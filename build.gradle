@@ -1,0 +1,100 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.5'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'java'
+	id 'jacoco'
+}
+
+group = 'com.project'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+jar {
+	enabled = false
+}
+
+dependencies {
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.session:spring-session-data-redis'
+	implementation('it.ozimov:embedded-redis:0.7.3')
+			{ exclude group: "org.slf4j", module: "slf4j-simple" }
+
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation('it.ozimov:embedded-redis:0.7.3')
+			{ exclude group: "org.slf4j", module: "slf4j-simple" }
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+	finalizedBy 'jacocoTestReport'
+}
+
+jacoco {
+	toolVersion = '0.8.7'
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		html.required.set(true)
+		xml.required.set(true)
+		csv.required.set(false)
+
+		def reportDirPath = "$buildDir/reports/code-coverage"
+
+		html.destination file("$reportDirPath/${project.name}")
+		xml.destination file("$reportDirPath/${project.name}.xml")
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(
+				files(classDirectories.files.collect {
+					fileTree(dir: it, excludes: [
+							'**/*Application*',
+							'**/*Config*',
+							'**/*Exception*',
+							'**/*common*',
+							'**/*Profile*'
+					])
+				})
+		)
+	}
+
+	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+
+	violationRules {
+		rule {
+			element = 'CLASS'
+			enabled = true
+
+			excludes = [
+					"**.*Application*",
+					"**.*Config*",
+					"**.*Exception*",
+					"**.*common*",
+					"**.*Profile*"
+			]
+		}
+	}
+}

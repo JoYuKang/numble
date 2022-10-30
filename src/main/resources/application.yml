@@ -1,0 +1,27 @@
+management:
+  endpoints:
+    web:
+      base-path: /application
+      exposure:
+        include: health
+
+spring:
+  profiles:
+    include:
+      - redis
+
+---
+spring:
+  config:
+    activate:
+      on-profile: real1
+server:
+  port: 8081
+
+---
+spring:
+  config:
+    activate:
+      on-profile: real2
+server:
+  port: 8082
