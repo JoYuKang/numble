@@ -8,8 +8,10 @@ management:
 spring:
   profiles:
     include:
-      - redis
+      - session
       - db
+      - jpa
+      - oauth2
 
 ---
 spring:
