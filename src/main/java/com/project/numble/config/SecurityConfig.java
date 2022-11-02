@@ -21,7 +21,8 @@ public class SecurityConfig {
     public SecurityFilterChain resource(HttpSecurity http) throws Exception {
         http
             .requestMatchers(matchers -> matchers
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()))
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .antMatchers("/docs/**"))
             .authorizeRequests(authorize -> authorize.anyRequest().permitAll())
             .requestCache(RequestCacheConfigurer::disable)
             .securityContext(AbstractHttpConfigurer::disable)
