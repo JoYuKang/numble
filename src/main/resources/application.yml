@@ -9,6 +9,7 @@ spring:
   profiles:
     include:
       - redis
+      - db
 
 ---
 spring:
