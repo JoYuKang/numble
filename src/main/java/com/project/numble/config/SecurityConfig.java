@@ -43,6 +43,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(authorize -> authorize
                 .antMatchers(HttpMethod.GET, "/profile").permitAll()
                 .antMatchers(HttpMethod.GET, "/application/health").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/sign-up").permitAll()
                 .anyRequest().authenticated());
 
         return http.build();
