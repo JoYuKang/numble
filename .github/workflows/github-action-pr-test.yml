@@ -32,16 +32,6 @@ jobs:
       - name: Test with Gradle
         run: ./gradlew --info test
 
-      - name: PR Test Coverage
-        id: jacoco
-        uses: madrapps/jacoco-report@v1.2
-        with:
-          title: 📝 Test Coverage Report
-          paths: ${{ github.workspace }}/build/reports/code-coverage/numble.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          min-coverage-overall: 0
-          min-coverage-changed-files: 0
-
       - name: Cleanup Gradle Cache
         if: ${{ always() }}
         run: |
