@@ -1,6 +1,7 @@
 package com.project.numble.application.auth.controller.advice;
 
 import com.project.numble.application.auth.controller.AuthController;
+import com.project.numble.application.auth.service.exception.SignInFailureException;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.common.advice.ExceptionType;
 import com.project.numble.application.user.service.exception.UserEmailAlreadyExistsException;
@@ -21,5 +22,11 @@ public class AuthControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Map<String, String> userEmailAlreadyExistsExceptionHandler() {
         return utils.getFailureResponse(ExceptionType.USER_EMAIL_ALREADY_EXISTS_EXCEPTION);
+    }
+
+    @ExceptionHandler(SignInFailureException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> signInFailureExceptionHandler() {
+        return utils.getFailureResponse(ExceptionType.SIGN_IN_FAILURE_EXCEPTION);
     }
 }
