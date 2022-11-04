@@ -1,7 +1,6 @@
 package com.project.numble.application.auth.controller;
 
 import static com.project.numble.application.helper.factory.dto.SignUpFactory.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -25,7 +24,7 @@ import com.project.numble.application.common.advice.CommonControllerAdvice;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.helper.factory.dto.SignInFactory;
 import com.project.numble.application.helper.factory.dto.SignUpFactory;
-import com.project.numble.application.user.service.UserService;
+import com.project.numble.application.user.service.StandardUserService;
 import com.project.numble.application.user.service.exception.UserEmailAlreadyExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -57,7 +56,7 @@ class AuthControllerDocsTest {
     private static final String NICKNAME = "nickname";
 
     @Mock
-    UserService userService;
+    StandardUserService userService;
 
     @Mock
     AuthService authService;
