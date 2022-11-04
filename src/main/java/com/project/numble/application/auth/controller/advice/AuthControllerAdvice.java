@@ -5,6 +5,7 @@ import com.project.numble.application.auth.service.exception.SignInFailureExcept
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.common.advice.ExceptionType;
 import com.project.numble.application.user.service.exception.UserEmailAlreadyExistsException;
+import com.project.numble.application.user.service.exception.UserNicknameAlreadyExistsException;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,11 @@ public class AuthControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Map<String, String> signInFailureExceptionHandler() {
         return utils.getFailureResponse(ExceptionType.SIGN_IN_FAILURE_EXCEPTION);
+    }
+
+    @ExceptionHandler(UserNicknameAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> userNicknameAlreadyExistsExceptionHandler() {
+        return utils.getFailureResponse(ExceptionType.USER_NICKNAME_ALREADY_EXISTS_EXCEPTION);
     }
 }
