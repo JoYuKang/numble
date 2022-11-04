@@ -36,7 +36,6 @@ public class AuthController {
     public ResponseEntity<Void> signIn(@Validated @RequestBody SignInRequest request,
         HttpSession session) {
         authService.signIn(request);
-
         session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
             SecurityContextHolder.getContext());
 

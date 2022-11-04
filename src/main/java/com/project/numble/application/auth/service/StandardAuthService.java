@@ -26,7 +26,7 @@ public class StandardAuthService implements AuthService {
     @Transactional(readOnly = true)
     public void signIn(SignInRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-            .orElseThrow(UserNotFoundException::new);
+            .orElseThrow(SignInFailureException::new);
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new SignInFailureException();
