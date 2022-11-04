@@ -86,27 +86,27 @@ include::{snippets}/sign-in-failed/http-response.adoc[]
 
 ==== HTTP request
 
-----
+```
 GET /oauth2/authorization/naver
 GET /oauth2/authorization/kakao
 
-----
+```
 
 ==== HTTP response
 
-----
+```
 HTTP/1.1 302 Redirection
 
-----
+```
 
 === 소셜 로그인 성공
 
 ==== HTTP response
 
----
-HTTP/1.1 200 Redirection
+```
+HTTP/1.1 302 Redirection
 
----
+```
 
 ===== HTTP response Cookie
 
@@ -119,8 +119,11 @@ Cookie Value : Spring Session Data Redis ID
 
 ==== HTTP response
 
----
-HTTP/1.1 401 UNAUTHORIZED
+```
+HTTP/1.1 401 Unauthorized
 
-{"exception":"[access_denied] Canceled By User","timestamp":1667533303145}
----
+{
+  "exception" : "[access_denied] Canceled By User",
+  "timestamp":1667533303145
+}
+```

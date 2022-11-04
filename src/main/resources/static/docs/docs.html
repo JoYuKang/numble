@@ -453,6 +453,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#일반-로그인">일반 로그인</a></li>
 <li><a href="#_로그인_실패">로그인 실패</a></li>
 <li><a href="#소셜-로그인">소셜 로그인</a></li>
+<li><a href="#_소셜_로그인_성공">소셜 로그인 성공</a></li>
+<li><a href="#_소셜_로그인_실패">소셜 로그인 실패</a></li>
 </ul>
 </li>
 </ul>
@@ -703,8 +705,8 @@ Cookie Value : Spring Session Data Redis ID</code></pre>
 <h4 id="_http_request_3"><a class="link" href="#_http_request_3">HTTP request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre>GET /oauth2/authorization/naver
-GET /oauth2/authorization/kakao</pre>
+<pre class="highlight"><code>GET /oauth2/authorization/naver
+GET /oauth2/authorization/kakao</code></pre>
 </div>
 </div>
 </div>
@@ -712,7 +714,43 @@ GET /oauth2/authorization/kakao</pre>
 <h4 id="_http_response_3"><a class="link" href="#_http_response_3">HTTP response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre>HTTP/1.1 302 Redirection</pre>
+<pre class="highlight"><code>HTTP/1.1 302 Redirection</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_소셜_로그인_성공"><a class="link" href="#_소셜_로그인_성공">소셜 로그인 성공</a></h3>
+<div class="sect3">
+<h4 id="_http_response_4"><a class="link" href="#_http_response_4">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>HTTP/1.1 302 Redirection</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_http_response_cookie_2"><a class="link" href="#_http_response_cookie_2">HTTP response Cookie</a></h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Cookie Name : SESSION
+Cookie Value : Spring Session Data Redis ID</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_소셜_로그인_실패"><a class="link" href="#_소셜_로그인_실패">소셜 로그인 실패</a></h3>
+<div class="sect3">
+<h4 id="_http_response_5"><a class="link" href="#_http_response_5">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>HTTP/1.1 401 Unauthorized
+
+{
+  "exception" : "[access_denied] Canceled By User",
+  "timestamp":1667533303145
+}</code></pre>
 </div>
 </div>
 </div>
@@ -723,7 +761,7 @@ GET /oauth2/authorization/kakao</pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-04 12:28:21 +0900
+Last updated 2022-11-04 12:54:54 +0900
 </div>
 </div>
 </body>
