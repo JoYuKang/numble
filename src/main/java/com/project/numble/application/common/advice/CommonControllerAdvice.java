@@ -1,5 +1,6 @@
 package com.project.numble.application.common.advice;
 
+import com.project.numble.application.user.repository.exception.UserNotFoundException;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,5 +29,11 @@ public class CommonControllerAdvice {
     Map<String, String> exceptionHandler(Exception e) {
         log.info("{}", e);
         return utils.getFailureResponse(ExceptionType.EXCEPTION);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> userNotFoundExceptionHandler() {
+        return utils.getFailureResponse(ExceptionType.USER_NOT_FOUND_EXCEPTION);
     }
 }

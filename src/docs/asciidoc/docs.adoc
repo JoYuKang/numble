@@ -16,7 +16,7 @@ endif::[]
 
 include::{snippets}/sign-up/http-request.adoc[]
 
-=== HTTP request fields
+==== HTTP request fields
 
 include::{snippets}/sign-up/request-fields.adoc[]
 
@@ -45,3 +45,85 @@ include::{snippets}/sign-up-failed-password-blank/http-response.adoc[]
 ==== 닉네임이 공백일 시
 
 include::{snippets}/sign-up-failed-nickname-blank/http-response.adoc[]
+
+[[로그인]]
+=== 로그인
+
+[[일반-로그인]]
+=== 일반 로그인
+
+==== HTTP request
+
+include::{snippets}/sign-in/http-request.adoc[]
+
+==== HTTP request fields
+
+include::{snippets}/sign-in/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/sign-in/http-response.adoc[]
+
+===== HTTP response Cookie
+
+```
+Cookie Name : SESSION
+Cookie Value : Spring Session Data Redis ID
+```
+
+=== 로그인 실패
+
+==== 없는 이메일일 시
+
+include::{snippets}/sign-in-failed/http-response.adoc[]
+
+==== 비밀번호가 틀렸을 시
+
+include::{snippets}/sign-in-failed/http-response.adoc[]
+
+[[소셜-로그인]]
+=== 소셜 로그인
+
+==== HTTP request
+
+```
+GET /oauth2/authorization/naver
+GET /oauth2/authorization/kakao
+
+```
+
+==== HTTP response
+
+```
+HTTP/1.1 302 Redirection
+
+```
+
+=== 소셜 로그인 성공
+
+==== HTTP response
+
+```
+HTTP/1.1 302 Redirection
+
+```
+
+===== HTTP response Cookie
+
+```
+Cookie Name : SESSION
+Cookie Value : Spring Session Data Redis ID
+```
+
+=== 소셜 로그인 실패
+
+==== HTTP response
+
+```
+HTTP/1.1 401 Unauthorized
+
+{
+  "exception" : "[access_denied] Canceled By User",
+  "timestamp":1667533303145
+}
+```

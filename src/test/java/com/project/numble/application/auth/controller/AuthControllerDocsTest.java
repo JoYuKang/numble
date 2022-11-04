@@ -17,9 +17,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.numble.application.auth.controller.advice.AuthControllerAdvice;
+import com.project.numble.application.auth.dto.request.SignInRequest;
 import com.project.numble.application.auth.dto.request.SignUpRequest;
+import com.project.numble.application.auth.service.AuthService;
+import com.project.numble.application.auth.service.exception.SignInFailureException;
 import com.project.numble.application.common.advice.CommonControllerAdvice;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
+import com.project.numble.application.helper.factory.dto.SignInFactory;
 import com.project.numble.application.user.service.UserService;
 import com.project.numble.application.user.service.exception.UserEmailAlreadyExistsException;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +57,9 @@ class AuthControllerDocsTest {
 
     @Mock
     UserService userService;
+
+    @Mock
+    AuthService authService;
 
     @InjectMocks
     AuthController authController;
@@ -217,5 +224,49 @@ class AuthControllerDocsTest {
             .andDo(
                 document("sign-up-failed-nickname-blank")
             );
+    }
+
+    @Test
+    void signIn_성공_문서화_테스트() throws Exception {
+        // given
+        SignInRequest request = SignInFactory.createSignUpRequest("test@email.com", "password");
+
+        willDoNothing().given(authService).signIn(any(SignInRequest.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.post("/auth/sign-in")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)));
+
+        // then
+        result
+            .andExpect(status().isOk())
+            .andDo(
+                document("sign-in",
+                    requestFields(
+                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"))
+                ));
+    }
+
+    @Test
+    void signIn_로그인_실패_테스트() throws Exception {
+        // given
+        SignInRequest request = SignInFactory.createSignUpRequest("test@email.com", "password");
+
+        willThrow(SignInFailureException.class).given(authService).signIn(any(SignInRequest.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.post("/auth/sign-in")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)));
+
+        // then
+        result
+            .andExpect(status().isBadRequest())
+            .andDo(
+                document("sign-in-failed"));
     }
 }

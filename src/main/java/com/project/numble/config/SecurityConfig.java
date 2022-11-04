@@ -1,5 +1,11 @@
 package com.project.numble.config;
 
+import com.project.numble.application.user.repository.UserRepository;
+import com.project.numble.core.security.CustomUserDetailsService;
+import com.project.numble.core.security.oauth2.CustomAuthenticationFailureHandler;
+import com.project.numble.core.security.oauth2.CustomOAuth2SuccessHandler;
+import com.project.numble.core.security.oauth2.CustomOAuth2UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final UserRepository userRepository;
 
     @Bean
     @Order(0)
@@ -45,7 +54,12 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, "/profile").permitAll()
                 .antMatchers(HttpMethod.GET, "/application/health").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/sign-up").permitAll()
-                .anyRequest().authenticated());
+                .antMatchers(HttpMethod.POST, "/auth/sign-in").permitAll()
+                .anyRequest().authenticated())
+            .oauth2Login()
+            .userInfoEndpoint(oauth2 -> oauth2.userService(oAuth2UserService()))
+            .successHandler(oAuth2SuccessHandler())
+            .failureHandler(new CustomAuthenticationFailureHandler());
 
         return http.build();
     }
@@ -58,5 +72,20 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    @Bean
+    public CustomUserDetailsService customUserDetailsService() {
+        return new CustomUserDetailsService(userRepository);
+    }
+
+    @Bean
+    public CustomOAuth2UserService oAuth2UserService() {
+        return new CustomOAuth2UserService();
+    }
+
+    @Bean
+    public CustomOAuth2SuccessHandler oAuth2SuccessHandler() {
+        return new CustomOAuth2SuccessHandler(userRepository, customUserDetailsService());
     }
 }
