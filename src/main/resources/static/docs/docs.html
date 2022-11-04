@@ -520,7 +520,7 @@ Content-Type: application/json
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>false</em></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unique</p></td>
 </tr>
 </tbody>
 </table>
@@ -592,6 +592,18 @@ Content-Type: application/json
 
 {
   "message" : "닉네임을 입력해주세요."
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_닉네임이_중복일_시"><a class="link" href="#_닉네임이_중복일_시">닉네임이 중복일 시</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
+
+{
+  "message" : "이미 존재하는 이메일입니다."
 }</code></pre>
 </div>
 </div>
@@ -761,7 +773,7 @@ Cookie Value : Spring Session Data Redis ID</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-04 12:54:54 +0900
+Last updated 2022-11-04 23:33:40 +0900
 </div>
 </div>
 </body>
