@@ -4,7 +4,7 @@ import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.board.dto.request.AddBoardRequest;
 import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
-import com.project.numble.application.board.exception.BoardNotExistsException;
+import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.repository.BoardRepository;
 import com.project.numble.application.user.domain.User;
 import lombok.RequiredArgsConstructor;
