@@ -1,5 +1,8 @@
 package com.project.numble.config;
 
+import com.project.numble.application.user.repository.UserRepository;
+import com.project.numble.core.security.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final UserRepository userRepository;
 
     @Bean
     @Order(0)
@@ -45,6 +51,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, "/profile").permitAll()
                 .antMatchers(HttpMethod.GET, "/application/health").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/sign-up").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/sign-in").permitAll()
                 .anyRequest().authenticated());
 
         return http.build();
@@ -58,5 +65,10 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    @Bean
+    public CustomUserDetailsService customUserDetailsService() {
+        return new CustomUserDetailsService(userRepository);
     }
 }
