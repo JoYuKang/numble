@@ -4,10 +4,7 @@ import com.project.numble.application.common.entity.BaseTimeEntity;
 import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.AnimalType;
 import com.project.numble.application.user.domain.User;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

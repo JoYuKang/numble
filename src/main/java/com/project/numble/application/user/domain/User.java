@@ -1,6 +1,7 @@
 package com.project.numble.application.user.domain;
 
 import com.project.numble.application.board.domain.Board;
+import com.project.numble.application.board.domain.Comment;
 import com.project.numble.application.common.entity.BaseTimeEntity;
 import com.project.numble.application.user.domain.enums.Role;
 import java.time.LocalDateTime;
@@ -52,7 +53,12 @@ public class User extends BaseTimeEntity {
 
     // board 추가
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
-    private List<Board> board = new ArrayList<>();
+    private List<Board> boards = new ArrayList<>();
+
+    // 댓글 추가
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<Comment> Comments = new ArrayList<>();
+
 
     private boolean deleted = false;
 

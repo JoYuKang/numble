@@ -22,12 +22,10 @@ public class ModBoardRequest {
     @NotEmpty(message = "내용은 필수입니다.")
     private List<Category> category;
 
-    private LocalDateTime lastModifiedDate;
 
     @Builder
     public ModBoardRequest(String content) {
         this.content = content;
-        this.lastModifiedDate = LocalDateTime.now();
     }
 
     @Builder
@@ -37,7 +35,6 @@ public class ModBoardRequest {
         ) {
             this.images.add(image);
         }
-        this.lastModifiedDate = LocalDateTime.now();
     }
 
 
