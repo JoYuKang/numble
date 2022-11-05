@@ -18,4 +18,6 @@ public interface BoardService {
 
     List<GetBoardResponse> getBoardUser(User user);
 
+    void delete(Long id);
+
 }

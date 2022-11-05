@@ -65,7 +65,6 @@ public class BoardServiceImp implements BoardService{
         return null;
     }
 
-
     // 전체 조회
     @Override
     @Transactional(readOnly = true)
@@ -91,6 +90,13 @@ public class BoardServiceImp implements BoardService{
 
         return id;
     }
+
+    // 삭제
+    @Override
+    public void delete(Long id) {
+        boardRepository.deleteById(id);
+    }
+
 
     // Board 가져오기
     private Board getBoardOne(Long id) {
