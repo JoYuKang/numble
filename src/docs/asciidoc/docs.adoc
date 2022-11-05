@@ -46,6 +46,10 @@ include::{snippets}/sign-up-failed-password-blank/http-response.adoc[]
 
 include::{snippets}/sign-up-failed-nickname-blank/http-response.adoc[]
 
+==== 닉네임이 중복일 시
+
+include::{snippets}/sign-up-failed-already-exists-nickname/http-response.adoc[]
+
 [[로그인]]
 === 로그인
 

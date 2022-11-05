@@ -1,7 +1,6 @@
 package com.project.numble.application.auth.controller;
 
 import static com.project.numble.application.helper.factory.dto.SignUpFactory.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -24,7 +23,8 @@ import com.project.numble.application.auth.service.exception.SignInFailureExcept
 import com.project.numble.application.common.advice.CommonControllerAdvice;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.helper.factory.dto.SignInFactory;
-import com.project.numble.application.user.service.UserService;
+import com.project.numble.application.helper.factory.dto.SignUpFactory;
+import com.project.numble.application.user.service.StandardUserService;
 import com.project.numble.application.user.service.exception.UserEmailAlreadyExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,7 +56,7 @@ class AuthControllerDocsTest {
     private static final String NICKNAME = "nickname";
 
     @Mock
-    UserService userService;
+    StandardUserService userService;
 
     @Mock
     AuthService authService;
@@ -126,7 +126,7 @@ class AuthControllerDocsTest {
                     requestFields(fieldWithPath("email")
                             .type(JsonFieldType.STRING).description("이메일").attributes(key("constraint").value("unique")),
                         fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
-                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"))));
+                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임").attributes(key("constraint").value("unique")))));
     }
 
     @Test
@@ -223,6 +223,27 @@ class AuthControllerDocsTest {
             .andExpect(status().isBadRequest())
             .andDo(
                 document("sign-up-failed-nickname-blank")
+            );
+    }
+
+    @Test
+    void signUp_닉네임_중복_실패_테스트() throws Exception {
+        // given
+        SignUpRequest request = SignUpFactory.createSignUpRequest(EMAIL, PASSWORD, NICKNAME);
+
+        willThrow(UserEmailAlreadyExistsException.class).given(userService).signUp(any(SignUpRequest.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.post("/auth/sign-up")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)));
+
+        // then
+        result
+            .andExpect(status().isBadRequest())
+            .andDo(
+                document("sign-up-failed-already-exists-nickname")
             );
     }
 
