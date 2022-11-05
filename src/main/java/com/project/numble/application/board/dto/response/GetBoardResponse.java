@@ -17,8 +17,6 @@ public class GetBoardResponse {
 
     private Long id;
 
-    private String nickname;
-
     @NotEmpty(message = "내용은 필수입니다.")
     private String content;
 
@@ -29,8 +27,6 @@ public class GetBoardResponse {
 
     @NotEmpty(message = "내용은 필수입니다.")
     private Category category;
-
-    private LocalDateTime createdDate;
 
     @Builder
     GetBoardResponse(Long id, String content, User user) {
@@ -49,8 +45,6 @@ public class GetBoardResponse {
     public GetBoardResponse(Board board) {
         this.content = board.getContent();
         this.user = board.getUser();
-        this.nickname = board.getUser().getNickname();
-        this.createdDate = board.getCreatedDate();
     }
 
 }
