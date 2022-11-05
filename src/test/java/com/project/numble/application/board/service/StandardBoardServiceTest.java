@@ -16,17 +16,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @SpringBootTest
 @Transactional
-class BoardServiceImpTest {
+class StandardBoardServiceTest {
 
 
     @Autowired
-    BoardServiceImp boardService;
+    StandardBoardService boardService;
     @Autowired
     BoardRepository boardRepository;
     @Autowired
@@ -122,6 +123,44 @@ class BoardServiceImpTest {
         }
 
         Assertions.assertThat(boardList.size()).isEqualTo(2);
+
+    }
+
+    @Test
+    @DisplayName("user가 쓴 board 조회")
+    void searchAllByUser(){
+        User user1 = User.createNormalUser("use1@test.com", "1234", "test1!!");
+
+        AddBoardRequest boardRequest1 = AddBoardRequest.builder()
+                .user(user1)
+                .content("same user 111111").build();
+
+        AddBoardRequest boardRequest2 = AddBoardRequest.builder()
+                .user(user1)
+                .content("same user 222222").build();
+
+        Long save = boardService.save(boardRequest1);
+        boardService.save(boardRequest2);
+
+        Optional<Board> byId = boardRepository.findAllById(save);
+        Board board = byId.get();
+
+        User user2 = User.createNormalUser("use2@test.com", "1234", "test2@@");
+
+        AddBoardRequest boardRequest3 = AddBoardRequest.builder()
+                .user(user2)
+                .content("other user").build();
+
+        boardService.save(boardRequest3);
+
+        List<GetBoardResponse> boardUser = boardService.getBoardUser(user1);
+
+        for (GetBoardResponse getBoardResponse : boardUser) {
+            log.info(getBoardResponse.getUser().getNickname());
+            log.info(getBoardResponse.getContent());
+        }
+
+        Assertions.assertThat(boardUser.size()).isEqualTo(2);
 
     }
 

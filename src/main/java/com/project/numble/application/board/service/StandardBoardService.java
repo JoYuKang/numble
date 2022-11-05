@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class BoardServiceImp implements BoardService{
+public class StandardBoardService implements BoardService{
 
     private final String DAILY_ROUTINE = "일상";
     private final String INFORMATION = "정보";
@@ -30,11 +30,7 @@ public class BoardServiceImp implements BoardService{
     @Transactional
     @Override
     public Long save(AddBoardRequest request) {
-        AddBoardRequest boardRequest = AddBoardRequest.builder()
-                .user(request.getUser())
-                .content(request.getContent())
-                .build();
-        return boardRepository.save(boardRequest.toEntity()).getId();
+        return boardRepository.save(request.toEntity()).getId();
     }
 
 
@@ -58,11 +54,9 @@ public class BoardServiceImp implements BoardService{
     // 자기가 작성한 글 조회
     @Override
     public List<GetBoardResponse> getBoardUser(User user) {
-        List<Board> boards = new ArrayList<>();
+        List<Board> findByUser = boardRepository.findAllByUser(user);
 
-        //boardRepository.findAllByUser(user);
-
-        return null;
+        return findByUser.stream().map(GetBoardResponse::new).collect(Collectors.toList());
     }
 
     // 전체 조회
