@@ -71,6 +71,7 @@ public class Board extends BaseTimeEntity {
         return board;
     }
 
+
     // 이미지 등록
     public void addImage(Image image) {
         this.images.add(image);
@@ -90,4 +91,9 @@ public class Board extends BaseTimeEntity {
         return board.getLikeCount() + 1;
     }
 
+    public void initUser(User user) {
+        if (this.user == null) {
+            this.user = user;
+        }
+    }
 }
