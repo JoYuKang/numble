@@ -2,6 +2,7 @@ package com.project.numble.application.board.dto.response;
 
 import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.board.domain.Category;
+import com.project.numble.application.board.domain.Comment;
 import com.project.numble.application.board.domain.Image;
 import com.project.numble.application.user.domain.User;
 import lombok.Builder;
@@ -17,7 +18,6 @@ public class GetBoardResponse {
 
     private Long id;
 
-    @NotEmpty(message = "내용은 필수입니다.")
     private String content;
 
     // 추가 예정
@@ -25,7 +25,6 @@ public class GetBoardResponse {
 
     private User user;
 
-    @NotEmpty(message = "내용은 필수입니다.")
     private Category category;
 
     @Builder

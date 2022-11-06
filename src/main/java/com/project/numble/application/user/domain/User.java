@@ -80,6 +80,15 @@ public class User extends BaseTimeEntity {
         animal.initUser(this);
     }
 
+    public void addBoard(Board board) {
+        this.boards.add(board);
+        board.initUser(this);
+    }
+
+    public void delBoard(Board board) {
+        this.boards.remove(board);
+    }
+
     public static User createNormalUser(String email, String password, String nickname) {
         User user = new User(email, nickname);
 
@@ -93,5 +102,6 @@ public class User extends BaseTimeEntity {
         user.profile = profile;
         return user;
     }
+
 
 }

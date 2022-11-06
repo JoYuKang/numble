@@ -7,12 +7,15 @@ import com.project.numble.application.board.dto.response.GetBoardResponse;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.repository.BoardRepository;
 import com.project.numble.application.user.domain.User;
+import com.project.numble.application.user.repository.UserRepository;
+import com.project.numble.application.user.service.StandardUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,11 +29,17 @@ public class StandardBoardService implements BoardService{
 
     private final BoardRepository boardRepository;
 
+    private final UserRepository userRepository;
+
     // 저장
     @Transactional
     @Override
     public Long save(AddBoardRequest request) {
-        return boardRepository.save(request.toEntity()).getId();
+        Board board = request.toEntity();
+        Optional<User> findUser = userRepository.findByEmail(request.getUser().getEmail());
+        User user = findUser.orElseThrow(() -> new NoSuchElementException());
+        user.addBoard(board);
+        return boardRepository.save(board).getId();
     }
 
 
@@ -79,7 +88,6 @@ public class StandardBoardService implements BoardService{
         // 개시글 가져오기
         Board board = getBoardOne(id);
 
-        // 수정일자 누락 확인하기
         board.update(boardRequest.getContent());
 
         return id;
@@ -88,6 +96,14 @@ public class StandardBoardService implements BoardService{
     // 삭제
     @Override
     public void delete(Long id) {
+
+        // ?????????????????????
+        // 삭제 시 user안 board list 처리 방법 생각
+        Optional<Board> delBoard = boardRepository.findAllById(id);
+        Board board = delBoard.orElseThrow(() -> new NoSuchElementException());
+        Optional<User> findUser = userRepository.findByEmail(board.getUser().getEmail());
+        User user = findUser.orElseThrow(() -> new NoSuchElementException());
+        user.delBoard(board);
         boardRepository.deleteById(id);
     }
 
