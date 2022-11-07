@@ -113,7 +113,6 @@ public class StandardUserService implements UserService {
         StringBuilder sb = readResponse(conn);
 
         Map<String, List<Map<String, String>>> map = objectMapper.readValue(sb.toString(), HashMap.class);
-        System.out.println(map);
         return map.get(KAKAO_LOCAL_ADDRESS_KEY).get(0);
     }
 
