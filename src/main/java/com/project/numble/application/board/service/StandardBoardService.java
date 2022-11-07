@@ -8,7 +8,9 @@ import com.project.numble.application.board.service.exception.BoardNotExistsExce
 import com.project.numble.application.board.repository.BoardRepository;
 import com.project.numble.application.user.domain.User;
 import com.project.numble.application.user.repository.UserRepository;
+import com.project.numble.application.user.repository.exception.UserNotFoundException;
 import com.project.numble.application.user.service.StandardUserService;
+import com.project.numble.application.user.service.exception.UserNicknameAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,23 +99,18 @@ public class StandardBoardService implements BoardService{
     @Override
     public void delete(Long id) {
 
-        // ?????????????????????
-        // 삭제 시 user안 board list 처리 방법 생각
-        Optional<Board> delBoard = boardRepository.findAllById(id);
-        Board board = delBoard.orElseThrow(() -> new NoSuchElementException());
-        Optional<User> findUser = userRepository.findByEmail(board.getUser().getEmail());
-        User user = findUser.orElseThrow(() -> new NoSuchElementException());
-        user.delBoard(board);
+
+        Board delBoard = boardRepository.findAllById(id).orElseThrow(() -> new BoardNotExistsException());
+
+        userRepository.findByEmail(delBoard.getUser().getEmail()).orElseThrow(() -> new UserNotFoundException())
+                        .delBoard(delBoard);
+
         boardRepository.deleteById(id);
     }
 
 
     // Board 가져오기
     private Board getBoardOne(Long id) {
-        Optional<Board> boardWrapper = boardRepository.findAllById(id);
-        Board board = boardWrapper.orElseThrow(()
-                -> new BoardNotExistsException());
-
-        return board;
+        return boardRepository.findAllById(id).orElseThrow(() -> new BoardNotExistsException());
     }
 }

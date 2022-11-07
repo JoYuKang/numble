@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 @Table(name = "tb_board")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode(of = "id", callSuper = false)
 public class Board extends BaseTimeEntity {
 
     @Id
@@ -26,6 +27,7 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name = "user_id",updatable = false)
     private User user;
 
+    // 리스트 형태로 변경 예정
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_type_id")
     private AnimalType animal_type;

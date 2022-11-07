@@ -9,7 +9,9 @@ public enum ExceptionType {
     USER_EMAIL_ALREADY_EXISTS_EXCEPTION("userEmailAlreadyExistsException.message"),
     USER_NOT_FOUND_EXCEPTION("userNotFoundException.message"),
     SIGN_IN_FAILURE_EXCEPTION("signInFailureException.message"),
-    USER_NICKNAME_ALREADY_EXISTS_EXCEPTION("userNicknameAlreadyExistsException.message")
+    USER_NICKNAME_ALREADY_EXISTS_EXCEPTION("userNicknameAlreadyExistsException.message"),
+
+    BOARD_NOT_EXISTS_EXCEPTION("boardNotExistsException.message")
     ;
 
     private final String message;
