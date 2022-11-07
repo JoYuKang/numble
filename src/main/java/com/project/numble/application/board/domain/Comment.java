@@ -3,6 +3,7 @@ package com.project.numble.application.board.domain;
 import com.project.numble.application.common.entity.BaseTimeEntity;
 import com.project.numble.application.user.domain.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +23,7 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "comment_id")
     private Long id;
 
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, length = 120)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,5 +36,15 @@ public class Comment extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReComment> reComments = new ArrayList<>();
+
+
+    @Builder
+    private Comment(String content, Board board, User user) {
+        this.content = content;
+        this.board = board;
+        this.user = user;
+    }
+
+
 
 }
