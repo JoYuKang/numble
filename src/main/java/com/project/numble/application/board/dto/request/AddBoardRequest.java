@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AddBoardRequest {
 
-
     @NotEmpty(message = "내용은 필수입니다.")
     private String content;
     private User user;
@@ -38,7 +37,6 @@ public class AddBoardRequest {
             this.imageList.add(image);
         }
     }
-
 
     public Board toEntity() {
         return Board.builder()
