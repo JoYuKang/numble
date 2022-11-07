@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AddBoardRequest {
 
-    private Long id;
 
     @NotEmpty(message = "내용은 필수입니다.")
     private String content;
@@ -25,13 +24,10 @@ public class AddBoardRequest {
 
     private List<Image> imageList;
 
-    private LocalDateTime createdDate;
-
     @Builder
     public AddBoardRequest(User user, String content) {
         this.user = user;
         this.content = content;
-        this.createdDate = LocalDateTime.now();
     }
 
     @Builder
@@ -41,7 +37,6 @@ public class AddBoardRequest {
         for (Image image : images) {
             this.imageList.add(image);
         }
-        this.createdDate = LocalDateTime.now();
     }
 
 
