@@ -12,6 +12,7 @@ spring:
       - db
       - jpa
       - oauth2
+      - api
 
 ---
 spring:
