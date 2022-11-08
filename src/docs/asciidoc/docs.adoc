@@ -132,6 +132,22 @@ HTTP/1.1 401 Unauthorized
 }
 ```
 
+=== 로그아웃
+
+==== HTTP request
+
+include::{snippets}/sign-out/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/sign-out/http-response.adoc[]
+
+=== 로그아웃 실패
+
+==== 세션이 유효하지 않을 시
+
+include::{snippets}/sign-out-failed-session-timeout/http-response.adoc[]
+
 [[User-API]]
 == User API
 
