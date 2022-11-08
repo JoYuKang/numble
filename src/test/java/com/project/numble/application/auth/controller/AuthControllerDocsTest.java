@@ -37,10 +37,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -289,5 +291,42 @@ class AuthControllerDocsTest {
             .andExpect(status().isBadRequest())
             .andDo(
                 document("sign-in-failed"));
+    }
+
+    @Test
+    void signOut_성공_문서화_테스트() throws Exception {
+        // given
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, "1");
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.get("/auth/sign-out")
+                .session(session)
+        );
+
+        // then
+        result
+            .andExpect(status().isOk())
+            .andDo(
+                document("sign-out"));
+    }
+
+    @Test
+    void signOut_세션_만료_실패_문서화_테스트() throws Exception {
+        // given
+        MockHttpSession session = new MockHttpSession();
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.get("/auth/sign-out")
+                .session(session)
+        );
+
+        // then
+        result
+            .andExpect(status().isBadRequest())
+            .andDo(
+                document("sign-out-failed-session-timeout"));
     }
 }
