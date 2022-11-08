@@ -1,6 +1,6 @@
 buildscript {
 	repositories {
-		maven { url "https://repo.spring.io/libs-release" }
+		jcenter()
 	}
 	dependencies {
 		classpath("org.ysb33r.gradle:grolifant:0.16.1")
