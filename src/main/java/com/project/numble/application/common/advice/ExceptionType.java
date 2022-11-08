@@ -12,7 +12,8 @@ public enum ExceptionType {
     USER_NICKNAME_ALREADY_EXISTS_EXCEPTION("userNicknameAlreadyExistsException.message"),
     BOARD_NOT_EXISTS_EXCEPTION("boardNotExistsException.message"),
     URL_CONNECTION_IO_EXCEPTION("urlConnectionIOException.message"),
-    COMMENT_NOT_EXISTS_EXCEPTION ("commentNotExistsException.message")
+    COMMENT_NOT_EXISTS_EXCEPTION ("commentNotExistsException.message"),
+    USER_ALREADY_SIGN_OUT_EXCEPTION("userAlreadySignOutException.message")
     ;
 
     private final String message;
