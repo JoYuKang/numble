@@ -131,3 +131,50 @@ HTTP/1.1 401 Unauthorized
   "timestamp":1667533303145
 }
 ```
+
+[[User-API]]
+== User API
+
+=== ip 기반 동네 검색
+
+==== HTTP request
+
+include::{snippets}/search-address-by-ip/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/search-address-by-ip/response-body.adoc[]
+
+==== HTTP response fields
+
+include::{snippets}/search-address-by-ip/response-fields.adoc[]
+
+=== ip 기반 동네 검색 실패
+
+==== open api 통신 문제일 시
+
+include::{snippets}/search-address-connection-error/http-response.adoc[]
+
+=== 검색어 입력 기반 동네 검색
+
+==== HTTP request
+
+include::{snippets}/search-address-by-query/http-request.adoc[]
+
+==== HTTP request query parameters
+
+include::{snippets}/search-address-by-query/request-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/search-address-by-query/response-body.adoc[]
+
+==== HTTP response fields
+
+include::{snippets}/search-address-by-query/response-fields.adoc[]
+
+=== 검색어 기반 동네 검색 실패
+
+==== open api 통신 문제일 시
+
+include::{snippets}/search-address-connection-error/http-response.adoc[]
