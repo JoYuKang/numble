@@ -1,9 +1,18 @@
+buildscript {
+	repositories {
+		maven { url "https://repo.spring.io/libs-release" }
+	}
+	dependencies {
+		classpath("org.ysb33r.gradle:grolifant:0.16.1")
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.7.5'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id 'java'
 	id 'jacoco'
-	id 'org.asciidoctor.jvm.convert' version '3.3.1'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 group = 'com.project'
@@ -12,6 +21,7 @@ sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 jar {
