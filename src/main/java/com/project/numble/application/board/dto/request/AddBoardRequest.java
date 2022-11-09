@@ -23,6 +23,9 @@ public class AddBoardRequest {
 
     private List<Image> imageList;
 
+    @NotEmpty(message = "카테고리는 필수입니다.")
+    private List<Category> category;
+
     @Builder
     public AddBoardRequest(User user, String content) {
         this.user = user;
