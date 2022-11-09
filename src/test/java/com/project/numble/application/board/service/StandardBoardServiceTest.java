@@ -144,13 +144,19 @@ class StandardBoardServiceTest {
         userRepository.save(user2);
         boardService.save(boardRequest3);
 
-        List<GetBoardResponse> boardUser = boardService.getBoardUser(user1);
+        List<Board> all = boardRepository.findAll();
+        for (Board board : all) {
+            log.info("board.getContent() " + board.getContent());
+        }
 
+        List<GetBoardResponse> boardUser = boardService.getBoardUser(user1);
+        log.info("==================================");
         for (GetBoardResponse getBoardResponse : boardUser) {
-            log.info(getBoardResponse.getUser().getNickname());
-            log.info(getBoardResponse.getContent());
+            log.info("boardUser getNickname" + getBoardResponse.getUser().getNickname());
+            log.info("boardUser getContent" + getBoardResponse.getContent());
         }
         log.info("==================================");
+        log.info("board size = " + boardUser.size());
         List<Board> boards = user1.getBoards();
         for (Board board1 : boards) {
             log.info(">>> board content" + board1.getContent());

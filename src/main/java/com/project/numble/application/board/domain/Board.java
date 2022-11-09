@@ -24,7 +24,7 @@ public class Board extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.PERSIST, targetEntity = User.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",updatable = false, insertable = false) // 읽기 전용
+    @JoinColumn(name = "user_id",updatable = false) // 읽기 전용 insertable = false?
     private User user;
 
     // 리스트 형태로 변경 예정
