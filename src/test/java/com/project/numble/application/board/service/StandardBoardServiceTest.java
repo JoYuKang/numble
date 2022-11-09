@@ -161,7 +161,6 @@ class StandardBoardServiceTest {
     }
 
 
-
     @Test
     @DisplayName("board 삭제 후 조회 test")
     void del(){
@@ -177,12 +176,12 @@ class StandardBoardServiceTest {
 
         log.info("============== board list ==============");
         for (GetBoardResponse getBoardResponse : boardUser) {
-            log.info("getBoardResponse getNickname" + getBoardResponse.getUser().getNickname());
-            log.info("getBoardResponse getContent" + getBoardResponse.getContent());
+            log.info("getBoardResponse getNickname " + getBoardResponse.getUser().getNickname());
+            log.info("getBoardResponse getContent " + getBoardResponse.getContent());
         }
 
         log.info("========= before user board list =========");
-        List<Board> beforeUserBoards = user1.getBoards();
+        List<Board> beforeUserBoards = user1. getBoards();
         for (Board board : beforeUserBoards) {
             log.info("board.getContent() " + board.getContent());
         }

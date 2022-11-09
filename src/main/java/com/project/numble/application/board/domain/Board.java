@@ -24,7 +24,7 @@ public class Board extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.PERSIST, targetEntity = User.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",updatable = false)
+    @JoinColumn(name = "user_id",updatable = false, insertable = false) // 읽기 전용
     private User user;
 
     // 리스트 형태로 변경 예정
@@ -92,6 +92,18 @@ public class Board extends BaseTimeEntity {
     public int addLikeCount(Board board) {
         return board.getLikeCount() + 1;
     }
+
+    // 댓글 추가
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.initBoard(this);
+    }
+
+    // 댓글 삭제
+    public void delComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
 
     public void initUser(User user) {
         if (this.user == null) {

@@ -26,9 +26,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class StandardBoardService implements BoardService{
 
-    private final String DAILY_ROUTINE = "일상";
-    private final String INFORMATION = "정보";
-
     private final BoardRepository boardRepository;
 
     private final UserRepository userRepository;
@@ -51,13 +48,11 @@ public class StandardBoardService implements BoardService{
     public GetBoardResponse getBoard(Long id) {
         Board board = getBoardOne(id);
 
-        GetBoardResponse boardResponse = GetBoardResponse.builder()
+        return GetBoardResponse.builder()
                 .user(board.getUser())
                 .id(board.getId())
                 .content(board.getContent())
                 .build();
-
-        return boardResponse;
     }
 
 
@@ -65,40 +60,31 @@ public class StandardBoardService implements BoardService{
     // 자기가 작성한 글 조회
     @Override
     public List<GetBoardResponse> getBoardUser(User user) {
-        List<Board> findByUser = boardRepository.findAllByUser(user);
-
-        return findByUser.stream().map(GetBoardResponse::new).collect(Collectors.toList());
+        return boardRepository.findAllByUser(user).stream().map(GetBoardResponse::new).collect(Collectors.toList());
     }
 
     // 전체 조회
     @Override
     @Transactional(readOnly = true)
     public List<GetBoardResponse> getBoardList() {
-        List<Board> boards = boardRepository.findAllByOrderByCreatedDateDesc();
-
-        return boards.stream().map(GetBoardResponse::new).collect(Collectors.toList());
+        return boardRepository.findAllByOrderByCreatedDateDesc().stream().map(GetBoardResponse::new).collect(Collectors.toList());
     }
 
 
     // 수정
     @Override
-    public Long updateBoard(Long id, ModBoardRequest request) {
-        ModBoardRequest boardRequest = ModBoardRequest.builder()
-                .content(request.getContent())
-                .build();
+    public Long updateBoard(Long boardId, ModBoardRequest request) {
 
         // 개시글 가져오기
-        Board board = getBoardOne(id);
+        Board board = getBoardOne(boardId);
+        board.update(request.getContent());
 
-        board.update(boardRequest.getContent());
-
-        return id;
+        return boardId;
     }
 
     // 삭제
     @Override
     public void delete(Long id) {
-
 
         Board delBoard = boardRepository.findAllById(id).orElseThrow(() -> new BoardNotExistsException());
 

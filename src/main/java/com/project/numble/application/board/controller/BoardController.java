@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/boards")
+@RequestMapping("/board")
 @RequiredArgsConstructor
 public class BoardController {
 
@@ -22,7 +22,7 @@ public class BoardController {
 
 
     // board 다건 조회
-    @GetMapping({"", "/list"})
+    @GetMapping("/list")
     public ResponseEntity<List<GetBoardResponse>> getBoards() {
         List<GetBoardResponse> boards = standardBoardService.getBoardList();
 
