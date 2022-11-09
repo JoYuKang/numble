@@ -57,7 +57,7 @@ public class User extends BaseTimeEntity {
 
     // 댓글 추가
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
-    private List<Comment> Comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
 
     private boolean deleted = false;
@@ -87,6 +87,15 @@ public class User extends BaseTimeEntity {
 
     public void delBoard(Board board) {
         this.boards.remove(board);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.initUser(this);
+    }
+
+    public void delComment(Comment comment) {
+        this.comments.remove(comment);
     }
 
     public static User createNormalUser(String email, String password, String nickname) {
