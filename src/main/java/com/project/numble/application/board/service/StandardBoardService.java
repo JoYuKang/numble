@@ -33,11 +33,11 @@ public class StandardBoardService implements BoardService{
     // 저장
     @Transactional
     @Override
-    public Long save(AddBoardRequest request) {
+    public Long save(AddBoardRequest request, Long userId) {
         Board board = request.toEntity();
-        Optional<User> findUser = userRepository.findByEmail(request.getUser().getEmail());
-        User user = findUser.orElseThrow(() -> new NoSuchElementException());
-        user.addBoard(board);
+        Optional<User> findUser = userRepository.findById(userId);
+        User user = findUser.orElseThrow(() -> new UserNotFoundException());
+        board.setUser(user);
         return boardRepository.save(board).getId();
     }
 
@@ -50,7 +50,6 @@ public class StandardBoardService implements BoardService{
 
         return GetBoardResponse.builder()
                 .user(board.getUser())
-                .id(board.getId())
                 .content(board.getContent())
                 .build();
     }
@@ -88,7 +87,7 @@ public class StandardBoardService implements BoardService{
 
         Board delBoard = boardRepository.findAllById(id).orElseThrow(() -> new BoardNotExistsException());
 
-        userRepository.findByEmail(delBoard.getUser().getEmail()).orElseThrow(() -> new UserNotFoundException())
+        userRepository.findById(delBoard.getUser().getId()).orElseThrow(() -> new UserNotFoundException())
                         .delBoard(delBoard);
 
         boardRepository.deleteById(id);

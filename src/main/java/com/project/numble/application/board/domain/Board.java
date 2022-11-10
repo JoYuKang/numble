@@ -1,5 +1,7 @@
 package com.project.numble.application.board.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.numble.application.common.entity.BaseTimeEntity;
 import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.AnimalType;
@@ -24,7 +26,7 @@ public class Board extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.PERSIST, targetEntity = User.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",updatable = false) // 읽기 전용 insertable = false?
+    @JoinColumn(name = "user_id",updatable = false) // 읽기 전용 insertable = false
     private User user;
 
     // 리스트 형태로 변경 예정
@@ -72,8 +74,6 @@ public class Board extends BaseTimeEntity {
         }
         return board;
     }
-
-
     // 이미지 등록
     public void addImage(Image image) {
         this.images.add(image);
@@ -93,6 +93,11 @@ public class Board extends BaseTimeEntity {
         return board.getLikeCount() + 1;
     }
 
+    //==연관관계 메서드==//
+    public void setUser(User user) {
+        this.user = user;
+        user.getBoards().add(this);
+    }
     // 댓글 추가
     public void addComment(Comment comment) {
         this.comments.add(comment);

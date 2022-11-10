@@ -12,7 +12,7 @@ public interface BoardService {
     GetBoardResponse getBoard(Long id);
     List<GetBoardResponse> getBoardList();
 
-    Long save(AddBoardRequest addBoardRequest);
+    Long save(AddBoardRequest addBoardRequest, Long userId);
 
     Long updateBoard(Long id, ModBoardRequest modBoardRequest);
 
