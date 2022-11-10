@@ -6,6 +6,7 @@ import com.project.numble.application.board.domain.Comment;
 import com.project.numble.application.board.domain.Image;
 import com.project.numble.application.user.domain.AnimalType;
 import com.project.numble.application.user.domain.User;
+import io.netty.channel.local.LocalAddress;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +21,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GetBoardResponse {
 
-    private Long id;
-
     private String content;
 
     // 이미지 예정
     private List<Image> image;
 
-    private User user;
+    private String nickname;
 
     // 동물 예정
     private AnimalType animalType;
@@ -38,23 +37,25 @@ public class GetBoardResponse {
     // 댓글 불러오기
     private List<GetCommentResponse> comments = new ArrayList<>();
 
+    // 생성 시간
+    private LocalAddress createdDate;
+
     @Builder
-    GetBoardResponse(Long id, String content, User user) {
-        this.id = id;
+    GetBoardResponse(String content, User user) {
         this.content = content;
-        this.user = user;
+        this.nickname = user.getNickname();
     }
 
     public Board toEntity() {
         return Board.builder()
-                .user(user)
+                //.user()
                 .content(content)
                 .build();
     }
 
     public GetBoardResponse(Board board) {
         this.content = board.getContent();
-        this.user = board.getUser();
+        this.nickname = board.getUser().getNickname();
         this.comments = board.getComments().stream().map(GetCommentResponse::new).collect(Collectors.toList());
     }
 
