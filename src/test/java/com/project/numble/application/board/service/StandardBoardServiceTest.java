@@ -3,6 +3,7 @@ package com.project.numble.application.board.service;
 import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.board.dto.request.AddBoardRequest;
 import com.project.numble.application.board.dto.request.ModBoardRequest;
+import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
 import com.project.numble.application.board.repository.BoardRepository;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
@@ -117,9 +118,9 @@ class StandardBoardServiceTest {
         userRepository.save(user2);
         Long saveId2 = boardService.save(boardRequest2, user1.getId());
 
-        List<GetBoardResponse> boardList = boardService.getBoardList();
+        List<GetAllBoardResponse> boardList = boardService.getBoardList();
 
-        for (GetBoardResponse board: boardList) {
+        for (GetAllBoardResponse board: boardList) {
             log.info(">>>> "+String.valueOf(board.getNickname()));
             log.info(">>>> "+String.valueOf(board.getContent()));
         }
