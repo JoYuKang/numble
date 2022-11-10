@@ -23,7 +23,7 @@ public class AddBoardRequest {
 
     private List<Image> imageList;
 
-    @NotEmpty(message = "카테고리는 필수입니다.")
+    //@NotEmpty(message = "카테고리는 필수입니다.")
     private List<Category> category;
 
     @Builder
@@ -43,7 +43,6 @@ public class AddBoardRequest {
 
     public Board toEntity() {
         return Board.builder()
-                .user(user)
                 .content(content)
                 .build();
     }

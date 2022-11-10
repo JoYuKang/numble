@@ -22,7 +22,7 @@ public class ModBoardRequest {
 
     private List<Image> images;
 
-    @NotEmpty(message = "카테고리는 필수입니다.")
+    //@NotEmpty(message = "카테고리는 필수입니다.")
     private List<Category> category;
 
     private User user;

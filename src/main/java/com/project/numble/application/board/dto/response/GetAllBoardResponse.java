@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
-public class GetBoardResponse {
+public class GetAllBoardResponse {
 
     private String content;
 
@@ -31,14 +31,11 @@ public class GetBoardResponse {
     // tag 예정
     private Category category;
 
-    // 댓글 불러오기
-    private List<GetCommentResponse> comments = new ArrayList<>();
-
     // 생성 시간
     private LocalAddress createdDate;
 
     @Builder
-    GetBoardResponse(String content, User user) {
+    GetAllBoardResponse(String content, User user) {
         this.content = content;
         this.nickname = user.getNickname();
     }
@@ -49,10 +46,9 @@ public class GetBoardResponse {
                 .build();
     }
 
-    public GetBoardResponse(Board board) {
+    public GetAllBoardResponse(Board board) {
         this.content = board.getContent();
         this.nickname = board.getUser().getNickname();
-        this.comments = board.getComments().stream().map(GetCommentResponse::new).collect(Collectors.toList());
     }
 
 }
