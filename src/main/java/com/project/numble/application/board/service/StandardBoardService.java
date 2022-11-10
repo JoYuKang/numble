@@ -3,14 +3,13 @@ package com.project.numble.application.board.service;
 import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.board.dto.request.AddBoardRequest;
 import com.project.numble.application.board.dto.request.ModBoardRequest;
+import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.repository.BoardRepository;
 import com.project.numble.application.user.domain.User;
 import com.project.numble.application.user.repository.UserRepository;
 import com.project.numble.application.user.repository.exception.UserNotFoundException;
-import com.project.numble.application.user.service.StandardUserService;
-import com.project.numble.application.user.service.exception.UserNicknameAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,13 +46,8 @@ public class StandardBoardService implements BoardService{
     @Transactional(readOnly = true)
     public GetBoardResponse getBoard(Long id) {
         Board board = getBoardOne(id);
-
-        return GetBoardResponse.builder()
-                .user(board.getUser())
-                .content(board.getContent())
-                .build();
+        return new GetBoardResponse(board);
     }
-
 
 
     // 자기가 작성한 글 조회
@@ -65,8 +59,8 @@ public class StandardBoardService implements BoardService{
     // 전체 조회
     @Override
     @Transactional(readOnly = true)
-    public List<GetBoardResponse> getBoardList() {
-        return boardRepository.findAllByOrderByCreatedDateDesc().stream().map(GetBoardResponse::new).collect(Collectors.toList());
+    public List<GetAllBoardResponse> getBoardList() {
+        return boardRepository.findAllByOrderByCreatedDateDesc().stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
     }
 
 

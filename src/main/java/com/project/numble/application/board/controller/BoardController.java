@@ -3,9 +3,9 @@ package com.project.numble.application.board.controller;
 
 import com.project.numble.application.board.dto.request.AddBoardRequest;
 import com.project.numble.application.board.dto.request.ModBoardRequest;
+import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
 import com.project.numble.application.board.service.BoardService;
-import com.project.numble.application.board.service.StandardBoardService;
 import com.project.numble.core.resolver.SignInUser;
 import com.project.numble.core.resolver.UserInfo;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +26,8 @@ public class BoardController {
 
     // board 다건 조회
     @GetMapping("/list")
-    public ResponseEntity<List<GetBoardResponse>> getBoards() {
-        List<GetBoardResponse> boards = boardService.getBoardList();
+    public ResponseEntity<List<GetAllBoardResponse>> getBoards() {
+        List<GetAllBoardResponse> boards = boardService.getBoardList();
 
         return new ResponseEntity<>(boards, HttpStatus.OK);
     }
@@ -43,20 +43,20 @@ public class BoardController {
 
     // board 추가
     @PostMapping("/add")
-    public ResponseEntity<Long> addBoard(@Valid @RequestBody AddBoardRequest request, @SignInUser UserInfo userInfo) {
+    public ResponseEntity<Long> addBoard(@SignInUser UserInfo userInfo, @Valid @RequestBody AddBoardRequest request) {
         Long saveId = boardService.save(request, userInfo.getUserId());
-        return new ResponseEntity<>(saveId,HttpStatus.CREATED);
+        return new ResponseEntity<>(saveId, HttpStatus.CREATED);
     }
 
     // board 수정
     @PostMapping("/modify/{id}")
-    public ResponseEntity<Long> updateBoard(@Valid @RequestBody ModBoardRequest request, @PathVariable Long id) {
+    public ResponseEntity<Long> updateBoard(@PathVariable Long id, @Valid @RequestBody ModBoardRequest request) {
         Long updateId = boardService.updateBoard(id, request);
         return new ResponseEntity<>(updateId,HttpStatus.OK);
     }
 
     // board 삭제
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBoard(@PathVariable Long id) {
         boardService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
