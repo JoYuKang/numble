@@ -25,5 +25,5 @@ public interface UserService {
 
     GetUserStaticInfoResponse getUserStaticInfo(UserInfo userInfo);
 
-    void deleteAddress(UserInfo userInfo);
+    void delAddress(UserInfo userInfo);
 }

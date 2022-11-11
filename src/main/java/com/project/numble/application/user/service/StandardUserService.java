@@ -152,7 +152,7 @@ public class StandardUserService implements UserService {
     }
 
     @Override
-    public void deleteAddress(UserInfo userInfo) {
+    public void delAddress(UserInfo userInfo) {
         addressRepository.deleteByUserId(userInfo.getUserId());
     }
 
