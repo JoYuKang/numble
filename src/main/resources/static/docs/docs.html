@@ -465,6 +465,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_ip_기반_동네_검색_실패">ip 기반 동네 검색 실패</a></li>
 <li><a href="#_검색어_입력_기반_동네_검색">검색어 입력 기반 동네 검색</a></li>
 <li><a href="#_검색어_기반_동네_검색_실패">검색어 기반 동네 검색 실패</a></li>
+<li><a href="#_user_정적_정보_조회">User 정적 정보 조회</a></li>
+<li><a href="#_user_정적_정보_조회_실패_시">User 정적 정보 조회 실패 시</a></li>
 </ul>
 </li>
 </ul>
@@ -981,13 +983,98 @@ Cookie Value : Spring Session Data Redis ID</code></pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_user_정적_정보_조회"><a class="link" href="#_user_정적_정보_조회">User 정적 정보 조회</a></h3>
+<div class="sect3">
+<h4 id="_http_request_7"><a class="link" href="#_http_request_7">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /users/static-info HTTP/1.1</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_response_fields_3"><a class="link" href="#_http_response_fields_3">HTTP response fields</a></h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이메일</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Object</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주소</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>address.addressName</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">주소 전체 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>address.regionDepth1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지역 1Depth, 시도 단위</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>address.regionDepth2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">지역 2Depth, 구 단위</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nickname</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">닉네임</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hasPet</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">펫 등록 유무</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>first</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">첫 로그인 유무</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_user_정적_정보_조회_실패_시"><a class="link" href="#_user_정적_정보_조회_실패_시">User 정적 정보 조회 실패 시</a></h3>
+<div class="sect3">
+<h4 id="_세션이_유효하지_않을_시_2"><a class="link" href="#_세션이_유효하지_않을_시_2">세션이 유효하지 않을 시</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
+
+{
+  "message" : "세션이 만료되었거나 올바르지 않은 값입니다."
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-09 18:44:47 +0900
+Last updated 2022-11-11 21:10:16 +0900
 </div>
 </div>
 </body>

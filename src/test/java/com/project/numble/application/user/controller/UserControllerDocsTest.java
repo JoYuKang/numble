@@ -1,5 +1,6 @@
 package com.project.numble.application.user.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
@@ -17,11 +18,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.numble.application.common.advice.CommonControllerAdvice;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
+import com.project.numble.application.helper.factory.entity.UserFactory;
 import com.project.numble.application.user.controller.advice.UserControllerAdvice;
+import com.project.numble.application.user.domain.User;
 import com.project.numble.application.user.dto.response.FindAddressByClientIpResponse;
 import com.project.numble.application.user.dto.response.FindAddressByQueryResponse;
+import com.project.numble.application.user.dto.response.GetUserStaticInfoResponse;
+import com.project.numble.application.user.repository.exception.UserNotFoundException;
 import com.project.numble.application.user.service.StandardUserService;
 import com.project.numble.application.user.service.util.UrlConnectionIOException;
+import com.project.numble.core.resolver.UserInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -165,6 +171,53 @@ class UserControllerDocsTest {
                         fieldWithPath("regionDepth1").type(JsonFieldType.STRING).description("지역 1Depth, 시도 단위").optional(),
                         fieldWithPath("regionDepth2").type(JsonFieldType.STRING).description("지역 2Depth, 구 단위").optional())
                 )
+            );
+    }
+
+    @Test
+    void getUserStaticInfo_성공_테스트() throws Exception {
+        // given
+        GetUserStaticInfoResponse response = GetUserStaticInfoResponse
+                .fromUser(UserFactory.createStaticUser());
+        given(userService.getUserStaticInfo(any(UserInfo.class))).willReturn(response);
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.get("/users/static-info"));
+
+        // then
+        result
+            .andExpect(status().isOk())
+            .andDo(
+                document("get-static-user-info",
+                    responseFields(
+                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                        fieldWithPath("address").type(JsonFieldType.OBJECT).description("주소").optional(),
+                        fieldWithPath("address.addressName").type(JsonFieldType.STRING).description("주소 전체 이름").optional(),
+                        fieldWithPath("address.regionDepth1").type(JsonFieldType.STRING).description("지역 1Depth, 시도 단위").optional(),
+                        fieldWithPath("address.regionDepth2").type(JsonFieldType.STRING).description("지역 2Depth, 구 단위").optional(),
+                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
+                        fieldWithPath("hasPet").type(JsonFieldType.BOOLEAN).description("펫 등록 유무"),
+                        fieldWithPath("first").type(JsonFieldType.BOOLEAN).description("첫 로그인 유무")
+                    )
+                )
+            );
+    }
+
+    @Test
+    void getUserStaticInfo_실패_테스트() throws Exception {
+        // given
+        willThrow(UserNotFoundException.class).given(userService).getUserStaticInfo(any(UserInfo.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.get("/users/static-info"));
+
+        // then
+        result
+            .andExpect(status().isBadRequest())
+            .andDo(
+                document("get-static-user-info-failed")
             );
     }
 }
