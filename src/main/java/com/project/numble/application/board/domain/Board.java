@@ -1,7 +1,9 @@
 package com.project.numble.application.board.domain;
 
 import com.project.numble.application.common.entity.BaseTimeEntity;
+import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.User;
+import com.project.numble.application.user.domain.enums.AnimalType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,8 +28,8 @@ public class Board extends BaseTimeEntity {
 
     // 리스트 형태로 변경 예정
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_type_id")
-    private AnimalType animal_type;
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
 
     @Column(columnDefinition = "TEXT",nullable = false)
     private String content;
