@@ -14,12 +14,24 @@ import static com.project.numble.application.user.service.util.UserOpenApiUrlCon
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.numble.application.auth.dto.request.SignUpRequest;
+import com.project.numble.application.user.domain.Address;
+import com.project.numble.application.user.domain.Animal;
+import com.project.numble.application.user.domain.User;
+import com.project.numble.application.user.domain.enums.AnimalType;
+import com.project.numble.application.user.dto.request.AddAddressRequest;
+import com.project.numble.application.user.dto.request.AddAnimalsRequest;
 import com.project.numble.application.user.dto.response.FindAddressByClientIpResponse;
 import com.project.numble.application.user.dto.response.FindAddressByQueryResponse;
+import com.project.numble.application.user.dto.response.GetAddressResponse;
+import com.project.numble.application.user.dto.response.GetUserStaticInfoResponse;
+import com.project.numble.application.user.repository.AddressRepository;
+import com.project.numble.application.user.repository.AnimalRepository;
 import com.project.numble.application.user.repository.UserRepository;
+import com.project.numble.application.user.repository.exception.UserNotFoundException;
 import com.project.numble.application.user.service.exception.UserEmailAlreadyExistsException;
 import com.project.numble.application.user.service.exception.UserNicknameAlreadyExistsException;
 import com.project.numble.application.user.service.util.UrlConnectionIOException;
+import com.project.numble.core.resolver.UserInfo;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,6 +55,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class StandardUserService implements UserService {
 
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
+    private final AnimalRepository animalRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Value("${google.map.key}")
@@ -97,6 +111,49 @@ public class StandardUserService implements UserService {
         catch (IOException e) {
             throw new UrlConnectionIOException(e);
         }
+    }
+
+    @Override
+    public void addAddress(UserInfo userInfo, AddAddressRequest request) {
+        User user = userRepository.findById(userInfo.getUserId())
+            .orElseThrow(UserNotFoundException::new);
+
+        Address address = AddAddressRequest.toAddress(request, user);
+
+        addressRepository.save(address);
+    }
+
+    @Override
+    public GetAddressResponse getAddress(UserInfo userInfo) {
+        Address address = addressRepository.findByUserId(userInfo.getUserId()).orElseGet(() -> new Address());
+
+        return GetAddressResponse.fromAddress(address);
+    }
+
+    @Override
+    public void addAnimals(UserInfo userInfo, AddAnimalsRequest request) {
+        User user = userRepository.findById(userInfo.getUserId())
+            .orElseThrow(UserNotFoundException::new);
+
+        request.getAnimalTypes().stream().map(AnimalType::getAnimalType).forEach(animalType -> {
+            Animal animal = new Animal(animalType);
+
+            user.addAnimal(animal);
+            animalRepository.save(animal);
+        });
+    }
+
+    @Override
+    public GetUserStaticInfoResponse getUserStaticInfo(UserInfo userInfo) {
+        User user = userRepository.findStaticUserInfoById(userInfo.getUserId())
+            .orElseThrow(UserNotFoundException::new);
+
+        return GetUserStaticInfoResponse.fromUser(user);
+    }
+
+    @Override
+    public void deleteAddress(UserInfo userInfo) {
+        addressRepository.deleteByUserId(userInfo.getUserId());
     }
 
     private Map<String, String> getAddressByQuery(String query) throws IOException {
