@@ -25,18 +25,18 @@ public class Comment extends BaseTimeEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
+    @JoinColumn(name = "board_id",updatable = false)
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id",updatable = false)
     private User user;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReComment> reComments = new ArrayList<>();
 
     @Builder
-    private Comment(String content, Board board, User user) {
+    public Comment(String content, Board board, User user) {
         this.content = content;
         this.board = board;
         this.user = user;
@@ -44,9 +44,7 @@ public class Comment extends BaseTimeEntity {
 
     public Comment toEntity() {
         return Comment.builder()
-                .user(user)
                 .content(content)
-                .board(board)
                 .build();
     }
     public void update(String content) {
@@ -63,6 +61,16 @@ public class Comment extends BaseTimeEntity {
         if (this.user == null) {
             this.user = user;
         }
+    }
+
+    //==연관관계 메서드==//
+    public void setUser(User user) {
+        this.user = user;
+        user.getComments().add(this);
+    }
+    public void setBoard(Board board) {
+        this.board = board;
+        board.getComments().add(this);
     }
 
 }

@@ -2,6 +2,7 @@ package com.project.numble.application.board.controller.advice;
 
 import com.project.numble.application.board.controller.CommentController;
 import com.project.numble.application.board.service.exception.CommentNotExistsException;
+import com.project.numble.application.board.service.exception.CurrentUserNotSameCommentUser;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.common.advice.ExceptionType;
 import lombok.RequiredArgsConstructor;
@@ -24,4 +25,9 @@ public class CommentControllerAdvice {
         return utils.getFailureResponse(ExceptionType.COMMENT_NOT_EXISTS_EXCEPTION);
     }
 
+    @ExceptionHandler(CurrentUserNotSameCommentUser.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> currentUserNotSameCommentUserExceptionHandler() {
+        return utils.getFailureResponse(ExceptionType.CURRENT_USER_NOT_SAME_COMMENT_USER);
+    }
 }

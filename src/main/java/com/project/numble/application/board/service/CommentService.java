@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface CommentService {
 
-    Long save(Long boardId, AddCommentRequest commentRequest);
+    Long save(Long boardId, Long userId, AddCommentRequest commentRequest);
 
     List<GetCommentResponse> getComments(Long boardId);
 
     List<GetCommentResponse> getCommentsByUser(Long userId);
 
-    Long updateComment(Long id, ModCommentRequest commentRequest);
+    Long updateComment(Long boardId, Long userId, ModCommentRequest commentRequest);
 
-    void delete(Long commentId);
+    void delete(Long commentId, Long userId, Long boardId);
 
 
 }
