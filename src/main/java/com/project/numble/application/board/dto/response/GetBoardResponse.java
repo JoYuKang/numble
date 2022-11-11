@@ -3,7 +3,7 @@ package com.project.numble.application.board.dto.response;
 import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.board.domain.Category;
 import com.project.numble.application.board.domain.Image;
-import com.project.numble.application.user.domain.AnimalType;
+import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.User;
 import io.netty.channel.local.LocalAddress;
 import lombok.Builder;
@@ -26,7 +26,7 @@ public class GetBoardResponse {
     private String nickname;
 
     // 동물 예정
-    private AnimalType animalType;
+    private Animal animal;
 
     // tag 예정
     private Category category;

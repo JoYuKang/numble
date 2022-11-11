@@ -1,14 +1,16 @@
 package com.project.numble.application.user.domain;
 
+import com.project.numble.application.user.domain.enums.AnimalType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,25 +27,16 @@ public class Animal {
     @Column(name = "animal_id")
     private Long id;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "animal_type")
+    private AnimalType animalType;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_type_id")
-    private AnimalType animalType;
-
-    @Column(name = "animal_name", nullable = false, length = 20)
-    private String name;
-
-    @Column(nullable = false)
-    private boolean neutering;
-
-    public Animal(User user, AnimalType animalType, String name, boolean neutering) {
-        this.user = user;
+    public Animal(AnimalType animalType) {
         this.animalType = animalType;
-        this.name = name;
-        this.neutering = neutering;
     }
 
     public void initUser(User user) {
