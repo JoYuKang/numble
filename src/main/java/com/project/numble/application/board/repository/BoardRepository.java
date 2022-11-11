@@ -1,8 +1,6 @@
 package com.project.numble.application.board.repository;
 
 import com.project.numble.application.board.domain.Board;
-import com.project.numble.application.board.dto.response.GetBoardResponse;
-import com.project.numble.application.user.domain.AnimalType;
 import com.project.numble.application.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

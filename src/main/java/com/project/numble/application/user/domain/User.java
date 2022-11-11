@@ -6,7 +6,9 @@ import com.project.numble.application.common.entity.BaseTimeEntity;
 import com.project.numble.application.user.domain.enums.Role;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -45,11 +48,11 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role = Role.ROLE_USER;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> address = new ArrayList<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private Address address;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Animal> animals = new ArrayList<>();
+    private Set<Animal> animals = new HashSet<>();
 
     // board 추가
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
@@ -57,8 +60,7 @@ public class User extends BaseTimeEntity {
 
     // 댓글 추가
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
-
+    private List<Comment> Comments = new ArrayList<>();
 
     private boolean deleted = false;
 
@@ -68,11 +70,6 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-    }
-
-    public void addAddress(Address address) {
-        this.address.add(address);
-        address.initUser(this);
     }
 
     public void addAnimal(Animal animal) {
@@ -89,15 +86,6 @@ public class User extends BaseTimeEntity {
         this.boards.remove(board);
     }
 
-    public void addComment(Comment comment) {
-        this.comments.add(comment);
-        comment.initUser(this);
-    }
-
-    public void delComment(Comment comment) {
-        this.comments.remove(comment);
-    }
-
     public static User createNormalUser(String email, String password, String nickname) {
         User user = new User(email, nickname);
 
@@ -111,6 +99,4 @@ public class User extends BaseTimeEntity {
         user.profile = profile;
         return user;
     }
-
-
 }
