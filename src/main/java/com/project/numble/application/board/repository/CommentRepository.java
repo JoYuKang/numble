@@ -10,7 +10,7 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     // 자신이 쓴 댓글 모아보기 기능
-    List<Comment> findAllByUserOrderByIdDesc(Long userId);
+    List<Comment> findAllByUserOrderByCreatedDateDesc(User user);
 
     // 댓글 보기
     List<Comment> findAllByBoard(Board board);

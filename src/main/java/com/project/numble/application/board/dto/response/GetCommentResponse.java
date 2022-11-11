@@ -13,30 +13,25 @@ import javax.validation.constraints.NotEmpty;
 @RequiredArgsConstructor
 public class GetCommentResponse {
 
-    private Long id;
+    Long commentId;
 
     @NotEmpty(message = "내용은 필수입니다.")
     private String content;
 
-    private User user;
+    private String nickname;
 
     @Builder
-    GetCommentResponse(Long id, String content, User user) {
-        this.id = id;
+    GetCommentResponse(Long commentId, String content, String nickname) {
+        this.commentId = commentId;
         this.content = content;
-        this.user = user;
+        this.nickname = nickname;
     }
 
-    public Comment toEntity() {
-        return Comment.builder()
-                .user(user)
-                .content(content)
-                .build();
-    }
 
     public GetCommentResponse(Comment comment) {
+        this.commentId = comment.getId();
         this.content = comment.getContent();
-        this.user = comment.getUser();
+        this.nickname = comment.getUser().getNickname();
     }
 
 }
