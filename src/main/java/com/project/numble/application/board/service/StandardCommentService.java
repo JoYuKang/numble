@@ -9,7 +9,8 @@ import com.project.numble.application.board.repository.BoardRepository;
 import com.project.numble.application.board.repository.CommentRepository;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.service.exception.CommentNotExistsException;
-import com.project.numble.application.board.service.exception.CurrentUserNotSameCommentUser;
+import com.project.numble.application.board.service.exception.CommentNotInBoard;
+import com.project.numble.application.board.service.exception.CurrentUserNotSameWriter;
 import com.project.numble.application.user.domain.User;
 import com.project.numble.application.user.repository.UserRepository;
 import com.project.numble.application.user.repository.exception.UserNotFoundException;
@@ -34,7 +35,7 @@ public class StandardCommentService implements CommentService{
 
     @Override
     public Long save(Long boardId, Long userId, AddCommentRequest request) {
-        Optional<Board> optionalBoard = boardRepository.findAllById(boardId);
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new BoardNotExistsException());
 
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -50,7 +51,7 @@ public class StandardCommentService implements CommentService{
     @Override
     public List<GetCommentResponse> getComments(Long boardId) {
 
-        Optional<Board> optionalBoard = boardRepository.findAllById(boardId);
+        Optional<Board> optionalBoard = boardRepository.findById(boardId);
         Board board = optionalBoard.orElseThrow(() -> new BoardNotExistsException());
 
         return commentRepository.findAllByBoard(board).stream().map(GetCommentResponse::new).collect(Collectors.toList());
@@ -70,6 +71,12 @@ public class StandardCommentService implements CommentService{
         String currentUserNickname = checkBoardAndUser(boardId, userId);
         // 댓글 가져오기
         Comment comment = getComment(request.getId());
+
+        // 게시글의 댓글이 맞는지 비교
+        if (!comment.getBoard().getId().equals(boardId)) {
+            throw new CommentNotInBoard();
+        }
+
         // 현재 사용자와 댓글 작성자 비교
         checkUser(currentUserNickname, comment);
 
@@ -88,18 +95,18 @@ public class StandardCommentService implements CommentService{
         commentRepository.delete(comment);
     }
 
-    private Comment getComment(Long request) {
-        return commentRepository.findById(request).orElseThrow(() -> new CommentNotExistsException());
+    private Comment getComment(Long commentId) {
+        return commentRepository.findById(commentId).orElseThrow(() -> new CommentNotExistsException());
     }
 
     private String checkBoardAndUser(Long boardId, Long userId) {
-        boardRepository.findAllById(boardId).orElseThrow(() -> new BoardNotExistsException());
+        boardRepository.findById(boardId).orElseThrow(() -> new BoardNotExistsException());
         return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException()).getNickname();
     }
 
     private static void checkUser(String currentUserNickname, Comment comment) {
         if (!currentUserNickname.equals(comment.getUser().getNickname())) {
-            throw new CurrentUserNotSameCommentUser();
+            throw new CurrentUserNotSameWriter();
         }
     }
 }
