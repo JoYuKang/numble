@@ -39,19 +39,26 @@ public class BoardController {
 
         return new ResponseEntity<>(board, HttpStatus.OK);
     }
+    // board 단건 조회
+    @GetMapping("/user")
+    public ResponseEntity<List<GetBoardResponse>> getUserBoard(@SignInUser UserInfo userInfo) {
+        List<GetBoardResponse> boards = boardService.getBoardUser(userInfo.getUserId());
+
+        return new ResponseEntity<>(boards, HttpStatus.OK);
+    }
 
 
     // board 추가
     @PostMapping("/add")
     public ResponseEntity<Long> addBoard(@SignInUser UserInfo userInfo, @Valid @RequestBody AddBoardRequest request) {
-        Long saveId = boardService.save(request, userInfo.getUserId());
+        Long saveId = boardService.addBoard(request, userInfo.getUserId());
         return new ResponseEntity<>(saveId, HttpStatus.CREATED);
     }
 
     // board 수정
     @PostMapping("/modify/{id}")
-    public ResponseEntity<Long> updateBoard(@PathVariable Long id, @Valid @RequestBody ModBoardRequest request) {
-        Long updateId = boardService.updateBoard(id, request);
+    public ResponseEntity<Long> updateBoard(@PathVariable Long id, @SignInUser UserInfo userInfo, @Valid @RequestBody ModBoardRequest request) {
+        Long updateId = boardService.updateBoard(id, userInfo.getUserId(), request);
         return new ResponseEntity<>(updateId,HttpStatus.OK);
     }
 

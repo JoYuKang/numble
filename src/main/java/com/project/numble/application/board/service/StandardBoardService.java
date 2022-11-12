@@ -30,9 +30,8 @@ public class StandardBoardService implements BoardService{
     private final UserRepository userRepository;
 
     // 저장
-    @Transactional
     @Override
-    public Long save(AddBoardRequest request, Long userId) {
+    public Long addBoard(AddBoardRequest request, Long userId) {
         Board board = request.toEntity();
         Optional<User> findUser = userRepository.findById(userId);
         User user = findUser.orElseThrow(() -> new UserNotFoundException());
@@ -52,8 +51,8 @@ public class StandardBoardService implements BoardService{
 
     // 자기가 작성한 글 조회
     @Override
-    public List<GetBoardResponse> getBoardUser(User user) {
-        return boardRepository.findAllByUser(user).stream().map(GetBoardResponse::new).collect(Collectors.toList());
+    public List<GetBoardResponse> getBoardUser(Long userId) {
+        return boardRepository.findAllByUserId(userId).stream().map(GetBoardResponse::new).collect(Collectors.toList());
     }
 
     // 전체 조회
@@ -66,7 +65,7 @@ public class StandardBoardService implements BoardService{
 
     // 수정
     @Override
-    public Long updateBoard(Long boardId, ModBoardRequest request) {
+    public Long updateBoard(Long boardId, Long userId, ModBoardRequest request) {
 
         // 개시글 가져오기
         Board board = getBoardOne(boardId);

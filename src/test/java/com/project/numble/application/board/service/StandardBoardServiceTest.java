@@ -46,7 +46,7 @@ class StandardBoardServiceTest {
 
         AddBoardRequest boardRequest = getAddBoardRequest(user, "testContent");
 
-        Long saveId = boardService.save(boardRequest, user.getId());
+        Long saveId = boardService.addBoard(boardRequest, user.getId());
 
         Optional<User> userByEmail = userRepository.findByEmail("use@test.com");
 
@@ -73,7 +73,7 @@ class StandardBoardServiceTest {
         AddBoardRequest boardRequest = getAddBoardRequest(user, "before test content");
 
         userRepository.save(user);
-        Long saveId = boardService.save(boardRequest, user.getId());
+        Long saveId = boardService.addBoard(boardRequest, user.getId());
 
         String updateText = "after test content";
 
@@ -88,7 +88,7 @@ class StandardBoardServiceTest {
                 .content(updateText)
                 .build();
 
-        Long afterId = boardService.updateBoard(saveId, modBoardRequest);
+        Long afterId = boardService.updateBoard(saveId, user.getId(), modBoardRequest);
 
         Optional<Board> optionalBoard2 = boardRepository.findAllById(afterId);
         Board afterBoard = optionalBoard2.orElseThrow(() -> new BoardNotExistsException());
@@ -109,14 +109,14 @@ class StandardBoardServiceTest {
         AddBoardRequest boardRequest1 = getAddBoardRequest(user1, "test content 111111");
 
         userRepository.save(user1);
-        Long saveId1 = boardService.save(boardRequest1, user1.getId());
+        Long saveId1 = boardService.addBoard(boardRequest1, user1.getId());
 
         User user2 = User.createNormalUser("use2@test.com", "1234", "test2@@");
 
         AddBoardRequest boardRequest2 = getAddBoardRequest(user2, "test content 222222");
 
         userRepository.save(user2);
-        Long saveId2 = boardService.save(boardRequest2, user1.getId());
+        Long saveId2 = boardService.addBoard(boardRequest2, user1.getId());
 
         List<GetAllBoardResponse> boardList = boardService.getBoardList();
 
@@ -135,17 +135,17 @@ class StandardBoardServiceTest {
         User user1 = getUser("use1@test.com", "test1!!");
 
         AddBoardRequest boardRequest1 = getAddBoardRequest(user1, "same user 111111");
-        boardService.save(boardRequest1, user1.getId());
+        boardService.addBoard(boardRequest1, user1.getId());
 
         AddBoardRequest boardRequest2 = getAddBoardRequest(user1, "same user 222222");
-        boardService.save(boardRequest2, user1.getId());
+        boardService.addBoard(boardRequest2, user1.getId());
 
         User user2 = getUser("use2@test.com", "test2@@");
 
         AddBoardRequest boardRequest3 = getAddBoardRequest(user2, "other user");
 
         userRepository.save(user2);
-        boardService.save(boardRequest3, user2.getId());
+        boardService.addBoard(boardRequest3, user2.getId());
 
         List<Board> all = boardRepository.findAll();
 
@@ -154,7 +154,7 @@ class StandardBoardServiceTest {
             log.info("board.getContent() " + board.getContent());
         }
 
-        List<GetBoardResponse> boardUser = boardService.getBoardUser(user1);
+        List<GetBoardResponse> boardUser = boardService.getBoardUser(user1.getId());
         log.info("================ user1 ================");
         for (GetBoardResponse getBoardResponse : boardUser) {
             log.info("boardUser getNickname" + getBoardResponse.getNickname());
@@ -180,12 +180,12 @@ class StandardBoardServiceTest {
         User user1 = getUser("use1@test.com", "test1!!");
 
         AddBoardRequest boardRequest1 = getAddBoardRequest(user1, "same user 111111");
-        Long DelId = boardService.save(boardRequest1, user1.getId());
+        Long DelId = boardService.addBoard(boardRequest1, user1.getId());
 
         AddBoardRequest boardRequest2 = getAddBoardRequest(user1, "same user 222222");
-        boardService.save(boardRequest2, user1.getId());
+        boardService.addBoard(boardRequest2, user1.getId());
 
-        List<GetBoardResponse> boardUser = boardService.getBoardUser(user1);
+        List<GetBoardResponse> boardUser = boardService.getBoardUser(user1.getId());
 
         log.info("============== board list ==============");
         for (GetBoardResponse getBoardResponse : boardUser) {
