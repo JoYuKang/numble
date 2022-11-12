@@ -38,7 +38,8 @@ public class StandardBoardService implements BoardService{
                 .content(request.getContent())
                 .address(user.getAddress())
                 .build();
-        user.addBoard(board);
+        // user.addBoard(board);
+        board.setUser(user);
         return boardRepository.save(board).getId();
     }
 
