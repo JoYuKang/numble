@@ -39,11 +39,10 @@ public class BoardController {
 
         return new ResponseEntity<>(board, HttpStatus.OK);
     }
-    // board 단건 조회
+    // user가 작성한 게시글 조회
     @GetMapping("/user")
-    public ResponseEntity<List<GetBoardResponse>> getUserBoard(@SignInUser UserInfo userInfo) {
-        List<GetBoardResponse> boards = boardService.getBoardUser(userInfo.getUserId());
-
+    public ResponseEntity<List<GetAllBoardResponse>> getUserBoard(@SignInUser UserInfo userInfo) {
+        List<GetAllBoardResponse> boards = boardService.getBoardUser(userInfo.getUserId());
         return new ResponseEntity<>(boards, HttpStatus.OK);
     }
 

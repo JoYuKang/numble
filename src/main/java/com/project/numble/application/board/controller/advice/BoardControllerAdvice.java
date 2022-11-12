@@ -2,6 +2,7 @@ package com.project.numble.application.board.controller.advice;
 
 import com.project.numble.application.board.controller.BoardController;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
+import com.project.numble.application.board.service.exception.CurrentUserNotSameWriter;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.common.advice.ExceptionType;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,12 @@ public class BoardControllerAdvice {
     Map<String, String> boardNotExistsExceptionHandler() {
         return utils.getFailureResponse(ExceptionType.BOARD_NOT_EXISTS_EXCEPTION);
     }
+
+    @ExceptionHandler(CurrentUserNotSameWriter.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> currentUserNotSameWriterExceptionHandler() {
+        return utils.getFailureResponse(ExceptionType.CURRENT_USER_NOT_SAME_WRITER);
+    }
+
 
 }

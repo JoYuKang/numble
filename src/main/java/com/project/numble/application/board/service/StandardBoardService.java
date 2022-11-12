@@ -7,6 +7,7 @@ import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.repository.BoardRepository;
+import com.project.numble.application.board.service.exception.CurrentUserNotSameWriter;
 import com.project.numble.application.user.domain.User;
 import com.project.numble.application.user.repository.UserRepository;
 import com.project.numble.application.user.repository.exception.UserNotFoundException;
@@ -32,10 +33,12 @@ public class StandardBoardService implements BoardService{
     // 저장
     @Override
     public Long addBoard(AddBoardRequest request, Long userId) {
-        Board board = request.toEntity();
-        Optional<User> findUser = userRepository.findById(userId);
-        User user = findUser.orElseThrow(() -> new UserNotFoundException());
-        board.setUser(user);
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
+        Board board = Board.builder().user(user)
+                .content(request.getContent())
+                .address(user.getAddress())
+                .build();
+        user.addBoard(board);
         return boardRepository.save(board).getId();
     }
 
@@ -51,8 +54,8 @@ public class StandardBoardService implements BoardService{
 
     // 자기가 작성한 글 조회
     @Override
-    public List<GetBoardResponse> getBoardUser(Long userId) {
-        return boardRepository.findAllByUserId(userId).stream().map(GetBoardResponse::new).collect(Collectors.toList());
+    public List<GetAllBoardResponse> getBoardUser(Long userId) {
+        return boardRepository.findAllByUserId(userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
     }
 
     // 전체 조회
@@ -69,6 +72,13 @@ public class StandardBoardService implements BoardService{
 
         // 개시글 가져오기
         Board board = getBoardOne(boardId);
+
+        // 게시글 사용자와 수정자 비교
+        if (!board.getUser().getId().equals(userId)) {
+            throw new CurrentUserNotSameWriter();
+        }
+
+
         board.update(request.getContent());
 
         return boardId;
@@ -78,7 +88,7 @@ public class StandardBoardService implements BoardService{
     @Override
     public void delete(Long id) {
 
-        Board delBoard = boardRepository.findAllById(id).orElseThrow(() -> new BoardNotExistsException());
+        Board delBoard = boardRepository.findById(id).orElseThrow(() -> new BoardNotExistsException());
 
         userRepository.findById(delBoard.getUser().getId()).orElseThrow(() -> new UserNotFoundException())
                         .delBoard(delBoard);
@@ -89,6 +99,6 @@ public class StandardBoardService implements BoardService{
 
     // Board 가져오기
     private Board getBoardOne(Long id) {
-        return boardRepository.findAllById(id).orElseThrow(() -> new BoardNotExistsException());
+        return boardRepository.findById(id).orElseThrow(() -> new BoardNotExistsException());
     }
 }
