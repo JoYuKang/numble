@@ -34,11 +34,7 @@ public class GetBoardResponse {
     // tag 예정
     private Category category;
 
-    private String addressName;
-
-    private String regionDepth1;
-
-    private String regionDepth2;
+    private String boardAddress;
 
     // 댓글 불러오기
     private List<GetCommentResponse> comments = new ArrayList<>();
@@ -51,25 +47,10 @@ public class GetBoardResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private  LocalDateTime lastModifiedDate;
 
-    @Builder
-    GetBoardResponse(String content, User user, Address address) {
-        this.content = content;
-        this.nickname = user.getNickname();
-//        this.address = address;
-    }
-
-    public Board toEntity() {
-        return Board.builder()
-                .content(content)
-                .build();
-    }
-
     public GetBoardResponse(Board board) {
         this.content = board.getContent();
         this.nickname = board.getUser().getNickname();
-        this.addressName = board.getAddress().getAddressName();
-        this.regionDepth1 = board.getAddress().getRegionDepth1();
-        this.regionDepth2 = board.getAddress().getRegionDepth2();
+        this.boardAddress = board.getBoardAddress();
         this.comments = board.getComments().stream().map(GetCommentResponse::new).collect(Collectors.toList());
         this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();

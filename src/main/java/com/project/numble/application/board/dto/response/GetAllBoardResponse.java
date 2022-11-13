@@ -32,11 +32,7 @@ public class GetAllBoardResponse {
     // tag 예정
     private Category category;
 
-    private String addressName;
-
-    private String regionDepth1;
-
-    private String regionDepth2;
+    private String boardAddress;
 
     // 생성 시간
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
@@ -46,24 +42,10 @@ public class GetAllBoardResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private  LocalDateTime lastModifiedDate;
 
-    @Builder
-    GetAllBoardResponse(String content, User user) {
-        this.content = content;
-        this.nickname = user.getNickname();
-    }
-
-    public Board toEntity() {
-        return Board.builder()
-                .content(content)
-                .build();
-    }
-
     public GetAllBoardResponse(Board board) {
         this.content = board.getContent();
         this.nickname = board.getUser().getNickname();
-        this.addressName = board.getAddress().getAddressName();
-        this.regionDepth1 = board.getAddress().getRegionDepth1();
-        this.regionDepth2 = board.getAddress().getRegionDepth2();
+        this.boardAddress = board.getBoardAddress();
         this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();
     }

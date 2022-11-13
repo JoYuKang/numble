@@ -26,11 +26,15 @@ public class ModBoardRequest {
     private List<Category> category;
 
     private User user;
+
+    private String boardAddress;
+
     @Builder
     public ModBoardRequest(Long id,String content, User user) {
         this.id = id;
         this.content = content;
         this.user = user;
+        this.boardAddress = user.getAddress().getRegionDepth1();
     }
 
     @Builder
@@ -45,6 +49,7 @@ public class ModBoardRequest {
         return Board.builder()
                 .user(user)
                 .content(content)
+                .boardAddress(boardAddress)
                 .build();
     }
 

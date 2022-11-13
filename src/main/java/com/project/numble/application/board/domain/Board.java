@@ -31,9 +31,8 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name = "animal_id")
     private Animal animal;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
-    private Address address;
+    @Column(nullable = false)
+    private String boardAddress;
 
     @Column(columnDefinition = "TEXT",nullable = false)
     private String content;
@@ -55,10 +54,10 @@ public class Board extends BaseTimeEntity {
 
 
     @Builder
-    private Board(User user, String content, Address address, List<Image> images, List<Category> categories, Animal animal) {
+    private Board(User user, String content, String boardAddress, List<Image> images, List<Category> categories, Animal animal) {
         this.user = user;
         this.content = content;
-        this.address = address;
+        this.boardAddress = boardAddress;
         this.images = images;
         this.animal = animal;
         this.categories = categories;
@@ -84,11 +83,6 @@ public class Board extends BaseTimeEntity {
         return board.getLikeCount() + 1;
     }
 
-    //==연관관계 메서드==//
-    public void setUser(User user) {
-        this.user = user;
-        user.getBoards().add(this);
-    }
     // 댓글 추가
     public void addComment(Comment comment) {
         this.comments.add(comment);
@@ -99,12 +93,6 @@ public class Board extends BaseTimeEntity {
     public void delComment(Comment comment) {
         this.comments.add(comment);
     }
-
-    // 주소 등록
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
 
     public void initUser(User user) {
         if (this.user == null) {

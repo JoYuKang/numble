@@ -26,15 +26,17 @@ public class AddBoardRequest {
     private List<Image> imageList;
 
     //@NotEmpty(message = "카테고리는 필수입니다.")
-    private List<Category> category;
+    private String categoryType;
 
-    private Address address;
+    private String boardAddress;
+
+    private List<String> animalTypes;
 
     @Builder
-    public AddBoardRequest(User user, String content, Address address, Image... images) {
+    public AddBoardRequest(User user, String content, Image... images) {
         this.user = user;
         this.content = content;
-        this.address = address;
+        this.boardAddress = user.getAddress().getRegionDepth1();
         if (images != null){
             for (Image image : images) {
                 this.imageList.add(image);
@@ -46,7 +48,7 @@ public class AddBoardRequest {
         return Board.builder()
                 .content(content)
                 .user(user)
-                .address(new Address())
+                .boardAddress(boardAddress)
                 .build();
     }
 
