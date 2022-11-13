@@ -210,3 +210,87 @@ include::{snippets}/get-static-user-info/response-fields.adoc[]
 ==== 세션이 유효하지 않을 시
 
 include::{snippets}/get-static-user-info-failed/http-response.adoc[]
+
+=== 내 동네 설정
+
+==== HTTP request
+
+include::{snippets}/add-address-success/http-request.adoc[]
+
+==== HTTP request fields
+
+include::{snippets}/add-address-success/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/add-address-success/http-response.adoc[]
+
+=== 내 동네 설정 실패
+
+==== 주소 전체 이름을 입력하지 않았을 경우
+
+include::{snippets}/add-address-address-name-failed/http-response.adoc[]
+
+==== 지역 1Depth, 시도 단위를 입력하지 않았을 경우
+
+include::{snippets}/add-address-region-1-failed/http-response.adoc[]
+
+==== 지역 2Depth, 구 단위를 입력하지 않았을 경우
+
+include::{snippets}/add-address-region-2-name-failed/http-response.adoc[]
+
+=== 내 동네 조회
+
+==== HTTP request
+
+include::{snippets}/get-address-success/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/get-address-success/http-response.adoc[]
+
+==== HTTP response field
+
+include::{snippets}/get-address-success/response-fields.adoc[]
+
+=== 내 동네 조회 실패
+
+==== 세션이 유효하지 않을 시
+
+include::{snippets}/get-static-user-info-failed/http-response.adoc[]
+
+=== 내 동네 삭제
+
+==== HTTP request
+
+include::{snippets}/del-address-success/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/del-address-success/http-response.adoc[]
+
+=== 내 동네 삭제 실패
+
+==== 세션이 유효하지 않을 시
+
+include::{snippets}/get-static-user-info-failed/http-response.adoc[]
+
+=== 반려동물 등록
+
+==== HTTP request
+
+include::{snippets}/add-animals-success/http-request.adoc[]
+
+==== HTTP request field
+
+include::{snippets}/add-animals-success/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/add-animals-success/http-response.adoc[]
+
+=== 반려동물 등록 실패
+
+==== 세션이 유효하지 않을 시
+
+include::{snippets}/get-static-user-info-failed/http-response.adoc[]
