@@ -18,13 +18,13 @@ public class GetUserStaticInfoResponse {
     private boolean hasPet;
     private boolean isFirst;
 
-    public static GetUserStaticInfoResponse fromUser(User user) {
+    public static GetUserStaticInfoResponse fromUser(User user, long count) {
         return GetUserStaticInfoResponse.builder()
                 .email(user.getEmail())
                 .address(GetAddressResponse.fromAddress(Objects.isNull(user.getAddress()) ? new Address() : user.getAddress()))
                 .nickname(user.getNickname())
                 .hasPet(!CollectionUtils.isEmpty(user.getAnimals()))
-                .isFirst(Objects.isNull(user.getAddress()) && CollectionUtils.isEmpty(user.getAnimals()))
+                .isFirst(count < 2)
                 .build();
     }
 }
