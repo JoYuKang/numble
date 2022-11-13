@@ -1,13 +1,15 @@
 package com.project.numble.application.auth.service;
 
 import com.project.numble.application.auth.dto.request.SignInRequest;
+import com.project.numble.application.auth.repository.SignInLogRepository;
 import com.project.numble.application.auth.service.exception.SignInFailureException;
 import com.project.numble.application.user.domain.User;
+import com.project.numble.application.auth.repository.SignInLogRedisRepository;
 import com.project.numble.application.user.repository.UserRepository;
-import com.project.numble.application.user.repository.exception.UserNotFoundException;
 import com.project.numble.core.security.CustomAuthenticationToken;
 import com.project.numble.core.security.CustomUserDetails;
 import com.project.numble.core.security.CustomUserDetailsService;
+import java.time.Clock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +23,8 @@ public class StandardAuthService implements AuthService {
     private final UserRepository userRepository;
     private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final SignInLogRedisRepository signInRepository;
+    private final SignInLogRepository signInLogRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -35,6 +39,8 @@ public class StandardAuthService implements AuthService {
         CustomUserDetails userDetails = userDetailsService.loadUserByUsername(
             String.valueOf(user.getId()));
         setAuthentication(userDetails);
+
+        signInRepository.save(user.getId(), Clock.systemDefaultZone());
     }
 
     private void setAuthentication(CustomUserDetails userDetails) {
