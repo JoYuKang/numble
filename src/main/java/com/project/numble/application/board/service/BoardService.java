@@ -10,14 +10,14 @@ import java.util.List;
 
 public interface BoardService {
 
-    GetBoardResponse getBoard(Long id);
+    GetBoardResponse getBoard(Long boardId);
     List<GetAllBoardResponse> getBoardList();
 
-    Long save(AddBoardRequest addBoardRequest, Long userId);
+    Long addBoard(AddBoardRequest addBoardRequest, Long userId);
 
-    Long updateBoard(Long id, ModBoardRequest modBoardRequest);
+    Long updateBoard(Long boardId, Long userId, ModBoardRequest modBoardRequest);
 
-    List<GetBoardResponse> getBoardUser(User user);
+    List<GetAllBoardResponse> getBoardUser(Long userId);
 
     void delete(Long id);
 

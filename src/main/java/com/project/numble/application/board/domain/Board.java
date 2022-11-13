@@ -1,9 +1,9 @@
 package com.project.numble.application.board.domain;
 
 import com.project.numble.application.common.entity.BaseTimeEntity;
+import com.project.numble.application.user.domain.Address;
 import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.User;
-import com.project.numble.application.user.domain.enums.AnimalType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,11 +31,16 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name = "animal_id")
     private Animal animal;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
     @Column(columnDefinition = "TEXT",nullable = false)
     private String content;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Category> categories = new ArrayList<>();
+
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
 
@@ -50,27 +55,16 @@ public class Board extends BaseTimeEntity {
 
 
     @Builder
-    private Board(User user, String content) {
+    private Board(User user, String content, Address address, List<Image> images, List<Category> categories, Animal animal) {
         this.user = user;
         this.content = content;
+        this.address = address;
+        this.images = images;
+        this.animal = animal;
+        this.categories = categories;
     }
 
-    // 이미지 없이 글만 등록
-    public static Board createBoard(User user, String content) {
-        Board board = new Board(user, content);
-        return board;
-    }
 
-    // 임시
-    // 이미지 + 글 등록
-    public Board createBoardWithImages(User user, String content, Image... images) {
-        Board board = new Board(user, content);
-
-        for (Image image : images) {
-            addImage(image);
-        }
-        return board;
-    }
     // 이미지 등록
     public void addImage(Image image) {
         this.images.add(image);
@@ -104,6 +98,11 @@ public class Board extends BaseTimeEntity {
     // 댓글 삭제
     public void delComment(Comment comment) {
         this.comments.add(comment);
+    }
+
+    // 주소 등록
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
 

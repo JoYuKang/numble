@@ -60,7 +60,7 @@ public class User extends BaseTimeEntity {
 
     // 댓글 추가
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
-    private List<Comment> Comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     private boolean deleted = false;
 

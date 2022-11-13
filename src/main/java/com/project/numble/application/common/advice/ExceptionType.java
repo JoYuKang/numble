@@ -14,7 +14,8 @@ public enum ExceptionType {
     URL_CONNECTION_IO_EXCEPTION("urlConnectionIOException.message"),
     COMMENT_NOT_EXISTS_EXCEPTION ("commentNotExistsException.message"),
     USER_ALREADY_SIGN_OUT_EXCEPTION("userAlreadySignOutException.message"),
-    CURRENT_USER_NOT_SAME_COMMENT_USER("currentUserNotSameCommentUser.message")
+    CURRENT_USER_NOT_SAME_WRITER("currentUserNotSameWriter.message"),
+    COMMENT_NOT_IN_BOARD("commentNotInBoard.message")
     ;
 
     private final String message;
