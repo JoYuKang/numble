@@ -178,7 +178,7 @@ class UserControllerDocsTest {
     void getUserStaticInfo_성공_테스트() throws Exception {
         // given
         GetUserStaticInfoResponse response = GetUserStaticInfoResponse
-                .fromUser(UserFactory.createStaticUser());
+                .fromUser(UserFactory.createStaticUser(), 1);
         given(userService.getUserStaticInfo(any(UserInfo.class))).willReturn(response);
 
         // when

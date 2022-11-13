@@ -14,6 +14,7 @@ import static com.project.numble.application.user.service.util.UserOpenApiUrlCon
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.numble.application.auth.dto.request.SignUpRequest;
+import com.project.numble.application.auth.repository.SignInLogRepository;
 import com.project.numble.application.user.domain.Address;
 import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.User;
@@ -58,6 +59,7 @@ public class StandardUserService implements UserService {
     private final AddressRepository addressRepository;
     private final AnimalRepository animalRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SignInLogRepository signInLogRepository;
 
     @Value("${google.map.key}")
     private String googleMapKey;
@@ -148,7 +150,7 @@ public class StandardUserService implements UserService {
         User user = userRepository.findStaticUserInfoById(userInfo.getUserId())
             .orElseThrow(UserNotFoundException::new);
 
-        return GetUserStaticInfoResponse.fromUser(user);
+        return GetUserStaticInfoResponse.fromUser(user, signInLogRepository.countAllByUserId(user.getId()));
     }
 
     @Override
