@@ -6,6 +6,7 @@ import com.project.numble.application.user.dto.request.AddAnimalsRequest;
 import com.project.numble.application.user.dto.response.FindAddressByClientIpResponse;
 import com.project.numble.application.user.dto.response.FindAddressByQueryResponse;
 import com.project.numble.application.user.dto.response.GetAddressResponse;
+import com.project.numble.application.user.dto.response.GetMyInfoResponse;
 import com.project.numble.application.user.dto.response.GetUserStaticInfoResponse;
 import com.project.numble.core.resolver.UserInfo;
 
@@ -28,4 +29,6 @@ public interface UserService {
     void delAddress(UserInfo userInfo);
 
     void withdrawalUser(UserInfo userInfo);
+
+    GetMyInfoResponse getMyInfo(UserInfo userInfo);
 }
