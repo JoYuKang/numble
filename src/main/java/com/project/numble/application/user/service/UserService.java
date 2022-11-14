@@ -26,4 +26,6 @@ public interface UserService {
     GetUserStaticInfoResponse getUserStaticInfo(UserInfo userInfo);
 
     void delAddress(UserInfo userInfo);
+
+    void withdrawalUser(UserInfo userInfo);
 }

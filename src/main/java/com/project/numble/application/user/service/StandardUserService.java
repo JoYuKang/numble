@@ -158,6 +158,15 @@ public class StandardUserService implements UserService {
         addressRepository.deleteByUserId(userInfo.getUserId());
     }
 
+    @Override
+    @Transactional
+    public void withdrawalUser(UserInfo userInfo) {
+        User user = userRepository.findById(userInfo.getUserId())
+            .orElseThrow(UserNotFoundException::new);
+
+        user.withdrawal();
+    }
+
     private Map<String, String> getAddressByQuery(String query) throws IOException {
         StringBuilder urlBuilder = new StringBuilder(KAKAO_LOCAL_SEARCH_ADDRESS_URL);
         urlBuilder.append(URLEncoder.encode(query, StandardCharsets.UTF_8));
