@@ -85,6 +85,10 @@ include::{snippets}/sign-in-failed/http-response.adoc[]
 
 include::{snippets}/sign-in-failed/http-response.adoc[]
 
+==== 탈퇴한 회원일 시
+
+include::{snippets}/sign-in-withdrawal-failed/http-response.adoc[]
+
 [[소셜-로그인]]
 === 소셜 로그인
 

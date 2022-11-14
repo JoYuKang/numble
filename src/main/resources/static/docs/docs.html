@@ -475,6 +475,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_내_동네_삭제_실패">내 동네 삭제 실패</a></li>
 <li><a href="#_반려동물_등록">반려동물 등록</a></li>
 <li><a href="#_반려동물_등록_실패">반려동물 등록 실패</a></li>
+<li><a href="#_회원_탈퇴">회원 탈퇴</a></li>
+<li><a href="#_회원_탈퇴_실패">회원 탈퇴 실패</a></li>
 </ul>
 </li>
 </ul>
@@ -726,6 +728,18 @@ Cookie Value : Spring Session Data Redis ID</code></pre>
 
 {
   "message" : "이메일이나 비밀번호를 확인해 주세요."
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_탈퇴한_회원일_시"><a class="link" href="#_탈퇴한_회원일_시">탈퇴한 회원일 시</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
+
+{
+  "message" : "탈퇴한 회원입니다."
 }</code></pre>
 </div>
 </div>
@@ -1362,13 +1376,47 @@ Content-Type: application/json
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_회원_탈퇴"><a class="link" href="#_회원_탈퇴">회원 탈퇴</a></h3>
+<div class="sect3">
+<h4 id="_http_request_12"><a class="link" href="#_http_request_12">HTTP request</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /users/withdrawal HTTP/1.1</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http_response_13"><a class="link" href="#_http_response_13">HTTP response</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_회원_탈퇴_실패"><a class="link" href="#_회원_탈퇴_실패">회원 탈퇴 실패</a></h3>
+<div class="sect3">
+<h4 id="_세션이_유효하지_않을_시_6"><a class="link" href="#_세션이_유효하지_않을_시_6">세션이 유효하지 않을 시</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
+
+{
+  "message" : "세션이 만료되었거나 올바르지 않은 값입니다."
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-14 01:21:12 +0900
+Last updated 2022-11-14 23:16:47 +0900
 </div>
 </div>
 </body>
