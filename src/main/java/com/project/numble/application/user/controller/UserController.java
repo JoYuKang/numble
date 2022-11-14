@@ -5,6 +5,7 @@ import com.project.numble.application.user.dto.request.AddAnimalsRequest;
 import com.project.numble.application.user.dto.response.FindAddressByClientIpResponse;
 import com.project.numble.application.user.dto.response.FindAddressByQueryResponse;
 import com.project.numble.application.user.dto.response.GetAddressResponse;
+import com.project.numble.application.user.dto.response.GetMyInfoResponse;
 import com.project.numble.application.user.dto.response.GetUserStaticInfoResponse;
 import com.project.numble.application.user.service.UserService;
 import com.project.numble.core.resolver.SignInUser;
@@ -71,5 +72,10 @@ public class UserController {
     public ResponseEntity<Void> withdrawalUser(@SignInUser UserInfo userInfo) {
         userService.withdrawalUser(userInfo);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/my-info")
+    public ResponseEntity<GetMyInfoResponse> getMyInfo(@SignInUser UserInfo userInfo) {
+        return new ResponseEntity<>(userService.getMyInfo(userInfo),HttpStatus.OK);
     }
 }
