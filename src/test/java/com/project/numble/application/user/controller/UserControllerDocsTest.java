@@ -370,4 +370,19 @@ class UserControllerDocsTest {
                             .attributes(key("constraint").value("다중 선택 가능")
                     ))));
     }
+
+    @Test
+    void withdrawal_성공_테스트() throws Exception {
+        // given
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.delete("/users/withdrawal"));
+
+        // then
+        result
+            .andExpect(status().isOk())
+            .andDo(
+                document("withdrawal-user-success"));
+    }
 }

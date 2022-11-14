@@ -294,3 +294,19 @@ include::{snippets}/add-animals-success/http-response.adoc[]
 ==== 세션이 유효하지 않을 시
 
 include::{snippets}/get-static-user-info-failed/http-response.adoc[]
+
+=== 회원 탈퇴
+
+==== HTTP request
+
+include::{snippets}/withdrawal-user-success/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/withdrawal-user-success/http-response.adoc[]
+
+=== 회원 탈퇴 실패
+
+==== 세션이 유효하지 않을 시
+
+include::{snippets}/get-static-user-info-failed/http-response.adoc[]
