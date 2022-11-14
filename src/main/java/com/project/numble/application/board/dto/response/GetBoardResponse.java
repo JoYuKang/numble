@@ -2,13 +2,8 @@ package com.project.numble.application.board.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.numble.application.board.domain.Board;
-import com.project.numble.application.board.domain.Category;
 import com.project.numble.application.board.domain.Image;
-import com.project.numble.application.user.domain.Address;
 import com.project.numble.application.user.domain.Animal;
-import com.project.numble.application.user.domain.User;
-import io.netty.channel.local.LocalAddress;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -29,10 +24,10 @@ public class GetBoardResponse {
     private String nickname;
 
     // 동물 예정
-    private Animal animal;
+    private List<String> animalTypes;
 
     // tag 예정
-    private Category category;
+    private String categoryType;
 
     private String boardAddress;
 
@@ -51,6 +46,7 @@ public class GetBoardResponse {
         this.content = board.getContent();
         this.nickname = board.getUser().getNickname();
         this.boardAddress = board.getBoardAddress();
+        this.categoryType = board.getCategoryType();
         this.comments = board.getComments().stream().map(GetCommentResponse::new).collect(Collectors.toList());
         this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();

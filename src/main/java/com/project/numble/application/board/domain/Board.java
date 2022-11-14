@@ -1,14 +1,15 @@
 package com.project.numble.application.board.domain;
 
 import com.project.numble.application.common.entity.BaseTimeEntity;
-import com.project.numble.application.user.domain.Address;
 import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.User;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,19 +27,16 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name = "user_id",updatable = false) // 읽기 전용 insertable = false
     private User user;
 
-    // 리스트 형태로 변경 예정
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_id")
-    private Animal animal;
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<BoardAnimal> boardAnimals = new HashSet<>();
 
     @Column(nullable = false)
     private String boardAddress;
 
-    @Column(columnDefinition = "TEXT",nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Category> categories = new ArrayList<>();
+    private String categoryType;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
@@ -54,13 +52,13 @@ public class Board extends BaseTimeEntity {
 
 
     @Builder
-    private Board(User user, String content, String boardAddress, List<Image> images, List<Category> categories, Animal animal) {
+    private Board(User user, String content, String boardAddress, List<Image> images, String categoryType, Animal animal) {
         this.user = user;
         this.content = content;
         this.boardAddress = boardAddress;
         this.images = images;
-        this.animal = animal;
-        this.categories = categories;
+        //this.animals = animal;
+        this.categoryType = categoryType;
     }
 
 

@@ -1,18 +1,13 @@
 package com.project.numble.application.board.dto.request;
 
 import com.project.numble.application.board.domain.Board;
-import com.project.numble.application.board.domain.Category;
 import com.project.numble.application.board.domain.Image;
-import com.project.numble.application.user.domain.Address;
-import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -25,7 +20,7 @@ public class AddBoardRequest {
 
     private List<Image> imageList;
 
-    //@NotEmpty(message = "카테고리는 필수입니다.")
+    @NotEmpty(message = "카테고리는 필수입니다.")
     private String categoryType;
 
     private String boardAddress;
@@ -33,9 +28,10 @@ public class AddBoardRequest {
     private List<String> animalTypes;
 
     @Builder
-    public AddBoardRequest(User user, String content, Image... images) {
+    public AddBoardRequest(User user, String content, String categoryType, Image... images) {
         this.user = user;
         this.content = content;
+        this.categoryType = categoryType;
         this.boardAddress = user.getAddress().getRegionDepth1();
         if (images != null){
             for (Image image : images) {
@@ -48,6 +44,7 @@ public class AddBoardRequest {
         return Board.builder()
                 .content(content)
                 .user(user)
+                .categoryType(categoryType)
                 .boardAddress(boardAddress)
                 .build();
     }
