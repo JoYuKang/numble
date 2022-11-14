@@ -299,6 +299,26 @@ include::{snippets}/add-animals-success/http-response.adoc[]
 
 include::{snippets}/get-static-user-info-failed/http-response.adoc[]
 
+=== 내 프로필 조회
+
+==== HTTP request
+
+include::{snippets}/my-info-success/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/my-info-success/http-response.adoc[]
+
+==== HTTP response field
+
+include::{snippets}/my-info-success/response-fields.adoc[]
+
+=== 내 프로필 조회 실패
+
+==== 세션이 유효하지 않을 시
+
+include::{snippets}/get-static-user-info-failed/http-response.adoc[]
+
 === 회원 탈퇴
 
 ==== HTTP request
