@@ -99,4 +99,8 @@ public class User extends BaseTimeEntity {
         user.profile = profile;
         return user;
     }
+
+    public void withdrawal() {
+        this.deleted = true;
+    }
 }
