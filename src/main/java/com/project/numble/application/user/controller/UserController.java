@@ -66,4 +66,10 @@ public class UserController {
     public ResponseEntity<GetUserStaticInfoResponse> getUserStaticInfo(@SignInUser UserInfo userInfo) {
         return new ResponseEntity<>(userService.getUserStaticInfo(userInfo), HttpStatus.OK);
     }
+
+    @DeleteMapping("/withdrawal")
+    public ResponseEntity<Void> withdrawalUser(@SignInUser UserInfo userInfo) {
+        userService.withdrawalUser(userInfo);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
