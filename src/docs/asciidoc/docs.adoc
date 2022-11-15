@@ -85,6 +85,10 @@ include::{snippets}/sign-in-failed/http-response.adoc[]
 
 include::{snippets}/sign-in-failed/http-response.adoc[]
 
+==== 탈퇴한 회원일 시
+
+include::{snippets}/sign-in-withdrawal-failed/http-response.adoc[]
+
 [[소셜-로그인]]
 === 소셜 로그인
 
@@ -290,6 +294,42 @@ include::{snippets}/add-animals-success/request-fields.adoc[]
 include::{snippets}/add-animals-success/http-response.adoc[]
 
 === 반려동물 등록 실패
+
+==== 세션이 유효하지 않을 시
+
+include::{snippets}/get-static-user-info-failed/http-response.adoc[]
+
+=== 내 프로필 조회
+
+==== HTTP request
+
+include::{snippets}/my-info-success/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/my-info-success/http-response.adoc[]
+
+==== HTTP response field
+
+include::{snippets}/my-info-success/response-fields.adoc[]
+
+=== 내 프로필 조회 실패
+
+==== 세션이 유효하지 않을 시
+
+include::{snippets}/get-static-user-info-failed/http-response.adoc[]
+
+=== 회원 탈퇴
+
+==== HTTP request
+
+include::{snippets}/withdrawal-user-success/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/withdrawal-user-success/http-response.adoc[]
+
+=== 회원 탈퇴 실패
 
 ==== 세션이 유효하지 않을 시
 

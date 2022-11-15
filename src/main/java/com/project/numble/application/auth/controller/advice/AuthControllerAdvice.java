@@ -2,6 +2,7 @@ package com.project.numble.application.auth.controller.advice;
 
 import com.project.numble.application.auth.controller.AuthController;
 import com.project.numble.application.auth.exception.UserAlreadySignOutException;
+import com.project.numble.application.auth.exception.WithdrawalUserException;
 import com.project.numble.application.auth.service.exception.SignInFailureException;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.common.advice.ExceptionType;
@@ -42,5 +43,11 @@ public class AuthControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Map<String, String> userAlreadySignOutExceptionHandler() {
         return utils.getFailureResponse(ExceptionType.USER_ALREADY_SIGN_OUT_EXCEPTION);
+    }
+
+    @ExceptionHandler(WithdrawalUserException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> withdrawalUserExceptionHandler() {
+        return utils.getFailureResponse(ExceptionType.WITHDRAWAL_USER_EXCEPTION);
     }
 }
