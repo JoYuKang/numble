@@ -29,13 +29,4 @@ public class AddBoardRequest {
 
     private Set<String> boardAnimalTypes = new HashSet<>();
 
-    public Board toEntity() {
-        return Board.builder()
-                .content(content)
-                .user(user)
-                .categoryType(categoryType)
-                .boardAddress(boardAddress)
-                .build();
-    }
-
 }
