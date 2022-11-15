@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @RequiredArgsConstructor
@@ -27,6 +29,6 @@ public class ModBoardRequest {
 
     private String boardAddress;
 
-    private List<String> animalTypes;
+    private Set<String> boardAnimalTypes = new HashSet<>();
 
 }

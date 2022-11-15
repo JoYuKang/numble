@@ -83,14 +83,23 @@ public class StandardBoardService implements BoardService{
 
         // 개시글 가져오기
         Board board = getBoardOne(boardId);
-
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         // 게시글 사용자와 수정자 비교
         if (!board.getUser().getId().equals(userId)) {
             throw new CurrentUserNotSameWriter();
         }
 
-
-        board.update(request.getContent());
+        board.update(request,user.getAddress().getRegionDepth1());
+        if (request.getBoardAnimalTypes().size() == 0) {
+            throw new NullPointerException("사이즈가 0 ");
+        }
+        // 게시글 기존 동물 삭제
+        board.getBoardAnimals().clear();
+        // 게시글 동물 재 등록
+        request.getBoardAnimalTypes().stream().map(AnimalType::getAnimalType).forEach(boardAnimalType -> {
+            BoardAnimal boardAnimal = new BoardAnimal(boardAnimalType);
+            board.addBoardAnimal(boardAnimal);
+        });
 
         return boardId;
     }
