@@ -7,6 +7,7 @@ import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
 import com.project.numble.application.board.repository.BoardAnimalRepository;
+import com.project.numble.application.board.service.exception.BoardAnimalsNotExistsException;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.repository.BoardRepository;
 import com.project.numble.application.board.service.exception.CurrentUserNotSameWriter;
@@ -43,6 +44,10 @@ public class StandardBoardService implements BoardService{
                 .boardAddress(user.getAddress().getRegionDepth1())
                 .boardAnimals(new ArrayList<>())
                 .build();
+
+        if (request.getBoardAnimalTypes().size() == 0) {
+            throw new BoardAnimalsNotExistsException();
+        }
 
         request.getBoardAnimalTypes().stream().map(AnimalType::getAnimalType).forEach(boardAnimalType -> {
             BoardAnimal boardAnimal = new BoardAnimal(boardAnimalType);
@@ -91,7 +96,7 @@ public class StandardBoardService implements BoardService{
 
         board.update(request,user.getAddress().getRegionDepth1());
         if (request.getBoardAnimalTypes().size() == 0) {
-            throw new NullPointerException("사이즈가 0 ");
+            throw new BoardAnimalsNotExistsException();
         }
         // 게시글 기존 동물 삭제
         board.getBoardAnimals().clear();
