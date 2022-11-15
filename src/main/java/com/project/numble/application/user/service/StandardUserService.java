@@ -24,6 +24,7 @@ import com.project.numble.application.user.dto.request.AddAnimalsRequest;
 import com.project.numble.application.user.dto.response.FindAddressByClientIpResponse;
 import com.project.numble.application.user.dto.response.FindAddressByQueryResponse;
 import com.project.numble.application.user.dto.response.GetAddressResponse;
+import com.project.numble.application.user.dto.response.GetMyInfoResponse;
 import com.project.numble.application.user.dto.response.GetUserStaticInfoResponse;
 import com.project.numble.application.user.repository.AddressRepository;
 import com.project.numble.application.user.repository.AnimalRepository;
@@ -156,6 +157,23 @@ public class StandardUserService implements UserService {
     @Override
     public void delAddress(UserInfo userInfo) {
         addressRepository.deleteByUserId(userInfo.getUserId());
+    }
+
+    @Override
+    @Transactional
+    public void withdrawalUser(UserInfo userInfo) {
+        User user = userRepository.findById(userInfo.getUserId())
+            .orElseThrow(UserNotFoundException::new);
+
+        user.withdrawal();
+    }
+
+    @Override
+    public GetMyInfoResponse getMyInfo(UserInfo userInfo) {
+        User user = userRepository.findById(userInfo.getUserId())
+            .orElseThrow(UserNotFoundException::new);
+
+        return GetMyInfoResponse.fromUser(user);
     }
 
     private Map<String, String> getAddressByQuery(String query) throws IOException {

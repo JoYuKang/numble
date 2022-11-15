@@ -1,6 +1,7 @@
 package com.project.numble.application.auth.service;
 
 import com.project.numble.application.auth.dto.request.SignInRequest;
+import com.project.numble.application.auth.exception.WithdrawalUserException;
 import com.project.numble.application.auth.repository.SignInLogRepository;
 import com.project.numble.application.auth.service.exception.SignInFailureException;
 import com.project.numble.application.user.domain.User;
@@ -34,6 +35,10 @@ public class StandardAuthService implements AuthService {
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new SignInFailureException();
+        }
+
+        if (user.isDeleted()) {
+            throw new WithdrawalUserException();
         }
 
         CustomUserDetails userDetails = userDetailsService.loadUserByUsername(

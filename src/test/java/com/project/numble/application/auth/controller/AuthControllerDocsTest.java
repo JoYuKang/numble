@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.numble.application.auth.controller.advice.AuthControllerAdvice;
 import com.project.numble.application.auth.dto.request.SignInRequest;
 import com.project.numble.application.auth.dto.request.SignUpRequest;
+import com.project.numble.application.auth.exception.WithdrawalUserException;
 import com.project.numble.application.auth.service.AuthService;
 import com.project.numble.application.auth.service.exception.SignInFailureException;
 import com.project.numble.application.common.advice.CommonControllerAdvice;
@@ -291,6 +292,26 @@ class AuthControllerDocsTest {
             .andExpect(status().isBadRequest())
             .andDo(
                 document("sign-in-failed"));
+    }
+
+    @Test
+    void signIn_탈퇴_회원_로그인_실패_테스트() throws Exception {
+        // given
+        SignInRequest request = SignInFactory.createSignUpRequest("test@email.com", "password");
+
+        willThrow(WithdrawalUserException.class).given(authService).signIn(any(SignInRequest.class));
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.post("/auth/sign-in")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)));
+
+        // then
+        result
+            .andExpect(status().isBadRequest())
+            .andDo(
+                document("sign-in-withdrawal-failed"));
     }
 
     @Test

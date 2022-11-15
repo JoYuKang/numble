@@ -23,6 +23,7 @@ import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.helper.factory.dto.AddAddressRequestFactory;
 import com.project.numble.application.helper.factory.dto.AddAnimalsRequestFactory;
 import com.project.numble.application.helper.factory.dto.GetAddressResponseFactory;
+import com.project.numble.application.helper.factory.dto.GetMyInfoResponseFactory;
 import com.project.numble.application.helper.factory.entity.UserFactory;
 import com.project.numble.application.user.controller.advice.UserControllerAdvice;
 import com.project.numble.application.user.dto.request.AddAddressRequest;
@@ -30,6 +31,7 @@ import com.project.numble.application.user.dto.request.AddAnimalsRequest;
 import com.project.numble.application.user.dto.response.FindAddressByClientIpResponse;
 import com.project.numble.application.user.dto.response.FindAddressByQueryResponse;
 import com.project.numble.application.user.dto.response.GetAddressResponse;
+import com.project.numble.application.user.dto.response.GetMyInfoResponse;
 import com.project.numble.application.user.dto.response.GetUserStaticInfoResponse;
 import com.project.numble.application.user.repository.exception.UserNotFoundException;
 import com.project.numble.application.user.service.StandardUserService;
@@ -369,5 +371,48 @@ class UserControllerDocsTest {
                             .description("동물 종류(강아지, 고양이, 물고기, 햄스터, 파충류, 새, 토끼, 기타)")
                             .attributes(key("constraint").value("다중 선택 가능")
                     ))));
+    }
+
+    @Test
+    void withdrawal_성공_테스트() throws Exception {
+        // given
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.delete("/users/withdrawal"));
+
+        // then
+        result
+            .andExpect(status().isOk())
+            .andDo(
+                document("withdrawal-user-success"));
+    }
+
+    @Test
+    void getMyInfo_성공_테스트() throws Exception {
+        // given
+        GetMyInfoResponse response = GetMyInfoResponseFactory.infoBy("nickname", "profile",
+            "강남구", List.of("강아지", "고양이"));
+        given(userService.getMyInfo(any(UserInfo.class))).willReturn(response);
+
+        // when
+        ResultActions result = mockMvc.perform(
+            RestDocumentationRequestBuilders.get("/users/my-info"));
+
+        // then
+        result
+            .andExpect(status().isOk())
+            .andDo(
+                document("my-info-success",
+                    responseFields(
+                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
+                        fieldWithPath("profile").type(JsonFieldType.STRING).description("프로필").optional(),
+                        fieldWithPath("regionDepth2").type(JsonFieldType.STRING).description("지역 2Depth, 구 단위").optional(),
+                        fieldWithPath("animals")
+                            .type(JsonFieldType.ARRAY)
+                            .description("동물 종류(강아지, 고양이, 물고기, 햄스터, 파충류, 새, 토끼, 기타)")
+                    )
+                )
+            );
     }
 }
