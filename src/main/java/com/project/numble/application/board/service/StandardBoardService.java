@@ -36,10 +36,10 @@ public class StandardBoardService implements BoardService{
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         Board board = Board.builder().user(user)
                 .content(request.getContent())
-                .address(user.getAddress())
+                .categoryType(request.getCategoryType())
+                .boardAddress(user.getAddress().getRegionDepth1())
                 .build();
-        // user.addBoard(board);
-        board.setUser(user);
+        user.addBoard(board);
         return boardRepository.save(board).getId();
     }
 

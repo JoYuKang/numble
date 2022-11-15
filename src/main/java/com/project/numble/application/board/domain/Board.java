@@ -1,14 +1,15 @@
 package com.project.numble.application.board.domain;
 
 import com.project.numble.application.common.entity.BaseTimeEntity;
-import com.project.numble.application.user.domain.Address;
 import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.User;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,20 +27,16 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name = "user_id",updatable = false) // 읽기 전용 insertable = false
     private User user;
 
-    // 리스트 형태로 변경 예정
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_id")
-    private Animal animal;
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BoardAnimal> boardAnimals = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
-    private Address address;
+    @Column(nullable = false)
+    private String boardAddress;
 
-    @Column(columnDefinition = "TEXT",nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Category> categories = new ArrayList<>();
+    private String categoryType;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
@@ -55,13 +52,13 @@ public class Board extends BaseTimeEntity {
 
 
     @Builder
-    private Board(User user, String content, Address address, List<Image> images, List<Category> categories, Animal animal) {
+    private Board(User user, String content, String boardAddress, List<Image> images, String categoryType, List<BoardAnimal> boardAnimals) {
         this.user = user;
         this.content = content;
-        this.address = address;
+        this.boardAddress = boardAddress;
         this.images = images;
-        this.animal = animal;
-        this.categories = categories;
+        this.categoryType = categoryType;
+        this.boardAnimals = boardAnimals;
     }
 
 
@@ -84,11 +81,12 @@ public class Board extends BaseTimeEntity {
         return board.getLikeCount() + 1;
     }
 
-    //==연관관계 메서드==//
-    public void setUser(User user) {
-        this.user = user;
-        user.getBoards().add(this);
+    // 동물 추가
+    public void addBoardAnimal(BoardAnimal boardAnimal) {
+        this.boardAnimals.add(boardAnimal);
+        boardAnimal.initUser(this);
     }
+
     // 댓글 추가
     public void addComment(Comment comment) {
         this.comments.add(comment);
@@ -99,12 +97,6 @@ public class Board extends BaseTimeEntity {
     public void delComment(Comment comment) {
         this.comments.add(comment);
     }
-
-    // 주소 등록
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
 
     public void initUser(User user) {
         if (this.user == null) {
