@@ -1,14 +1,17 @@
 package com.project.numble.application.board.service;
 
 import com.project.numble.application.board.domain.Board;
+import com.project.numble.application.board.domain.BoardAnimal;
 import com.project.numble.application.board.dto.request.AddBoardRequest;
 import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
+import com.project.numble.application.board.repository.BoardAnimalRepository;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.repository.BoardRepository;
 import com.project.numble.application.board.service.exception.CurrentUserNotSameWriter;
 import com.project.numble.application.user.domain.User;
+import com.project.numble.application.user.domain.enums.AnimalType;
 import com.project.numble.application.user.repository.UserRepository;
 import com.project.numble.application.user.repository.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,15 +31,26 @@ public class StandardBoardService implements BoardService{
 
     private final UserRepository userRepository;
 
+    private final BoardAnimalRepository boardAnimalRepository;
+
+
     // 저장
     @Override
     public Long addBoard(AddBoardRequest request, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
+        System.out.println("@@@ request = " + request.getBoardAnimalTypes().size());
         Board board = Board.builder().user(user)
                 .content(request.getContent())
                 .categoryType(request.getCategoryType())
                 .boardAddress(user.getAddress().getRegionDepth1())
+                .boardAnimals(new ArrayList<>())
                 .build();
+
+        request.getBoardAnimalTypes().stream().map(AnimalType::getAnimalType).forEach(boardAnimalType -> {
+            BoardAnimal boardAnimal = new BoardAnimal(boardAnimalType);
+            board.addBoardAnimal(boardAnimal);
+        });
+
         user.addBoard(board);
         return boardRepository.save(board).getId();
     }

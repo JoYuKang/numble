@@ -25,20 +25,7 @@ public class AddBoardRequest {
 
     private String boardAddress;
 
-    private List<String> animalTypes;
-
-    @Builder
-    public AddBoardRequest(User user, String content, String categoryType, Image... images) {
-        this.user = user;
-        this.content = content;
-        this.categoryType = categoryType;
-        this.boardAddress = user.getAddress().getRegionDepth1();
-        if (images != null){
-            for (Image image : images) {
-                this.imageList.add(image);
-            }
-        }
-    }
+    private List<String> boardAnimalTypes;
 
     public Board toEntity() {
         return Board.builder()
