@@ -37,7 +37,6 @@ public class StandardBoardService implements BoardService{
     @Override
     public Long addBoard(AddBoardRequest request, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
-        System.out.println("@@@ request = " + request.getBoardAnimalTypes().size());
         Board board = Board.builder().user(user)
                 .content(request.getContent())
                 .categoryType(request.getCategoryType())
@@ -70,6 +69,7 @@ public class StandardBoardService implements BoardService{
 
     // 자기가 작성한 글 조회
     @Override
+    @Transactional(readOnly = true)
     public List<GetAllBoardResponse> getBoardUser(Long userId) {
         return boardRepository.findAllByUserId(userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
     }
