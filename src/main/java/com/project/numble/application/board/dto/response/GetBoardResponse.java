@@ -7,6 +7,7 @@ import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.enums.AnimalType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,6 +36,12 @@ public class GetBoardResponse {
     // 댓글 불러오기
     private List<GetCommentResponse> comments = new ArrayList<>();
 
+    // 좋아요 수
+    private Integer likeCount;
+
+    @Setter
+    private boolean likeCheck;
+
     // 생성 시간
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
@@ -51,8 +58,8 @@ public class GetBoardResponse {
         this.comments = board.getComments().stream().map(GetCommentResponse::new).collect(Collectors.toList());
         this.boardAnimalTypes = board.getBoardAnimals().stream().map(animal -> AnimalType.getName(animal.getAnimalType())).collect(
                 Collectors.toList());
+        this.likeCount = board.getLikes().size();
         this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();
     }
-
 }

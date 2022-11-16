@@ -6,4 +6,6 @@ public interface LikeService {
     boolean isNotAlreadyLike(Long userId, Long boardId);
 
     void cancelLike(Long userId, Long boardId);
+
+    Integer likeCount(Long boardId);
 }

@@ -47,12 +47,8 @@ public class Board extends BaseTimeEntity {
     @Column(name = "view_count")
     private int viewCount = 0;
 
-    @Column(name = "like_count")
-    private int likeCount = 0;
-
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Like> likes = new HashSet<>();
-
 
     @Builder
     private Board(User user, String content, String boardAddress, List<Image> images, String categoryType, List<BoardAnimal> boardAnimals) {
@@ -81,9 +77,15 @@ public class Board extends BaseTimeEntity {
     public int addViewCount(Board board) {
         return board.getViewCount() + 1;
     }
-    // 좋아요 + 1
-    public int addLikeCount(Board board) {
-        return board.getLikeCount() + 1;
+
+    public void addLike(Like like){
+        this.likes.add(like);
+        like.initBoard(this);
+    }
+
+    public void delLike(Like like){
+        this.likes.remove(like);
+        like.initBoard(this);
     }
 
     // 동물 추가

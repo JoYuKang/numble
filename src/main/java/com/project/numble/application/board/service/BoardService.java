@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface BoardService {
 
-    GetBoardResponse getBoard(Long boardId);
-    List<GetAllBoardResponse> getBoardList();
+    GetBoardResponse getBoard(Long userId, Long boardId);
+    List<GetAllBoardResponse> getBoardList(Long userId);
 
     Long addBoard(AddBoardRequest addBoardRequest, Long userId);
 
