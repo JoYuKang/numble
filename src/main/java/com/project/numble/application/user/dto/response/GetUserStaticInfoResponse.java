@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 public class GetUserStaticInfoResponse {
 
     private String email;
+    private String profile;
     private GetAddressResponse address;
     private String nickname;
     private boolean hasPet;
@@ -21,6 +22,7 @@ public class GetUserStaticInfoResponse {
     public static GetUserStaticInfoResponse fromUser(User user, long count) {
         return GetUserStaticInfoResponse.builder()
                 .email(user.getEmail())
+                .profile(user.getProfile())
                 .address(GetAddressResponse.fromAddress(Objects.isNull(user.getAddress()) ? new Address() : user.getAddress()))
                 .nickname(user.getNickname())
                 .hasPet(!CollectionUtils.isEmpty(user.getAnimals()))

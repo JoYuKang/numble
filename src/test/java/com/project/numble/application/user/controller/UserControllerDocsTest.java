@@ -203,6 +203,7 @@ class UserControllerDocsTest {
                 document("get-static-user-info",
                     responseFields(
                         fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                        fieldWithPath("profile").type(JsonFieldType.STRING).description("프로필").optional(),
                         fieldWithPath("address").type(JsonFieldType.OBJECT).description("주소").optional(),
                         fieldWithPath("address.addressName").type(JsonFieldType.STRING).description("주소 전체 이름").optional(),
                         fieldWithPath("address.regionDepth1").type(JsonFieldType.STRING).description("지역 1Depth, 시도 단위").optional(),
