@@ -1,14 +1,18 @@
 package com.project.numble.application.board.service;
 
 import com.project.numble.application.board.domain.Board;
+import com.project.numble.application.board.domain.BoardAnimal;
 import com.project.numble.application.board.dto.request.AddBoardRequest;
 import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
+import com.project.numble.application.board.repository.BoardAnimalRepository;
+import com.project.numble.application.board.service.exception.BoardAnimalsNotExistsException;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.repository.BoardRepository;
 import com.project.numble.application.board.service.exception.CurrentUserNotSameWriter;
 import com.project.numble.application.user.domain.User;
+import com.project.numble.application.user.domain.enums.AnimalType;
 import com.project.numble.application.user.repository.UserRepository;
 import com.project.numble.application.user.repository.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,11 +37,23 @@ public class StandardBoardService implements BoardService{
     @Override
     public Long addBoard(AddBoardRequest request, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
+        System.out.println("@@@ request = " + request.getBoardAnimalTypes().size());
         Board board = Board.builder().user(user)
                 .content(request.getContent())
                 .categoryType(request.getCategoryType())
                 .boardAddress(user.getAddress().getRegionDepth1())
+                .boardAnimals(new ArrayList<>())
                 .build();
+
+        if (request.getBoardAnimalTypes().size() == 0) {
+            throw new BoardAnimalsNotExistsException();
+        }
+
+        request.getBoardAnimalTypes().stream().map(AnimalType::getAnimalType).forEach(boardAnimalType -> {
+            BoardAnimal boardAnimal = new BoardAnimal(boardAnimalType);
+            board.addBoardAnimal(boardAnimal);
+        });
+
         user.addBoard(board);
         return boardRepository.save(board).getId();
     }
@@ -73,14 +88,23 @@ public class StandardBoardService implements BoardService{
 
         // 개시글 가져오기
         Board board = getBoardOne(boardId);
-
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
         // 게시글 사용자와 수정자 비교
         if (!board.getUser().getId().equals(userId)) {
             throw new CurrentUserNotSameWriter();
         }
 
-
-        board.update(request.getContent());
+        board.update(request,user.getAddress().getRegionDepth1());
+        if (request.getBoardAnimalTypes().size() == 0) {
+            throw new BoardAnimalsNotExistsException();
+        }
+        // 게시글 기존 동물 삭제
+        board.getBoardAnimals().clear();
+        // 게시글 동물 재 등록
+        request.getBoardAnimalTypes().stream().map(AnimalType::getAnimalType).forEach(boardAnimalType -> {
+            BoardAnimal boardAnimal = new BoardAnimal(boardAnimalType);
+            board.addBoardAnimal(boardAnimal);
+        });
 
         return boardId;
     }

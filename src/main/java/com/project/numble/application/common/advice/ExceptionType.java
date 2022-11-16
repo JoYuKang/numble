@@ -16,7 +16,8 @@ public enum ExceptionType {
     USER_ALREADY_SIGN_OUT_EXCEPTION("userAlreadySignOutException.message"),
     CURRENT_USER_NOT_SAME_WRITER("currentUserNotSameWriter.message"),
     COMMENT_NOT_IN_BOARD("commentNotInBoard.message"),
-    WITHDRAWAL_USER_EXCEPTION("withdrawalUserException.message")
+    WITHDRAWAL_USER_EXCEPTION("withdrawalUserException.message"),
+    BOARD_ANIMALS_NOT_EXISTS_EXCEPTION("boardAnimalsNotExistsException.message")
     ;
 
     private final String message;

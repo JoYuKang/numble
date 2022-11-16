@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.board.domain.Image;
 import com.project.numble.application.user.domain.Animal;
+import com.project.numble.application.user.domain.enums.AnimalType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +25,7 @@ public class GetBoardResponse {
     private String nickname;
 
     // 동물 예정
-    private List<String> animalTypes;
+    private List<String> boardAnimalTypes;
 
     // tag 예정
     private String categoryType;
@@ -48,6 +49,8 @@ public class GetBoardResponse {
         this.boardAddress = board.getBoardAddress();
         this.categoryType = board.getCategoryType();
         this.comments = board.getComments().stream().map(GetCommentResponse::new).collect(Collectors.toList());
+        this.boardAnimalTypes = board.getBoardAnimals().stream().map(animal -> AnimalType.getName(animal.getAnimalType())).collect(
+                Collectors.toList());
         this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();
     }

@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.board.domain.Image;
 import com.project.numble.application.user.domain.Animal;
+import com.project.numble.application.user.domain.enums.AnimalType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class GetAllBoardResponse {
     private String nickname;
 
     // 동물 예정
-    private List<String> animalTypes;
+    private List<String> boardAnimalTypes;
 
     private String categoryType;
 
@@ -42,6 +44,8 @@ public class GetAllBoardResponse {
         this.boardAddress = board.getBoardAddress();
         this.categoryType = board.getCategoryType();
         this.createdDate = board.getCreatedDate();
+        this.boardAnimalTypes = board.getBoardAnimals().stream().map(animal -> AnimalType.getName(animal.getAnimalType())).collect(
+                Collectors.toList());
         this.lastModifiedDate = board.getLastModifiedDate();
     }
 

@@ -8,7 +8,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @RequiredArgsConstructor
@@ -25,28 +27,6 @@ public class AddBoardRequest {
 
     private String boardAddress;
 
-    private List<String> animalTypes;
-
-    @Builder
-    public AddBoardRequest(User user, String content, String categoryType, Image... images) {
-        this.user = user;
-        this.content = content;
-        this.categoryType = categoryType;
-        this.boardAddress = user.getAddress().getRegionDepth1();
-        if (images != null){
-            for (Image image : images) {
-                this.imageList.add(image);
-            }
-        }
-    }
-
-    public Board toEntity() {
-        return Board.builder()
-                .content(content)
-                .user(user)
-                .categoryType(categoryType)
-                .boardAddress(boardAddress)
-                .build();
-    }
+    private Set<String> boardAnimalTypes = new HashSet<>();
 
 }

@@ -1,6 +1,7 @@
 package com.project.numble.application.board.controller.advice;
 
 import com.project.numble.application.board.controller.BoardController;
+import com.project.numble.application.board.service.exception.BoardAnimalsNotExistsException;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.service.exception.CurrentUserNotSameWriter;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
@@ -31,5 +32,10 @@ public class BoardControllerAdvice {
         return utils.getFailureResponse(ExceptionType.CURRENT_USER_NOT_SAME_WRITER);
     }
 
+    @ExceptionHandler(BoardAnimalsNotExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> boardAnimalsNotExistsExceptionHandler() {
+        return utils.getFailureResponse(ExceptionType.BOARD_ANIMALS_NOT_EXISTS_EXCEPTION);
+    }
 
 }

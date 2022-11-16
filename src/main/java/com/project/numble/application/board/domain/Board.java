@@ -1,15 +1,13 @@
 package com.project.numble.application.board.domain;
 
+import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.common.entity.BaseTimeEntity;
-import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.User;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -67,9 +65,11 @@ public class Board extends BaseTimeEntity {
         this.images.add(image);
     }
 
-    // 글만 수정
-    public void update(String content) {
-        this.content = content;
+    // 수정
+    public void update(ModBoardRequest request, String boardAddress) {
+        this.content = request.getContent();
+        this.categoryType = request.getCategoryType();
+        this.boardAddress = boardAddress;
     }
 
     // 조회수 + 1
