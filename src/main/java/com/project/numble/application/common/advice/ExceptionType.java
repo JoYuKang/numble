@@ -17,7 +17,9 @@ public enum ExceptionType {
     CURRENT_USER_NOT_SAME_WRITER("currentUserNotSameWriter.message"),
     COMMENT_NOT_IN_BOARD("commentNotInBoard.message"),
     WITHDRAWAL_USER_EXCEPTION("withdrawalUserException.message"),
-    BOARD_ANIMALS_NOT_EXISTS_EXCEPTION("boardAnimalsNotExistsException.message")
+    BOARD_ANIMALS_NOT_EXISTS_EXCEPTION("boardAnimalsNotExistsException.message"),
+    ALREADY_LIKE_BOARD_EXCEPTION("alreadyLikeBoardException.message"),
+    LIKE_NOT_EXISTS_EXCEPTION("likeNotExistsException.message")
     ;
 
     private final String message;
