@@ -58,7 +58,7 @@ public class GetBoardResponse {
         this.comments = board.getComments().stream().map(GetCommentResponse::new).collect(Collectors.toList());
         this.boardAnimalTypes = board.getBoardAnimals().stream().map(animal -> AnimalType.getName(animal.getAnimalType())).collect(
                 Collectors.toList());
-        this.likeCount = board.getLikes().size();
+        this.likeCount = board.getLikeCount();
         this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();
     }

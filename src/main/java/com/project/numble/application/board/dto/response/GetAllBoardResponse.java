@@ -3,6 +3,7 @@ package com.project.numble.application.board.dto.response;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.board.domain.Image;
+import com.project.numble.application.board.domain.Like;
 import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.enums.AnimalType;
 import lombok.Getter;
@@ -54,7 +55,7 @@ public class GetAllBoardResponse {
         this.createdDate = board.getCreatedDate();
         this.boardAnimalTypes = board.getBoardAnimals().stream().map(animal -> AnimalType.getName(animal.getAnimalType())).collect(
                 Collectors.toList());
-        this.likeCount = board.getLikes().size();
+        this.likeCount = board.getLikeCount();
         this.lastModifiedDate = board.getLastModifiedDate();
     }
 
