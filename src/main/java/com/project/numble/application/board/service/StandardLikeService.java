@@ -35,6 +35,7 @@ public class StandardLikeService implements LikeService{
         if (isNotAlreadyLike(userId, boardId)) {
             likeRepository.save(like);
             board.addLike(like);
+            board.plusLikeCount();
             return;
         }
 
@@ -46,6 +47,7 @@ public class StandardLikeService implements LikeService{
         Like like = likeRepository.findByUserIdAndBoardId(userId, boardId).orElseThrow(() -> new LikeNotExistsException());
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new BoardNotExistsException());
         likeRepository.delete(like);
+        board.minusLikeCount();
         board.delLike(like);
     }
 

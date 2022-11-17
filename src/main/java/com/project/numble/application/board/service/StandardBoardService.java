@@ -2,6 +2,7 @@ package com.project.numble.application.board.service;
 
 import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.board.domain.BoardAnimal;
+import com.project.numble.application.board.domain.Like;
 import com.project.numble.application.board.dto.request.AddBoardRequest;
 import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.board.dto.response.GetAllBoardResponse;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +35,7 @@ public class StandardBoardService implements BoardService{
 
     private final UserRepository userRepository;
 
-    private final LikeService likeService;
+    private final LikeRepository likeRepository;
 
     // 저장
     @Override
@@ -66,7 +68,7 @@ public class StandardBoardService implements BoardService{
     public GetBoardResponse getBoard(Long userId, Long boardId) {
         Board board = getBoardOne(boardId);
         GetBoardResponse getBoardResponse = new GetBoardResponse(board);
-        getBoardResponse.setLikeCheck(!likeService.isNotAlreadyLike(userId, boardId));
+        getBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, boardId).isEmpty());
         return getBoardResponse;
     }
 
@@ -77,7 +79,7 @@ public class StandardBoardService implements BoardService{
     public List<GetAllBoardResponse> getBoardUser(Long userId) {
         List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findAllByUserId(userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
         for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
-            getAllBoardResponse.setLikeCheck(!likeService.isNotAlreadyLike(userId, getAllBoardResponse.getBoardId()));
+            getAllBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
         }
         return getAllBoardResponses;
     }
@@ -88,7 +90,7 @@ public class StandardBoardService implements BoardService{
     public List<GetAllBoardResponse> getBoardList(Long userId) {
         List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findAllByOrderByCreatedDateDesc().stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
         for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
-            getAllBoardResponse.setLikeCheck(!likeService.isNotAlreadyLike(userId, getAllBoardResponse.getBoardId()));
+            getAllBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
         }
         return getAllBoardResponses;
     }
