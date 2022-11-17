@@ -11,11 +11,13 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
     // 조회
-    @EntityGraph(attributePaths = {"user", "comments"}, type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(attributePaths = {"user", "likes", "boardAnimals"}, type = EntityGraph.EntityGraphType.LOAD)
     Optional<Board> findById(Long boardId);
 
+    @EntityGraph(attributePaths = {"user", "likes", "boardAnimals"}, type = EntityGraph.EntityGraphType.LOAD)
     List<Board> findAllByUserId(Long userID);
 
+    @EntityGraph(attributePaths = {"user", "likes", "boardAnimals"}, type = EntityGraph.EntityGraphType.LOAD)
     List<Board> findAllByOrderByCreatedDateDesc();
 
 

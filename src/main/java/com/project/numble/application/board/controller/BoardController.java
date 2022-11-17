@@ -26,16 +26,16 @@ public class BoardController {
 
     // board 다건 조회
     @GetMapping("/list")
-    public ResponseEntity<List<GetAllBoardResponse>> getBoards() {
-        List<GetAllBoardResponse> boards = boardService.getBoardList();
+    public ResponseEntity<List<GetAllBoardResponse>> getBoards(@SignInUser UserInfo userInfo) {
+        List<GetAllBoardResponse> boards = boardService.getBoardList(userInfo.getUserId());
 
         return new ResponseEntity<>(boards, HttpStatus.OK);
     }
 
     // board 단건 조회
-    @GetMapping("/{id}")
-    public ResponseEntity<GetBoardResponse> getBoard(@PathVariable Long id) {
-        GetBoardResponse board = boardService.getBoard(id);
+    @GetMapping("/{boardId}")
+    public ResponseEntity<GetBoardResponse> getBoard(@SignInUser UserInfo userInfo, @PathVariable Long boardId) {
+        GetBoardResponse board = boardService.getBoard(userInfo.getUserId(), boardId);
 
         return new ResponseEntity<>(board, HttpStatus.OK);
     }

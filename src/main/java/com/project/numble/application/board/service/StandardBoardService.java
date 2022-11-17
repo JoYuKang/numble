@@ -7,6 +7,7 @@ import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
 import com.project.numble.application.board.repository.BoardAnimalRepository;
+import com.project.numble.application.board.repository.LikeRepository;
 import com.project.numble.application.board.service.exception.BoardAnimalsNotExistsException;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.repository.BoardRepository;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +32,8 @@ public class StandardBoardService implements BoardService{
     private final BoardRepository boardRepository;
 
     private final UserRepository userRepository;
+
+    private final LikeService likeService;
 
     // 저장
     @Override
@@ -61,9 +63,11 @@ public class StandardBoardService implements BoardService{
     // 단건 조회
     @Override
     @Transactional(readOnly = true)
-    public GetBoardResponse getBoard(Long id) {
-        Board board = getBoardOne(id);
-        return new GetBoardResponse(board);
+    public GetBoardResponse getBoard(Long userId, Long boardId) {
+        Board board = getBoardOne(boardId);
+        GetBoardResponse getBoardResponse = new GetBoardResponse(board);
+        getBoardResponse.setLikeCheck(!likeService.isNotAlreadyLike(userId, boardId));
+        return getBoardResponse;
     }
 
 
@@ -71,14 +75,22 @@ public class StandardBoardService implements BoardService{
     @Override
     @Transactional(readOnly = true)
     public List<GetAllBoardResponse> getBoardUser(Long userId) {
-        return boardRepository.findAllByUserId(userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findAllByUserId(userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+        for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
+            getAllBoardResponse.setLikeCheck(!likeService.isNotAlreadyLike(userId, getAllBoardResponse.getBoardId()));
+        }
+        return getAllBoardResponses;
     }
 
     // 전체 조회
     @Override
     @Transactional(readOnly = true)
-    public List<GetAllBoardResponse> getBoardList() {
-        return boardRepository.findAllByOrderByCreatedDateDesc().stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+    public List<GetAllBoardResponse> getBoardList(Long userId) {
+        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findAllByOrderByCreatedDateDesc().stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+        for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
+            getAllBoardResponse.setLikeCheck(!likeService.isNotAlreadyLike(userId, getAllBoardResponse.getBoardId()));
+        }
+        return getAllBoardResponses;
     }
 
 

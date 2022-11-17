@@ -7,6 +7,7 @@ import com.project.numble.application.user.domain.Animal;
 import com.project.numble.application.user.domain.enums.AnimalType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GetAllBoardResponse {
 
+    private Long boardId;
     private String content;
 
     // 이미지 예정
@@ -30,6 +32,11 @@ public class GetAllBoardResponse {
 
     private String boardAddress;
 
+    private Integer likeCount;
+
+    @Setter
+    private boolean likeCheck;
+
     // 생성 시간
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
@@ -39,6 +46,7 @@ public class GetAllBoardResponse {
     private  LocalDateTime lastModifiedDate;
 
     public GetAllBoardResponse(Board board) {
+        this.boardId = board.getId();
         this.content = board.getContent();
         this.nickname = board.getUser().getNickname();
         this.boardAddress = board.getBoardAddress();
@@ -46,6 +54,7 @@ public class GetAllBoardResponse {
         this.createdDate = board.getCreatedDate();
         this.boardAnimalTypes = board.getBoardAnimals().stream().map(animal -> AnimalType.getName(animal.getAnimalType())).collect(
                 Collectors.toList());
+        this.likeCount = board.getLikes().size();
         this.lastModifiedDate = board.getLastModifiedDate();
     }
 
