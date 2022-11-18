@@ -38,6 +38,8 @@ public class GetAllBoardResponse {
     @Setter
     private boolean likeCheck;
 
+    private Integer viewCount;
+
     // 생성 시간
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
@@ -56,6 +58,7 @@ public class GetAllBoardResponse {
         this.boardAnimalTypes = board.getBoardAnimals().stream().map(animal -> AnimalType.getName(animal.getAnimalType())).collect(
                 Collectors.toList());
         this.likeCount = board.getLikeCount();
+        this.viewCount = board.getViewCount();
         this.lastModifiedDate = board.getLastModifiedDate();
     }
 
