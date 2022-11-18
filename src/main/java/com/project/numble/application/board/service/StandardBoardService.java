@@ -64,9 +64,11 @@ public class StandardBoardService implements BoardService{
 
     // 단건 조회
     @Override
-    @Transactional(readOnly = true)
     public GetBoardResponse getBoard(Long userId, Long boardId) {
         Board board = getBoardOne(boardId);
+        if (board.getUser().getId() != userId) {
+            board.plusViewCount();
+        }
         GetBoardResponse getBoardResponse = new GetBoardResponse(board);
         getBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, boardId).isEmpty());
         return getBoardResponse;

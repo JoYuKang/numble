@@ -78,8 +78,8 @@ public class Board extends BaseTimeEntity {
     }
 
     // 조회수 + 1
-    public int addViewCount(Board board) {
-        return board.getViewCount() + 1;
+    public void plusViewCount() {
+        this.viewCount = this.getViewCount() + 1;
     }
 
 
