@@ -53,6 +53,12 @@ public class Board extends BaseTimeEntity {
     @Column(name = "like_count")
     private Integer likeCount = 0;
 
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Bookmark> bookmarks = new HashSet<>();
+
+    @Column(name = "bookmark_count")
+    private Integer bookmarkCount = 0;
+
     @Builder
     private Board(User user, String content, String boardAddress, List<Image> images, String categoryType, List<BoardAnimal> boardAnimals) {
         this.user = user;
@@ -60,7 +66,6 @@ public class Board extends BaseTimeEntity {
         this.boardAddress = boardAddress;
         this.images = images;
         this.categoryType = categoryType;
-        this.likeCount = getLikeCount();
         this.boardAnimals = boardAnimals;
     }
 
@@ -98,6 +103,22 @@ public class Board extends BaseTimeEntity {
     public void delLike(Like like){
         this.likes.remove(like);
         like.initBoard(this);
+    }
+    public void plusBookmarkCount() {
+        this.bookmarkCount = this.getBookmarkCount() + 1;
+    }
+    public void minusBookmarkCount() {
+        this.bookmarkCount = this.getBookmarkCount() - 1;
+    }
+
+    public void addBookmark(Bookmark bookmark){
+        this.bookmarks.add(bookmark);
+        bookmark.initBoard(this);
+    }
+
+    public void delBookmark(Bookmark bookmark){
+        this.bookmarks.remove(bookmark);
+        bookmark.initBoard(this);
     }
 
     // 동물 추가
