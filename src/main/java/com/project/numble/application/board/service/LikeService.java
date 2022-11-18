@@ -7,5 +7,4 @@ public interface LikeService {
 
     void cancelLike(Long userId, Long boardId);
 
-    Integer likeCount(Long boardId);
 }

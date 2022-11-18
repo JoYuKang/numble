@@ -19,7 +19,9 @@ public enum ExceptionType {
     WITHDRAWAL_USER_EXCEPTION("withdrawalUserException.message"),
     BOARD_ANIMALS_NOT_EXISTS_EXCEPTION("boardAnimalsNotExistsException.message"),
     ALREADY_LIKE_BOARD_EXCEPTION("alreadyLikeBoardException.message"),
-    LIKE_NOT_EXISTS_EXCEPTION("likeNotExistsException.message")
+    LIKE_NOT_EXISTS_EXCEPTION("likeNotExistsException.message"),
+    ALREADY_BOOKMARK_BOARD_EXCEPTION("alreadyBookmarkBoardException.message"),
+    BOOKMARK_NOT_EXIST_EXCEPTION("bookmarkNotExistsException.message")
     ;
 
     private final String message;

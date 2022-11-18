@@ -51,10 +51,6 @@ public class StandardLikeService implements LikeService{
         board.delLike(like);
     }
 
-    @Override
-    public Integer likeCount(Long boardId) {
-        return likeRepository.countByBoardId(boardId);
-    }
 
     @Override
     public boolean isNotAlreadyLike(Long userId, Long boardId) {

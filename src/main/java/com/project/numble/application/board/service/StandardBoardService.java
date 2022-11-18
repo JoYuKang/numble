@@ -8,6 +8,7 @@ import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
 import com.project.numble.application.board.repository.BoardAnimalRepository;
+import com.project.numble.application.board.repository.BookmarkRepository;
 import com.project.numble.application.board.repository.LikeRepository;
 import com.project.numble.application.board.service.exception.BoardAnimalsNotExistsException;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
@@ -36,6 +37,8 @@ public class StandardBoardService implements BoardService{
     private final UserRepository userRepository;
 
     private final LikeRepository likeRepository;
+
+    private final BookmarkRepository bookmarkRepository;
 
     // 저장
     @Override
@@ -71,6 +74,7 @@ public class StandardBoardService implements BoardService{
         }
         GetBoardResponse getBoardResponse = new GetBoardResponse(board);
         getBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, boardId).isEmpty());
+        getBoardResponse.setBookmarkCheck(!bookmarkRepository.findByUserIdAndBoardId(userId, boardId).isEmpty());
         return getBoardResponse;
     }
 
@@ -82,6 +86,7 @@ public class StandardBoardService implements BoardService{
         List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findAllByUserId(userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
         for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
             getAllBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
+            getAllBoardResponse.setBookmarkCheck(!bookmarkRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
         }
         return getAllBoardResponses;
     }
@@ -93,6 +98,7 @@ public class StandardBoardService implements BoardService{
         List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findAllByOrderByCreatedDateDesc().stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
         for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
             getAllBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
+            getAllBoardResponse.setBookmarkCheck(!bookmarkRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
         }
         return getAllBoardResponses;
     }
