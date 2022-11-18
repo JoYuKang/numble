@@ -44,6 +44,11 @@ public class GetBoardResponse {
 
     private Integer viewCount;
 
+    private Integer bookmarkCount;
+
+    @Setter
+    private boolean bookmarkCheck;
+
     // 생성 시간
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
@@ -62,6 +67,7 @@ public class GetBoardResponse {
                 Collectors.toList());
         this.likeCount = board.getLikeCount();
         this.viewCount = board.getViewCount();
+        this.bookmarkCount = board.getBookmarkCount();
         this.createdDate = board.getCreatedDate();
         this.lastModifiedDate = board.getLastModifiedDate();
     }

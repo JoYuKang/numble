@@ -18,6 +18,7 @@ public class AddBoardRequest {
 
     @NotEmpty(message = "내용은 필수입니다.")
     private String content;
+
     private User user;
 
     private List<Image> imageList;
@@ -27,6 +28,7 @@ public class AddBoardRequest {
 
     private String boardAddress;
 
+    @NotEmpty(message = "동물은 필수입니다.")
     private Set<String> boardAnimalTypes = new HashSet<>();
 
 }
