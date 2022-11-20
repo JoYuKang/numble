@@ -29,7 +29,7 @@ public interface CommentService {
 
     void deleteComment(UserInfo userInfo, Long commentId);
 
-    List<RootCommentResponse> getAllComments(Long boardId);
+    RootsCommentsResponse getAllComments(Long boardId);
 
-    List<GetCommentResponse> getMyComments(UserInfo userInfo);
+    GetCommentsResponse getMyComments(UserInfo userInfo);
 }

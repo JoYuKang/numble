@@ -128,7 +128,7 @@ public class StandardCommentService implements CommentService {
     }
 
     @Override
-    public List<RootCommentResponse> getAllComments(Long boardId) {
+    public RootsCommentsResponse getAllComments(Long boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(BoardNotExistsException::new);
 
         List<RootCommentResponse> rootComments = commentRepository.findRootComments(board);
@@ -142,16 +142,16 @@ public class StandardCommentService implements CommentService {
                 }
             });
 
-        return rootComments;
+        return new RootsCommentsResponse(rootComments);
     }
 
     @Override
-    public List<GetCommentResponse> getMyComments(UserInfo userInfo) {
+    public GetCommentsResponse getMyComments(UserInfo userInfo) {
         User user = userRepository.findById(userInfo.getUserId()).orElseThrow(UserNotFoundException::new);
         List<Comment> comments = commentRepository.findAllByUserOrderByCreatedDateDesc(user);
 
-        return comments.stream()
+        return new GetCommentsResponse(comments.stream()
             .map(GetCommentResponse::fromComment)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList()));
     }
 }
