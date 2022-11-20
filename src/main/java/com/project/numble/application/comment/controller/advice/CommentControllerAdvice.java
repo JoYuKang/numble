@@ -1,5 +1,6 @@
 package com.project.numble.application.comment.controller.advice;
 
+import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.comment.controller.CommentController;
 import com.project.numble.application.comment.service.exception.CommentNotAuthException;
 import com.project.numble.application.comment.service.exception.CommentNotFoundException;
@@ -28,5 +29,11 @@ public class CommentControllerAdvice {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     Map<String, String> commentNotAuthExceptionHandler() {
         return utils.getFailureResponse(ExceptionType.COMMENT_NOT_AUTH_EXCEPTION);
+    }
+
+    @ExceptionHandler(BoardNotExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> boardNotExistsExceptionHandler() {
+        return utils.getFailureResponse(ExceptionType.BOARD_NOT_EXISTS_EXCEPTION);
     }
 }
