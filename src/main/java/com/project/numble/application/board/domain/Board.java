@@ -3,6 +3,7 @@ package com.project.numble.application.board.domain;
 import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.comment.domain.Comment;
 import com.project.numble.application.common.entity.BaseTimeEntity;
+import com.project.numble.application.image.domain.Image;
 import com.project.numble.application.user.domain.User;
 import lombok.*;
 
@@ -70,10 +71,10 @@ public class Board extends BaseTimeEntity {
         this.boardAnimals = boardAnimals;
     }
 
-
     // 이미지 등록
     public void addImage(Image image) {
         this.images.add(image);
+        image.initBoard(this);
     }
 
     // 수정

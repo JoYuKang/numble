@@ -1,9 +1,7 @@
 package com.project.numble.application.board.dto.request;
 
-import com.project.numble.application.board.domain.Board;
-import com.project.numble.application.board.domain.Image;
+import com.project.numble.application.image.domain.Image;
 import com.project.numble.application.user.domain.User;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
