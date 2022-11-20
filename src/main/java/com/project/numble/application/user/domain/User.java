@@ -1,7 +1,7 @@
 package com.project.numble.application.user.domain;
 
 import com.project.numble.application.board.domain.Board;
-import com.project.numble.application.board.domain.Comment;
+import com.project.numble.application.comment.domain.Comment;
 import com.project.numble.application.common.entity.BaseTimeEntity;
 import com.project.numble.application.user.domain.enums.Role;
 import java.time.LocalDateTime;

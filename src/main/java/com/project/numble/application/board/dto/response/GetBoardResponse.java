@@ -33,9 +33,6 @@ public class GetBoardResponse {
 
     private String boardAddress;
 
-    // 댓글 불러오기
-    private List<GetCommentResponse> comments = new ArrayList<>();
-
     // 좋아요 수
     private Integer likeCount;
 
@@ -62,7 +59,6 @@ public class GetBoardResponse {
         this.nickname = board.getUser().getNickname();
         this.boardAddress = board.getBoardAddress();
         this.categoryType = board.getCategoryType();
-        this.comments = board.getComments().stream().map(GetCommentResponse::new).collect(Collectors.toList());
         this.boardAnimalTypes = board.getBoardAnimals().stream().map(animal -> AnimalType.getName(animal.getAnimalType())).collect(
                 Collectors.toList());
         this.likeCount = board.getLikeCount();
