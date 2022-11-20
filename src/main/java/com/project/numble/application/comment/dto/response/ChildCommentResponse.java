@@ -1,6 +1,7 @@
 package com.project.numble.application.comment.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.time.LocalDateTime;
@@ -23,8 +24,12 @@ public class ChildCommentResponse {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createdDate;
 
+    @JsonIgnore
     private Long rootId;
 
+    @JsonIgnore
     private Long parentId;
+
+    @JsonIgnore
     private String parentAuthor;
 }
