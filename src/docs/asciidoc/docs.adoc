@@ -334,3 +334,144 @@ include::{snippets}/withdrawal-user-success/http-response.adoc[]
 ==== 세션이 유효하지 않을 시
 
 include::{snippets}/get-static-user-info-failed/http-response.adoc[]
+
+[[Comment-API]]
+== 댓글 API
+
+=== 댓글 등록
+
+==== HTTP request
+
+include::{snippets}/add-comments/http-request.adoc[]
+
+==== HTTP request field
+
+include::{snippets}/add-comments/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/add-comments/http-response.adoc[]
+
+=== 댓글 등록 실패
+
+==== 게시글 ID가 없는 경우
+
+include::{snippets}/add-comment-id-failed/http-response.adoc[]
+
+==== 댓글 내용이 없는 경우
+
+include::{snippets}/add-comment-content-failed/http-response.adoc[]
+
+=== 대댓글 등록
+
+==== HTTP request
+
+include::{snippets}/reply-comments/http-request.adoc[]
+
+==== HTTP request field
+
+include::{snippets}/reply-comments/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/reply-comments/http-response.adoc[]
+
+=== 대댓글 등록 실패
+
+==== 게시글 ID가 없는 경우
+
+include::{snippets}/reply-comment-board-id-failed/http-response.adoc[]
+
+==== 댓글 ID가 없는 경우
+
+include::{snippets}/reply-comment-comment-id-failed/http-response.adoc[]
+
+==== 대댓글 내용이 없는 경우
+
+include::{snippets}/reply-comment-content-failed/http-response.adoc[]
+
+=== 댓글 수정
+
+==== HTTP request
+
+include::{snippets}/mod-comments/http-request.adoc[]
+
+==== HTTP request field
+
+include::{snippets}/mod-comments/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/mod-comments/http-response.adoc[]
+
+=== 댓글 수정 실패
+
+==== 댓글 ID가 없는 경우
+
+include::{snippets}/mod-comment-comment-id-failed/http-response.adoc[]
+
+==== 댓글 내용이 없는 경우
+
+include::{snippets}/mod-comment-content-failed/http-response.adoc[]
+
+=== 댓글 삭제
+
+==== HTTP request
+
+include::{snippets}/delete-comments/http-request.adoc[]
+
+==== HTTP request path parameter
+
+include::{snippets}/delete-comments/path-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/delete-comments/http-response.adoc[]
+
+=== 댓글 삭제 실패
+
+==== 댓글이 없는 경우
+
+include::{snippets}/delete-comment-failed/http-response.adoc[]
+
+=== 게시글 댓글 조회
+
+==== HTTP request
+
+include::{snippets}/get-all-comments/http-request.adoc[]
+
+==== HTTP request path parameter
+
+include::{snippets}/get-all-comments/path-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/get-all-comments/http-response.adoc[]
+
+==== HTTP response field
+
+include::{snippets}/get-all-comments/response-fields.adoc[]
+
+=== 게시글 댓글 조회 실패
+
+==== 게시글이 없는 경우
+
+include::{snippets}/get-all-comment-failed/http-response.adoc[]
+
+=== 내가 작성한 댓글 조회
+
+==== HTTP request
+
+include::{snippets}/get-my-comments/http-request.adoc[]
+
+==== HTTP request path parameter
+
+include::{snippets}/get-my-comments/path-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/get-my-comments/http-response.adoc[]
+
+==== HTTP response field
+
+include::{snippets}/get-my-comments/response-fields.adoc[]
