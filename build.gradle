@@ -13,6 +13,7 @@ plugins {
 	id 'java'
 	id 'jacoco'
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'com.project'
@@ -43,6 +44,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation('it.ozimov:embedded-redis:0.7.3')
 			{ exclude group: "org.slf4j", module: "slf4j-simple" }
+
+	implementation 'com.querydsl:querydsl-jpa:5.0.0'
+	annotationProcessor 'com.querydsl:querydsl-apt:5.0.0'
 
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
@@ -78,6 +82,11 @@ jacocoTestReport {
 		xml.destination file("$reportDirPath/${project.name}.xml")
 	}
 
+	def Qdomains = []
+	for (qPattern in '**/QA'..'**/QZ') {
+		Qdomains.add(qPattern + '*')
+	}
+
 	afterEvaluate {
 		classDirectories.setFrom(
 				files(classDirectories.files.collect {
@@ -87,7 +96,7 @@ jacocoTestReport {
 							'**/*Exception*',
 							'**/*common*',
 							'**/*Profile*'
-					])
+					] + Qdomains)
 				})
 		)
 	}
@@ -96,6 +105,12 @@ jacocoTestReport {
 }
 
 jacocoTestCoverageVerification {
+
+	def Qdomains = []
+
+	for (qPattern in '*.QA'..'*.QZ') {
+		Qdomains.add(qPattern + '*')
+	}
 
 	violationRules {
 		rule {
@@ -108,8 +123,41 @@ jacocoTestCoverageVerification {
 					"**.*Exception*",
 					"**.*common*",
 					"**.*Profile*"
-			]
+			] + Qdomains
 		}
+	}
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	library = "com.querydsl:querydsl-apt"
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java', querydslDir]
+		}
+	}
+}
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl.doFirst {
+	if (file(querydslDir).exists()) {
+		delete(file(querydslDir))
 	}
 }
 
