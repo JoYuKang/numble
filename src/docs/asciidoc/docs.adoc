@@ -475,3 +475,68 @@ include::{snippets}/get-my-comments/http-response.adoc[]
 ==== HTTP response field
 
 include::{snippets}/get-my-comments/response-fields.adoc[]
+
+[[Image-API]]
+== 이미지 API
+
+=== 이미지 업로드
+
+==== HTTP request
+
+include::{snippets}/image-upload/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/image-upload/http-response.adoc[]
+
+==== HTTP response field
+
+include::{snippets}/image-upload/response-fields.adoc[]
+
+=== 이미지 경로 조회
+
+==== HTTP request
+
+include::{snippets}/image-get-file-path/http-request.adoc[]
+
+==== HTTP request path parameters
+
+include::{snippets}/image-get-file-path/path-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/image-get-file-path/http-response.adoc[]
+
+==== HTTP response field
+
+include::{snippets}/image-get-file-path/response-fields.adoc[]
+
+=== 이미지 경로 조회 실패
+
+==== 존재하지 않는 이미지일 경우
+
+include::{snippets}/image-get-file-path-failed/http-response.adoc[]
+
+=== 이미지 삭제
+
+==== HTTP request
+
+include::{snippets}/delete-image/http-request.adoc[]
+
+==== HTTP request field
+
+include::{snippets}/delete-image/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/delete-image/http-response.adoc[]
+
+==== HTTP response field
+
+include::{snippets}/delete-image/response-fields.adoc[]
+
+=== 이미지 삭제 실패
+
+==== 존재하지 않는 이미지일 경우
+
+include::{snippets}/image-get-file-path-failed/http-response.adoc[]

@@ -1,0 +1,11 @@
+cloud:
+  aws:
+    credentials:
+      access-key: access-key
+      secret-key: secret-key
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: numble-9-image
+    stack:
+      auto: false

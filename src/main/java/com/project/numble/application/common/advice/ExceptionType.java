@@ -23,7 +23,8 @@ public enum ExceptionType {
     ALREADY_BOOKMARK_BOARD_EXCEPTION("alreadyBookmarkBoardException.message"),
     BOOKMARK_NOT_EXIST_EXCEPTION("bookmarkNotExistsException.message"),
     COMMENT_NOT_FOUND_EXCEPTION("commentNotFoundException.message"),
-    COMMENT_NOT_AUTH_EXCEPTION("commentNotAuthException.message");
+    COMMENT_NOT_AUTH_EXCEPTION("commentNotAuthException.message"),
+    IMAGE_NOT_FOUND_EXCEPTION("imageNotFoundException.message");
 
     private final String message;
 

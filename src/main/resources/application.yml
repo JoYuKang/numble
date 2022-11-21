@@ -13,6 +13,7 @@ spring:
       - jpa
       - oauth2
       - api
+      - aws
 
 ---
 spring:
