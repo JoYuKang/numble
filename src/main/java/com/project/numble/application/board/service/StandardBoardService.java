@@ -19,12 +19,12 @@ import com.project.numble.application.user.domain.enums.AnimalType;
 import com.project.numble.application.user.repository.UserRepository;
 import com.project.numble.application.user.repository.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,11 +82,22 @@ public class StandardBoardService implements BoardService{
     // 자기가 작성한 글 조회
     @Override
     @Transactional(readOnly = true)
-    public List<GetAllBoardResponse> getBoardUser(Long userId) {
-        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findAllByUserId(userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+    public List<GetAllBoardResponse> getBoardUser(PageRequest pageRequest,Long userId) {
+        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findUserBoardsOrderByIdDesc(pageRequest, userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
         for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
             getAllBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
             getAllBoardResponse.setBookmarkCheck(!bookmarkRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
+        }
+        return getAllBoardResponses;
+    }
+
+    // bookmark 게시글 조회
+    @Override
+    public List<GetAllBoardResponse> getBookmarkBoard(PageRequest pageRequest, Long userId) {
+        userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
+        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findBookmarkBoardOrderByIdDesc(pageRequest, userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+        for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
+            getAllBoardResponse.setBookmarkCheck(true);
         }
         return getAllBoardResponses;
     }

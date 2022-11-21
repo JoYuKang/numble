@@ -9,6 +9,8 @@ import com.project.numble.application.board.service.BoardService;
 import com.project.numble.core.resolver.SignInUser;
 import com.project.numble.core.resolver.UserInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,13 +41,22 @@ public class BoardController {
 
         return new ResponseEntity<>(board, HttpStatus.OK);
     }
+
     // user가 작성한 게시글 조회
     @GetMapping("/user")
     public ResponseEntity<List<GetAllBoardResponse>> getUserBoard(@SignInUser UserInfo userInfo) {
-        List<GetAllBoardResponse> boards = boardService.getBoardUser(userInfo.getUserId());
+        PageRequest pageRequest = PageRequest.of(0, 5);
+        List<GetAllBoardResponse> boards = boardService.getBoardUser(pageRequest, userInfo.getUserId());
         return new ResponseEntity<>(boards, HttpStatus.OK);
     }
 
+    // user bookmark 조회
+    @GetMapping("/bookmark")
+    public ResponseEntity<List<GetAllBoardResponse>> getBookmarkBoard(@SignInUser UserInfo userInfo) {
+        PageRequest pageRequest = PageRequest.of(0, 5);
+        List<GetAllBoardResponse> bookmarkBoards = boardService.getBookmarkBoard(pageRequest, userInfo.getUserId());
+        return new ResponseEntity<>(bookmarkBoards, HttpStatus.OK);
+    }
 
     // board 추가
     @PostMapping("/add")
