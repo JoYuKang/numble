@@ -6,6 +6,7 @@ import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
 import com.project.numble.application.board.service.BoardService;
+import com.project.numble.application.image.service.ImageService;
 import com.project.numble.core.resolver.SignInUser;
 import com.project.numble.core.resolver.UserInfo;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,13 @@ public class BoardController {
 
     // board 다건 조회
     @GetMapping("/list")
-    public ResponseEntity<List<GetAllBoardResponse>> getBoards(@SignInUser UserInfo userInfo) {
-        List<GetAllBoardResponse> boards = boardService.getBoardList(userInfo.getUserId());
+    public ResponseEntity<List<GetAllBoardResponse>> getBoards(
+            @RequestParam(value = "address", required = false) String address,
+            @RequestParam(value = "category", required = false) String categoryType,
+            @RequestParam(value = "animal", required = false) String animalType,
+            @SignInUser UserInfo userInfo) {
+        PageRequest pageRequest = PageRequest.of(0, 50);
+        List<GetAllBoardResponse> boards = boardService.getBoardList(pageRequest, userInfo.getUserId(), address, animalType, categoryType);
 
         return new ResponseEntity<>(boards, HttpStatus.OK);
     }

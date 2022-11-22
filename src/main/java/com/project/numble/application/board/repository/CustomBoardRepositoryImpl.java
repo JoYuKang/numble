@@ -1,9 +1,7 @@
 package com.project.numble.application.board.repository;
 
-import com.project.numble.application.board.domain.Board;
-import com.project.numble.application.board.domain.BoardAnimal;
-import com.project.numble.application.board.domain.QBoard;
-import com.project.numble.application.board.domain.QBookmark;
+import com.project.numble.application.board.domain.*;
+import com.project.numble.application.user.domain.enums.AnimalType;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +22,10 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
 
 
     @Override
-    public List<Board> findBoardsOrderByIdDesc(Pageable pageable, String categoryType, String animalType, String address) {
+    public List<Board> findBoardsOrderByIdDesc(Pageable pageable, String address, String categoryType) {
         return queryFactory.selectFrom(QBOARD)
                 .where(categoryTypeEq(categoryType),
-                        (addressEq(address)))
+                        addressEq(address))
                 .orderBy(QBOARD.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -39,13 +37,8 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     }
 
     private BooleanExpression addressEq(String address) {
-        return address != "전체" ? QBOARD.categoryType.eq(address) : null;
+        return address != "전체" ? QBOARD.boardAddress.eq(address) : null;
     }
-
-    //    private BooleanExpression animalTypeEq(String animalType) {
-    //        return animalType != "전체" ? QBOARD.boardAnimals. : null;
-    //    }
-
 
     @Override
     public List<Board> findUserBoardsOrderByIdDesc(Pageable pageable, Long userId) {

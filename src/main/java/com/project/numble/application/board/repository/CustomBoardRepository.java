@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CustomBoardRepository {
 
-    List<Board> findBoardsOrderByIdDesc(Pageable pageable, String categoryType, String animalType, String address);
+    List<Board> findBoardsOrderByIdDesc(Pageable pageable, String address, String categoryType);
 
     List<Board> findUserBoardsOrderByIdDesc(Pageable pageable, Long userId);
 
