@@ -14,6 +14,9 @@ import com.project.numble.application.board.service.exception.BoardAnimalsNotExi
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.repository.BoardRepository;
 import com.project.numble.application.board.service.exception.CurrentUserNotSameWriter;
+import com.project.numble.application.image.domain.Image;
+import com.project.numble.application.image.repository.ImageRepository;
+import com.project.numble.application.image.service.exception.ImageNotFoundException;
 import com.project.numble.application.user.domain.User;
 import com.project.numble.application.user.domain.enums.AnimalType;
 import com.project.numble.application.user.repository.UserRepository;
@@ -40,6 +43,8 @@ public class StandardBoardService implements BoardService{
 
     private final BookmarkRepository bookmarkRepository;
 
+    private final ImageRepository imageRepository;
+
     // 저장
     @Override
     public Long addBoard(AddBoardRequest request, Long userId) {
@@ -48,12 +53,16 @@ public class StandardBoardService implements BoardService{
                 .content(request.getContent())
                 .categoryType(request.getCategoryType())
                 .boardAddress(user.getAddress().getRegionDepth1())
-                .boardAnimals(new ArrayList<>())
                 .build();
 
         if (request.getBoardAnimalTypes().size() == 0) {
             throw new BoardAnimalsNotExistsException();
         }
+
+        request.getImageIds().forEach(id -> {
+            Image findImages = imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
+            board.addImage(findImages);
+        });
 
         request.getBoardAnimalTypes().stream().map(AnimalType::getAnimalType).forEach(boardAnimalType -> {
             BoardAnimal boardAnimal = new BoardAnimal(boardAnimalType);

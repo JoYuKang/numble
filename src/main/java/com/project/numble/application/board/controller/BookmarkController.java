@@ -16,7 +16,7 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     @PostMapping("/{boardId}")
-    public ResponseEntity<Void> addBookmark(@PathVariable("boardId") Long boardId, @SignInUser UserInfo userInfo ) {
+    public ResponseEntity<Void> addBookmark(@PathVariable("boardId") Long boardId, @SignInUser UserInfo userInfo) {
         bookmarkService.addBookmark(userInfo.getUserId(), boardId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

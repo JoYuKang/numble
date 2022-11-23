@@ -6,6 +6,7 @@ import com.project.numble.application.board.service.exception.BoardNotExistsExce
 import com.project.numble.application.board.service.exception.CurrentUserNotSameWriter;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.common.advice.ExceptionType;
+import com.project.numble.application.image.service.exception.ImageNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -38,4 +39,9 @@ public class BoardControllerAdvice {
         return utils.getFailureResponse(ExceptionType.BOARD_ANIMALS_NOT_EXISTS_EXCEPTION);
     }
 
+    @ExceptionHandler(ImageNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> imageNotFoundExceptionHandler() {
+        return utils.getFailureResponse(ExceptionType.IMAGE_NOT_FOUND_EXCEPTION);
+    }
 }
