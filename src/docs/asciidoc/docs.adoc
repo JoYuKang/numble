@@ -540,3 +540,66 @@ include::{snippets}/delete-image/response-fields.adoc[]
 ==== 존재하지 않는 이미지일 경우
 
 include::{snippets}/image-get-file-path-failed/http-response.adoc[]
+
+[[Bookmark-API]]
+== 북마크 API
+
+=== 븍마크 등록
+
+==== HTTP request
+
+include::{snippets}/add-bookmark/http-request.adoc[]
+
+==== HTTP request path parameters
+
+include::{snippets}/add-bookmark/path-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/add-bookmark/http-response.adoc[]
+
+=== 북마크 삭제
+
+==== HTTP request
+
+include::{snippets}/delete-bookmark/http-request.adoc[]
+
+==== HTTP request path parameters
+
+include::{snippets}/delete-bookmark/path-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/delete-bookmark/http-response.adoc[]
+
+[[Like-API]]
+== 좋아요 API
+
+=== 좋아요 등록
+
+==== HTTP request
+
+include::{snippets}/add-like/http-request.adoc[]
+
+==== HTTP request path parameters
+
+include::{snippets}/add-like/path-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/add-like/http-response.adoc[]
+
+=== 북마크 삭제
+
+==== HTTP request
+
+include::{snippets}/delete-like/http-request.adoc[]
+
+==== HTTP request path parameters
+
+include::{snippets}/delete-like/path-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/delete-like/http-response.adoc[]
+
