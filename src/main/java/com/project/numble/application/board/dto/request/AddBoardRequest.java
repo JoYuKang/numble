@@ -1,6 +1,5 @@
 package com.project.numble.application.board.dto.request;
 
-import com.project.numble.application.image.domain.Image;
 import com.project.numble.application.user.domain.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class AddBoardRequest {
 
     private User user;
 
-    private List<Image> imageList;
+    private List<Long> imageIds;
 
     @NotEmpty(message = "카테고리는 필수입니다.")
     private String categoryType;

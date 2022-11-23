@@ -62,13 +62,13 @@ public class Board extends BaseTimeEntity {
     private Integer bookmarkCount = 0;
 
     @Builder
-    private Board(User user, String content, String boardAddress, List<Image> images, String categoryType, List<BoardAnimal> boardAnimals) {
+    private Board(User user, String content, String boardAddress, String categoryType) {
         this.user = user;
         this.content = content;
         this.boardAddress = boardAddress;
-        this.images = images;
+        this.images = new ArrayList<>();
         this.categoryType = categoryType;
-        this.boardAnimals = boardAnimals;
+        this.boardAnimals = new ArrayList<>();
     }
 
     // 이미지 등록
