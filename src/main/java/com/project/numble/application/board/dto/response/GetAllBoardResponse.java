@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.image.domain.Image;
 import com.project.numble.application.user.domain.enums.AnimalType;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
+@EqualsAndHashCode(of = "boardId")
 public class GetAllBoardResponse {
 
     private Long boardId;

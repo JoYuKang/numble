@@ -105,8 +105,11 @@ public class StandardBoardService implements BoardService{
     // 전체 조회
     @Override
     @Transactional(readOnly = true)
-    public List<GetAllBoardResponse> getBoardList(Long userId) {
-        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findAllByOrderByCreatedDateDesc().stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+    public List<GetAllBoardResponse> getBoardList(PageRequest pageRequest, Long userId, String address, String animalType, String categoryType) {
+        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findBoardsOrderByIdDesc(pageRequest, address, categoryType).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+        if (!animalType.equals("전체")) {
+            getAllBoardResponses = getAllBoardResponses.stream().filter(getAllBoardResponse -> getAllBoardResponse.getBoardAnimalTypes().contains(animalType)).collect(Collectors.toList());
+        }
         for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
             getAllBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
             getAllBoardResponse.setBookmarkCheck(!bookmarkRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
