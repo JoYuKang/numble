@@ -589,7 +589,7 @@ include::{snippets}/add-like/path-parameters.adoc[]
 
 include::{snippets}/add-like/http-response.adoc[]
 
-=== 북마크 삭제
+=== 좋아요 삭제
 
 ==== HTTP request
 
@@ -603,3 +603,111 @@ include::{snippets}/delete-like/path-parameters.adoc[]
 
 include::{snippets}/delete-like/http-response.adoc[]
 
+[[Board-API]]
+== 게시글 API
+
+=== 게시글 등록
+
+==== HTTP request
+
+include::{snippets}/add-board/http-request.adoc[]
+
+==== HTTP request path parameters
+
+include::{snippets}/add-board/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/add-board/http-response.adoc[]
+
+=== 게시글 수정
+
+==== HTTP request
+
+include::{snippets}/mod-board/http-request.adoc[]
+
+==== HTTP request path parameters
+
+include::{snippets}/mod-board/request-fields.adoc[]
+
+==== HTTP response
+
+include::{snippets}/mod-board/http-response.adoc[]
+
+=== 게시글 삭제
+
+==== HTTP request
+
+include::{snippets}/delete-board/http-request.adoc[]
+
+==== HTTP request path parameters
+
+include::{snippets}/delete-board/path-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/delete-board/http-response.adoc[]
+
+=== 게시글 단건 조회
+
+==== HTTP request
+
+include::{snippets}/get-board/http-request.adoc[]
+
+==== HTTP request path parameters
+
+include::{snippets}/get-board/path-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/get-board/http-response.adoc[]
+
+==== HTTP response field
+
+include::{snippets}/get-board/response-fields.adoc[]
+
+=== 게시글 다건 조회
+
+==== HTTP request
+
+include::{snippets}/get-board-list/http-request.adoc[]
+
+==== HTTP request
+
+include::{snippets}/get-board-list/request-parameters.adoc[]
+
+==== HTTP response
+
+include::{snippets}/get-board-list/http-response.adoc[]
+
+==== HTTP response fields
+
+include::{snippets}/get-board-list/response-fields.adoc[]
+
+=== 유저가 작성한 게시글 조회
+
+==== HTTP request
+
+include::{snippets}/get-user-boards/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/get-user-boards/http-response.adoc[]
+
+==== HTTP response fields
+
+include::{snippets}/get-user-boards/response-fields.adoc[]
+
+=== 유저가 북마크한 게시글 조회
+
+==== HTTP request
+
+include::{snippets}/get-bookmark-boards/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/get-bookmark-boards/http-response.adoc[]
+
+==== HTTP response fields
+
+include::{snippets}/get-bookmark-boards/response-fields.adoc[]
