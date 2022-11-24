@@ -1,6 +1,5 @@
 package com.project.numble.application.board.dto.request;
 
-import com.project.numble.application.user.domain.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -15,8 +14,6 @@ public class AddBoardRequest {
 
     @NotEmpty(message = "내용은 필수입니다.")
     private String content;
-
-    private User user;
 
     private List<Long> imageIds;
 
