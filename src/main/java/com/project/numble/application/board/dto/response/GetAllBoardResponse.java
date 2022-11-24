@@ -22,7 +22,7 @@ public class GetAllBoardResponse {
     private String content;
 
     // 이미지 예정
-    private List<Image> image;
+    private List<Long> imageIds;
 
     private String nickname;
 
@@ -59,7 +59,6 @@ public class GetAllBoardResponse {
         this.nickname = board.getUser().getNickname();
         this.boardAddress = board.getBoardAddress();
         this.categoryType = board.getCategoryType();
-        this.createdDate = board.getCreatedDate();
         this.boardAnimalTypes = board.getBoardAnimals().stream().map(animal -> AnimalType.getName(animal.getAnimalType())).collect(
                 Collectors.toList());
         this.likeCount = board.getLikeCount();

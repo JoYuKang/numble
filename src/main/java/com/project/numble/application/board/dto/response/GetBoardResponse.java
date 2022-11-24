@@ -19,7 +19,7 @@ public class GetBoardResponse {
     private String content;
 
     // 이미지 예정
-    private List<Image> image;
+    private List<Long> imageIds;
 
     private String nickname;
 

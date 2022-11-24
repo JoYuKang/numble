@@ -14,16 +14,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ModBoardRequest {
 
-    Long id;
     @NotEmpty(message = "내용은 필수입니다.")
     private String content;
 
-    private List<Image> images;
+    private List<Long> imageIds;
 
     @NotEmpty(message = "카테고리는 필수입니다.")
     private String categoryType;
-
-    private User user;
 
     private String boardAddress;
 
