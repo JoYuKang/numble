@@ -464,10 +464,6 @@ include::{snippets}/get-all-comment-failed/http-response.adoc[]
 
 include::{snippets}/get-my-comments/http-request.adoc[]
 
-==== HTTP request path parameter
-
-include::{snippets}/get-my-comments/path-parameters.adoc[]
-
 ==== HTTP response
 
 include::{snippets}/get-my-comments/http-response.adoc[]
