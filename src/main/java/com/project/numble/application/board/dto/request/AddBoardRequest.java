@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,7 @@ public class AddBoardRequest {
     @NotEmpty(message = "내용은 필수입니다.")
     private String content;
 
-    private List<Long> imageIds;
+    private List<Long> imageIds = new ArrayList<>();
 
     @NotEmpty(message = "카테고리는 필수입니다.")
     private String categoryType;
