@@ -59,10 +59,12 @@ public class StandardBoardService implements BoardService{
             throw new BoardAnimalsNotExistsException();
         }
 
-        request.getImageIds().forEach(id -> {
-            Image findImages = imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
-            board.addImage(findImages);
-        });
+        if (request.getImageIds().size() != 0) {
+            request.getImageIds().forEach(id -> {
+                Image findImages = imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
+                board.addImage(findImages);
+            });
+        }
 
         request.getBoardAnimalTypes().stream().map(AnimalType::getAnimalType).forEach(boardAnimalType -> {
             BoardAnimal boardAnimal = new BoardAnimal(boardAnimalType);
@@ -138,7 +140,13 @@ public class StandardBoardService implements BoardService{
         if (!board.getUser().getId().equals(userId)) {
             throw new CurrentUserNotSameWriter();
         }
-
+        board.getImages().clear();
+        if (request.getImageIds().size() != 0) {
+            request.getImageIds().forEach(id -> {
+                Image findImages = imageRepository.findById(id).orElseThrow(ImageNotFoundException::new);
+                board.addImage(findImages);
+            });
+        }
         board.update(request,user.getAddress().getRegionDepth1());
         if (request.getBoardAnimalTypes().size() == 0) {
             throw new BoardAnimalsNotExistsException();
