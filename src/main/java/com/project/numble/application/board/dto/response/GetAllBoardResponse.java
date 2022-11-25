@@ -61,6 +61,7 @@ public class GetAllBoardResponse {
         this.categoryType = board.getCategoryType();
         this.boardAnimalTypes = board.getBoardAnimals().stream().map(animal -> AnimalType.getName(animal.getAnimalType())).collect(
                 Collectors.toList());
+        this.imageIds = board.getImages().stream().map(image -> image.getId()).collect(Collectors.toList());
         this.likeCount = board.getLikeCount();
         this.viewCount = board.getViewCount();
         this.bookmarkCount = board.getBookmarkCount();
