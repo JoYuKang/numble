@@ -6,5 +6,6 @@ cloud:
     region:
       static: ap-northeast-2
     s3:
+      bucket: numble-9-image
     stack:
       auto: false
