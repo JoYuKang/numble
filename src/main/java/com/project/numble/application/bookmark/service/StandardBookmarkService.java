@@ -1,12 +1,12 @@
-package com.project.numble.application.board.service;
+package com.project.numble.application.bookmark.service;
 
 import com.project.numble.application.board.domain.Board;
-import com.project.numble.application.board.domain.Bookmark;
+import com.project.numble.application.bookmark.domain.Bookmark;
 import com.project.numble.application.board.repository.BoardRepository;
-import com.project.numble.application.board.repository.BookmarkRepository;
-import com.project.numble.application.board.service.exception.AlreadyBookmarkBoardException;
+import com.project.numble.application.bookmark.repository.BookmarkRepository;
+import com.project.numble.application.bookmark.service.exception.AlreadyBookmarkBoardException;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
-import com.project.numble.application.board.service.exception.BookmarkNotExistsException;
+import com.project.numble.application.bookmark.service.exception.BookmarkNotExistsException;
 import com.project.numble.application.user.domain.User;
 import com.project.numble.application.user.repository.UserRepository;
 import com.project.numble.application.user.repository.exception.UserNotFoundException;

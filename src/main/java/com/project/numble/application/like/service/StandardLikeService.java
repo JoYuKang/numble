@@ -1,12 +1,12 @@
-package com.project.numble.application.board.service;
+package com.project.numble.application.like.service;
 
 import com.project.numble.application.board.domain.Board;
-import com.project.numble.application.board.domain.Like;
+import com.project.numble.application.like.domain.Like;
 import com.project.numble.application.board.repository.BoardRepository;
-import com.project.numble.application.board.repository.LikeRepository;
-import com.project.numble.application.board.service.exception.AlreadyLikeBoardException;
+import com.project.numble.application.like.repository.LikeRepository;
+import com.project.numble.application.like.service.exception.AlreadyLikeBoardException;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
-import com.project.numble.application.board.service.exception.LikeNotExistsException;
+import com.project.numble.application.like.service.exception.LikeNotExistsException;
 import com.project.numble.application.user.domain.User;
 import com.project.numble.application.user.repository.UserRepository;
 import com.project.numble.application.user.repository.exception.UserNotFoundException;

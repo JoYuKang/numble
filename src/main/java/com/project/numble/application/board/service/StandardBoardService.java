@@ -2,14 +2,12 @@ package com.project.numble.application.board.service;
 
 import com.project.numble.application.board.domain.Board;
 import com.project.numble.application.board.domain.BoardAnimal;
-import com.project.numble.application.board.domain.Like;
 import com.project.numble.application.board.dto.request.AddBoardRequest;
 import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
-import com.project.numble.application.board.repository.BoardAnimalRepository;
-import com.project.numble.application.board.repository.BookmarkRepository;
-import com.project.numble.application.board.repository.LikeRepository;
+import com.project.numble.application.bookmark.repository.BookmarkRepository;
+import com.project.numble.application.like.repository.LikeRepository;
 import com.project.numble.application.board.service.exception.BoardAnimalsNotExistsException;
 import com.project.numble.application.board.service.exception.BoardNotExistsException;
 import com.project.numble.application.board.repository.BoardRepository;
@@ -26,7 +24,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
