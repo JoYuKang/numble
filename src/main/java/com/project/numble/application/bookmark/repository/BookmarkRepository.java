@@ -1,6 +1,6 @@
-package com.project.numble.application.board.repository;
+package com.project.numble.application.bookmark.repository;
 
-import com.project.numble.application.board.domain.Bookmark;
+import com.project.numble.application.bookmark.domain.Bookmark;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

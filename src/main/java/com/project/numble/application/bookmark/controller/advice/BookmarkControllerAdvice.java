@@ -1,8 +1,8 @@
-package com.project.numble.application.board.controller.advice;
+package com.project.numble.application.bookmark.controller.advice;
 
-import com.project.numble.application.board.controller.BookmarkController;
-import com.project.numble.application.board.service.exception.AlreadyBookmarkBoardException;
-import com.project.numble.application.board.service.exception.BookmarkNotExistsException;
+import com.project.numble.application.bookmark.controller.BookmarkController;
+import com.project.numble.application.bookmark.service.exception.AlreadyBookmarkBoardException;
+import com.project.numble.application.bookmark.service.exception.BookmarkNotExistsException;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.common.advice.ExceptionType;
 import lombok.RequiredArgsConstructor;

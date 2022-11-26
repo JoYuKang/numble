@@ -1,6 +1,6 @@
-package com.project.numble.application.board.repository;
+package com.project.numble.application.like.repository;
 
-import com.project.numble.application.board.domain.Like;
+import com.project.numble.application.like.domain.Like;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

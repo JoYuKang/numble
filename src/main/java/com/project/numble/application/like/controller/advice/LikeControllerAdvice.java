@@ -1,9 +1,8 @@
-package com.project.numble.application.board.controller.advice;
+package com.project.numble.application.like.controller.advice;
 
-import com.project.numble.application.board.controller.LikeController;
-import com.project.numble.application.board.service.exception.AlreadyLikeBoardException;
-import com.project.numble.application.board.service.exception.CommentNotExistsException;
-import com.project.numble.application.board.service.exception.LikeNotExistsException;
+import com.project.numble.application.like.controller.LikeController;
+import com.project.numble.application.like.service.exception.AlreadyLikeBoardException;
+import com.project.numble.application.like.service.exception.LikeNotExistsException;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.common.advice.ExceptionType;
 import lombok.RequiredArgsConstructor;

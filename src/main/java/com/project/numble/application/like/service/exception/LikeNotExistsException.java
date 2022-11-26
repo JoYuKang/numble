@@ -1,4 +1,4 @@
-package com.project.numble.application.board.service.exception;
+package com.project.numble.application.like.service.exception;
 
 public class LikeNotExistsException extends RuntimeException{
 }

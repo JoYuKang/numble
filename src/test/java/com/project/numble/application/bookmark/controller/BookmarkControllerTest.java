@@ -1,8 +1,8 @@
-package com.project.numble.application.board.controller;
+package com.project.numble.application.bookmark.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.numble.application.board.controller.advice.LikeControllerAdvice;
-import com.project.numble.application.board.service.StandardLikeService;
+import com.project.numble.application.bookmark.controller.advice.BookmarkControllerAdvice;
+import com.project.numble.application.bookmark.service.StandardBookmarkService;
 import com.project.numble.application.common.advice.CommonControllerAdvice;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.core.resolver.SignInUserArgumentResolver;
@@ -31,19 +31,19 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("LikeController RestDocs 테스트")
+@DisplayName("BookmarkController RestDocs 테스트")
 @ExtendWith({MockitoExtension.class, RestDocumentationExtension.class})
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class LikeControllerTest {
+class BookmarkControllerTest {
 
     @Mock
-    StandardLikeService likeService;
+    StandardBookmarkService bookmarkService;
 
     @Mock
     SignInUserArgumentResolver signInUserArgumentResolver;
 
     @InjectMocks
-    LikeController likeController;
+    BookmarkController bookmarkController;
 
     MockMvc mockMvc;
     ObjectMapper objectMapper = new ObjectMapper();
@@ -64,9 +64,9 @@ class LikeControllerTest {
         validator.setValidationMessageSource(validatorMessageSource);
 
         mockMvc = MockMvcBuilders
-                .standaloneSetup(likeController)
+                .standaloneSetup(bookmarkController)
                 .setControllerAdvice(
-                        new LikeControllerAdvice(utils),
+                        new BookmarkControllerAdvice(utils),
                         new CommonControllerAdvice(utils)
                 )
                 .setValidator(validator)
@@ -87,19 +87,19 @@ class LikeControllerTest {
                 .build();
     }
     @Test
-    void addLike_성공_테스트() throws Exception{
+    void addBookmark_성공_테스트() throws Exception{
 
         // given
-        willDoNothing().given(likeService).addLike(any(), any());
+        willDoNothing().given(bookmarkService).addBookmark(any(), any());
 
         // when
         ResultActions result = mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/like/{boardId}", 1));
+                RestDocumentationRequestBuilders.post("/bookmark/{boardId}", 1));
 
         // then
         result
                 .andExpect(status().isCreated()).andDo(
-                        document("add-like"
+                        document("add-bookmark"
                                 , pathParameters(parameterWithName("boardId").description("게시글 ID"))
                         )
                 );
@@ -107,34 +107,34 @@ class LikeControllerTest {
     }
 
 //    @Test
-//    void addLike_board_실패_테스트() throws Exception{
+//    void addBookmark_board_실패_테스트() throws Exception{
 //
 //        // given
-//        willDoNothing().given(likeService).addLike(any(), any());
+//        willDoNothing().given(bookmarkService).addBookmark(any(), any());
 //
 //        // when
 //        ResultActions result = mockMvc.perform( // Expected 400, Actual 201
-//                RestDocumentationRequestBuilders.post("/like/{boardId}", "201"));
+//                RestDocumentationRequestBuilders.post("/bookmark/{boardId}", "201"));
 //        // then
 //        result
 //                .andExpect(status().isBadRequest())
 //                .andDo(
-//                        document("add-like-failed")
+//                        document("add-bookmark-failed")
 //                );
 //    }
 
     @Test
-    void cancelLike() throws Exception{
-        willDoNothing().given(likeService).cancelLike(any(), any());
+    void cancelBookmark() throws Exception{
+        willDoNothing().given(bookmarkService).cancelBookmark(any(), any());
 
         // when
         ResultActions result = mockMvc.perform(
-                RestDocumentationRequestBuilders.delete("/like/{boardId}", 1));
+                RestDocumentationRequestBuilders.delete("/bookmark/{boardId}", 1));
 
         // then
         result
                 .andExpect(status().isOk()).andDo(
-                        document("delete-like"
+                        document("delete-bookmark"
                                 , pathParameters(parameterWithName("boardId").description("게시글 ID"))
                         )
                 );

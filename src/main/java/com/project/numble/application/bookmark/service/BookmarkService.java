@@ -1,4 +1,4 @@
-package com.project.numble.application.board.service;
+package com.project.numble.application.bookmark.service;
 
 public interface BookmarkService {
 

@@ -1,4 +1,4 @@
-package com.project.numble.application.board.service;
+package com.project.numble.application.like.service;
 
 public interface LikeService {
     void addLike(Long userId, Long boardId);

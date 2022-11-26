@@ -1,7 +1,7 @@
 package com.project.numble.application.board.repository;
 
 import com.project.numble.application.board.domain.*;
-import com.project.numble.application.user.domain.enums.AnimalType;
+import com.project.numble.application.bookmark.domain.QBookmark;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,11 @@
 package com.project.numble.application.board.domain;
 
 import com.project.numble.application.board.dto.request.ModBoardRequest;
+import com.project.numble.application.bookmark.domain.Bookmark;
 import com.project.numble.application.comment.domain.Comment;
 import com.project.numble.application.common.entity.BaseTimeEntity;
 import com.project.numble.application.image.domain.Image;
+import com.project.numble.application.like.domain.Like;
 import com.project.numble.application.user.domain.User;
 import lombok.*;
 
