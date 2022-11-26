@@ -358,7 +358,7 @@ class CommentControllerTest {
     void getAllComments_성공_테스트() throws Exception {
         // given
         RootCommentResponse response = RootCommentResponseFactory.createRootCommentResponse();
-        given(commentService.getAllComments(anyLong())).willReturn(new RootsCommentsResponse(List.of(response)));
+        given(commentService.getAllComments(anyLong())).willReturn(List.of(response));
 
         // when
         ResultActions result = mockMvc.perform(
@@ -371,21 +371,21 @@ class CommentControllerTest {
                 document("get-all-comments",
                     pathParameters(parameterWithName("boardId").description("게시글 ID")),
                     responseFields(
-                        fieldWithPath("comments.[].commentId").type(JsonFieldType.NUMBER).description("댓글 ID").optional(),
-                        fieldWithPath("comments.[].author").type(JsonFieldType.STRING).description("댓글 작성자").optional(),
-                        fieldWithPath("comments.[].address").type(JsonFieldType.STRING).description("댓글 작성자 주소").optional(),
-                        fieldWithPath("comments.[].content").type(JsonFieldType.STRING).description("댓글 내용").optional(),
-                        fieldWithPath("comments.[].depth").type(JsonFieldType.NUMBER).description("댓글 깊이 (1)").optional(),
-                        fieldWithPath("comments.[].deleted").type(JsonFieldType.BOOLEAN).description("삭제 유무").optional(),
-                        fieldWithPath("comments.[].createdDate").type(JsonFieldType.STRING).description("댓글 등록일").optional(),
-                        fieldWithPath("comments.[].children").type(JsonFieldType.ARRAY).description("대댓글 목록").optional(),
-                        fieldWithPath("comments.[].children.[].commentId").type(JsonFieldType.NUMBER).description("대댓글 ID").optional(),
-                        fieldWithPath("comments.[].children.[].author").type(JsonFieldType.STRING).description("대댓글 작성자").optional(),
-                        fieldWithPath("comments.[].children.[].content").type(JsonFieldType.STRING).description("대댓글 내용").optional(),
-                        fieldWithPath("comments.[].children.[].depth").type(JsonFieldType.NUMBER).description("대댓글 깊이 (2)").optional(),
-                        fieldWithPath("comments.[].children.[].address").type(JsonFieldType.STRING).description("대댓글 작성자 주소").optional(),
-                        fieldWithPath("comments.[].children.[].deleted").type(JsonFieldType.BOOLEAN).description("대댓글 삭제 유무").optional(),
-                        fieldWithPath("comments.[].children.[].createdDate").type(JsonFieldType.STRING).description("대댓글 등록일").optional()
+                        fieldWithPath("[].commentId").type(JsonFieldType.NUMBER).description("댓글 ID").optional(),
+                        fieldWithPath("[].author").type(JsonFieldType.STRING).description("댓글 작성자").optional(),
+                        fieldWithPath("[].address").type(JsonFieldType.STRING).description("댓글 작성자 주소").optional(),
+                        fieldWithPath("[].content").type(JsonFieldType.STRING).description("댓글 내용").optional(),
+                        fieldWithPath("[].depth").type(JsonFieldType.NUMBER).description("댓글 깊이 (1)").optional(),
+                        fieldWithPath("[].deleted").type(JsonFieldType.BOOLEAN).description("삭제 유무").optional(),
+                        fieldWithPath("[].createdDate").type(JsonFieldType.STRING).description("댓글 등록일").optional(),
+                        fieldWithPath("[].children").type(JsonFieldType.ARRAY).description("대댓글 목록").optional(),
+                        fieldWithPath("[].children.[].commentId").type(JsonFieldType.NUMBER).description("대댓글 ID").optional(),
+                        fieldWithPath("[].children.[].author").type(JsonFieldType.STRING).description("대댓글 작성자").optional(),
+                        fieldWithPath("[].children.[].content").type(JsonFieldType.STRING).description("대댓글 내용").optional(),
+                        fieldWithPath("[].children.[].depth").type(JsonFieldType.NUMBER).description("대댓글 깊이 (2)").optional(),
+                        fieldWithPath("[].children.[].address").type(JsonFieldType.STRING).description("대댓글 작성자 주소").optional(),
+                        fieldWithPath("[].children.[].deleted").type(JsonFieldType.BOOLEAN).description("대댓글 삭제 유무").optional(),
+                        fieldWithPath("[].children.[].createdDate").type(JsonFieldType.STRING).description("대댓글 등록일").optional()
                     )
                 )
             );
@@ -411,7 +411,7 @@ class CommentControllerTest {
     void getMyComments_성공_테스트() throws Exception {
         // given
         GetCommentResponse response = GetCommentResponseFactory.createGetCommentResponse();
-        given(commentService.getMyComments(any())).willReturn(new GetCommentsResponse(List.of(response)));
+        given(commentService.getMyComments(any())).willReturn(List.of(response));
 
         // when
         ResultActions result = mockMvc.perform(
@@ -423,12 +423,12 @@ class CommentControllerTest {
             .andDo(
                 document("get-my-comments",
                     responseFields(
-                        fieldWithPath("comments.[].commentId").type(JsonFieldType.NUMBER).description("댓글 ID").optional(),
-                        fieldWithPath("comments.[].author").type(JsonFieldType.STRING).description("댓글 작성자").optional(),
-                        fieldWithPath("comments.[].content").type(JsonFieldType.STRING).description("댓글 내용").optional(),
-                        fieldWithPath("comments.[].depth").type(JsonFieldType.NUMBER).description("댓글 깊이 (1)").optional(),
-                        fieldWithPath("comments.[].deleted").type(JsonFieldType.BOOLEAN).description("삭제 유무").optional(),
-                        fieldWithPath("comments.[].createdDate").type(JsonFieldType.STRING).description("댓글 등록일").optional()
+                        fieldWithPath("[].commentId").type(JsonFieldType.NUMBER).description("댓글 ID").optional(),
+                        fieldWithPath("[].author").type(JsonFieldType.STRING).description("댓글 작성자").optional(),
+                        fieldWithPath("[].content").type(JsonFieldType.STRING).description("댓글 내용").optional(),
+                        fieldWithPath("[].depth").type(JsonFieldType.NUMBER).description("댓글 깊이 (1)").optional(),
+                        fieldWithPath("[].deleted").type(JsonFieldType.BOOLEAN).description("삭제 유무").optional(),
+                        fieldWithPath("[].createdDate").type(JsonFieldType.STRING).description("댓글 등록일").optional()
                     )
                 )
             );
