@@ -1930,26 +1930,24 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 
-{
-  "comments" : [ {
-    "commentId" : 1,
+[ {
+  "commentId" : 1,
+  "author" : "author",
+  "address" : "address",
+  "content" : "content",
+  "depth" : 1,
+  "deleted" : false,
+  "children" : [ {
+    "commentId" : 2,
     "author" : "author",
-    "address" : "address",
     "content" : "content",
-    "depth" : 1,
+    "depth" : 2,
+    "address" : "address",
     "deleted" : false,
-    "children" : [ {
-      "commentId" : 2,
-      "author" : "author",
-      "content" : "content",
-      "depth" : 2,
-      "address" : "address",
-      "deleted" : false,
-      "createdDate" : "2022-11-25 17:34:19"
-    } ],
-    "createdDate" : "2022-11-25 17:34:19"
-  } ]
-}</code></pre>
+    "createdDate" : "2022-11-26 11:03:16"
+  } ],
+  "createdDate" : "2022-11-26 11:03:16"
+} ]</code></pre>
 </div>
 </div>
 </div>
@@ -1970,77 +1968,77 @@ Content-Type: application/json
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].commentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].commentId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 ID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].author</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].author</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 작성자</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].address</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 작성자 주소</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 내용</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].depth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].depth</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 깊이 (1)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].deleted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].deleted</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">삭제 유무</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].createdDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].createdDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 등록일</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].children</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].children</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 목록</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].children.[].commentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].children.[].commentId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 ID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].children.[].author</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].children.[].author</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 작성자</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].children.[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].children.[].content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 내용</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].children.[].depth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].children.[].depth</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 깊이 (2)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].children.[].address</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].children.[].address</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 작성자 주소</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].children.[].deleted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].children.[].deleted</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 삭제 유무</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].children.[].createdDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].children.[].createdDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">대댓글 등록일</p></td>
 </tr>
@@ -2079,15 +2077,13 @@ Content-Type: application/json
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 
-{
-  "comments" : [ {
-    "commentId" : 1,
-    "author" : "author",
-    "content" : "content",
-    "depth" : 1,
-    "createdDate" : "2022-11-25 17:34:19"
-  } ]
-}</code></pre>
+[ {
+  "commentId" : 1,
+  "author" : "author",
+  "content" : "content",
+  "depth" : 1,
+  "createdDate" : "2022-11-26 11:03:16"
+} ]</code></pre>
 </div>
 </div>
 </div>
@@ -2108,32 +2104,32 @@ Content-Type: application/json
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].commentId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].commentId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 ID</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].author</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].author</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 작성자</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].content</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 내용</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].depth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].depth</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 깊이 (1)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].deleted</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].deleted</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Boolean</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">삭제 유무</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>comments.[].createdDate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>[].createdDate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">댓글 등록일</p></td>
 </tr>
@@ -2836,8 +2832,8 @@ Content-Type: application/json
   "viewCount" : 5,
   "bookmarkCount" : 2,
   "bookmarkCheck" : false,
-  "createdDate" : "2022-11-25T17:34:19",
-  "lastModifiedDate" : "2022-11-25T17:34:19"
+  "createdDate" : "2022-11-26T11:03:16",
+  "lastModifiedDate" : "2022-11-26T11:03:16"
 }</code></pre>
 </div>
 </div>
@@ -2985,8 +2981,8 @@ Content-Type: application/json
   "viewCount" : 5,
   "bookmarkCount" : 2,
   "bookmarkCheck" : false,
-  "createdDate" : "2022-11-25T17:34:19",
-  "lastModifiedDate" : "2022-11-25T17:34:19"
+  "createdDate" : "2022-11-26T11:03:16",
+  "lastModifiedDate" : "2022-11-26T11:03:16"
 } ]</code></pre>
 </div>
 </div>
@@ -3110,8 +3106,8 @@ Content-Type: application/json
   "viewCount" : 5,
   "bookmarkCount" : 2,
   "bookmarkCheck" : false,
-  "createdDate" : "2022-11-25T17:34:19",
-  "lastModifiedDate" : "2022-11-25T17:34:19"
+  "createdDate" : "2022-11-26T11:03:16",
+  "lastModifiedDate" : "2022-11-26T11:03:16"
 } ]</code></pre>
 </div>
 </div>
@@ -3235,8 +3231,8 @@ Content-Type: application/json
   "viewCount" : 5,
   "bookmarkCount" : 2,
   "bookmarkCheck" : false,
-  "createdDate" : "2022-11-25T17:34:19",
-  "lastModifiedDate" : "2022-11-25T17:34:19"
+  "createdDate" : "2022-11-26T11:03:16",
+  "lastModifiedDate" : "2022-11-26T11:03:16"
 } ]</code></pre>
 </div>
 </div>
@@ -3337,7 +3333,7 @@ Content-Type: application/json
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-25 17:33:41 +0900
+Last updated 2022-11-26 08:55:04 +0900
 </div>
 </div>
 </body>
