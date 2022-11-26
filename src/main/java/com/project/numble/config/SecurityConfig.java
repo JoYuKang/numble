@@ -3,6 +3,7 @@ package com.project.numble.config;
 import com.project.numble.application.user.repository.UserRepository;
 import com.project.numble.core.security.CustomUserDetailsService;
 import com.project.numble.core.security.oauth2.CustomAuthenticationFailureHandler;
+import com.project.numble.core.security.oauth2.CustomLoginFailureEntryPoint;
 import com.project.numble.core.security.oauth2.CustomOAuth2SuccessHandler;
 import com.project.numble.core.security.oauth2.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .exceptionHandling()
+            .authenticationEntryPoint(new CustomLoginFailureEntryPoint())
+            .and()
             .httpBasic().disable()
             .formLogin().disable()
             .csrf().disable()
