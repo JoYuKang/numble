@@ -2,6 +2,7 @@ package com.project.numble.application.board.repository;
 
 import com.project.numble.application.board.domain.*;
 import com.project.numble.application.bookmark.domain.QBookmark;
+import com.project.numble.application.user.domain.enums.AnimalType;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -18,26 +19,35 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
 
     private static final QBookmark QBOOKMARK = QBookmark.bookmark;
 
+    private static final QBoardAnimal QBOARDANIMAL = QBoardAnimal.boardAnimal;
+
     private final JPAQueryFactory queryFactory;
 
 
     @Override
-    public List<Board> findBoardsOrderByIdDesc(Pageable pageable, String address, String categoryType) {
-        return queryFactory.selectFrom(QBOARD)
+    public List<Board> findBoardsOrderByIdDesc(String address, String animalType, String categoryType, Long lastBoardId) {
+        return queryFactory.selectFrom(QBOARD).distinct()
+                .join(QBOARD.boardAnimals, QBOARDANIMAL)
+                .on(QBOARD.id.eq(QBOARDANIMAL.board.id))
                 .where(categoryTypeEq(categoryType),
-                        addressEq(address))
+                        addressEq(address),
+                        boardAnimalEq(animalType),
+                        QBOARD.id.lt(lastBoardId))
                 .orderBy(QBOARD.id.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .limit(5)
                 .fetch();
     }
 
     private BooleanExpression categoryTypeEq(String categoryType) {
-        return categoryType != "전체" ? QBOARD.categoryType.eq(categoryType) : null;
+        return !categoryType.equals("전체") ? QBOARD.categoryType.eq(categoryType) : null;
     }
 
     private BooleanExpression addressEq(String address) {
-        return address != "전체" ? QBOARD.boardAddress.eq(address) : null;
+        return !address.equals("전체") ? QBOARD.boardAddress.eq(address) : null;
+    }
+
+    private static BooleanExpression boardAnimalEq(String animalType) {
+        return !animalType.equals("전체") ? QBOARDANIMAL.animalType.eq(AnimalType.getAnimalType(animalType)) : null;
     }
 
     @Override

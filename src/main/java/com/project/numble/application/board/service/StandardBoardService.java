@@ -113,14 +113,19 @@ public class StandardBoardService implements BoardService{
     // 전체 조회
     @Override
     @Transactional(readOnly = true)
-    public List<GetAllBoardResponse> getBoardList(PageRequest pageRequest, Long userId, String address, String animalType, String categoryType) {
-        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findBoardsOrderByIdDesc(pageRequest, address, categoryType).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
-        if (!animalType.equals("전체")) {
-            getAllBoardResponses = getAllBoardResponses.stream().filter(getAllBoardResponse -> getAllBoardResponse.getBoardAnimalTypes().contains(animalType)).collect(Collectors.toList());
+    public List<GetAllBoardResponse> getBoardList(Long userId, String address, String animalType, String categoryType, Long lastBoardId) {
+        if (lastBoardId == null) {
+            lastBoardId = Long.MAX_VALUE;
+        }
+        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findBoardsOrderByIdDesc(address, animalType, categoryType, lastBoardId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+
+        if (getAllBoardResponses.size() > 0) {
+            lastBoardId = getAllBoardResponses.get(getAllBoardResponses.size() - 1).getBoardId();
         }
         for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
             getAllBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
             getAllBoardResponse.setBookmarkCheck(!bookmarkRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
+            getAllBoardResponse.setLastBoardId(lastBoardId);
         }
         return getAllBoardResponses;
     }

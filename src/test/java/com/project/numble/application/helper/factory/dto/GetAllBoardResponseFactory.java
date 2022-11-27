@@ -37,6 +37,8 @@ public class GetAllBoardResponseFactory {
             setField(response, "bookmarkCheck", false);
             setField(response, "createdDate", LocalDateTime.now());
             setField(response, "lastModifiedDate", LocalDateTime.now());
+            setField(response, "lastBoardId", 3L);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

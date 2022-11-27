@@ -243,7 +243,8 @@ public class BoardControllerTest {
                                         fieldWithPath("[].bookmarkCount").type(JsonFieldType.NUMBER).description("북마크 개수").optional(),
                                         fieldWithPath("[].bookmarkCheck").type(JsonFieldType.BOOLEAN).description("북마크 유무").optional(),
                                         fieldWithPath("[].createdDate").type(JsonFieldType.STRING).description("첫 작성 시간").optional(),
-                                        fieldWithPath("[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 시간").optional()
+                                        fieldWithPath("[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 시간").optional(),
+                                        fieldWithPath("[].lastBoardId").type(JsonFieldType.NUMBER).description("마지막 게시글 ID").optional()
                                 )
                         )
                 );
@@ -278,7 +279,9 @@ public class BoardControllerTest {
                                         fieldWithPath("[].bookmarkCount").type(JsonFieldType.NUMBER).description("북마크 개수").optional(),
                                         fieldWithPath("[].bookmarkCheck").type(JsonFieldType.BOOLEAN).description("북마크 유무").optional(),
                                         fieldWithPath("[].createdDate").type(JsonFieldType.STRING).description("첫 작성 시간").optional(),
-                                        fieldWithPath("[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 시간").optional()
+                                        fieldWithPath("[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 시간").optional(),
+                                        fieldWithPath("[].lastBoardId").type(JsonFieldType.NUMBER).description("마지막 게시글 ID").optional()
+
                                 )
                         )
                 );
@@ -313,7 +316,9 @@ public class BoardControllerTest {
                                         fieldWithPath("[].bookmarkCount").type(JsonFieldType.NUMBER).description("북마크 개수").optional(),
                                         fieldWithPath("[].bookmarkCheck").type(JsonFieldType.BOOLEAN).description("북마크 유무").optional(),
                                         fieldWithPath("[].createdDate").type(JsonFieldType.STRING).description("첫 작성 시간").optional(),
-                                        fieldWithPath("[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 시간").optional()
+                                        fieldWithPath("[].lastModifiedDate").type(JsonFieldType.STRING).description("수정 시간").optional(),
+                                        fieldWithPath("[].lastBoardId").type(JsonFieldType.NUMBER).description("마지막 게시글 ID").optional()
+
                                 )
                         )
                 );
