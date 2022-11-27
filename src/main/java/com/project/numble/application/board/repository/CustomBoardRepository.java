@@ -9,9 +9,9 @@ public interface CustomBoardRepository {
 
     List<Board> findBoardsOrderByIdDesc(String address, String animalType, String categoryType, Long lastBoardId);
 
-    List<Board> findUserBoardsOrderByIdDesc(Pageable pageable, Long userId);
+    List<Board> findUserBoardsOrderByIdDesc(Long userId, Long lastBoardId);
 
-    List<Board> findBookmarkBoardOrderByIdDesc(Pageable pageable, Long userId);
+    List<Board> findBookmarkBoardOrderByIdDesc(Long userId, Long lastBoardId);
 
 
 }
