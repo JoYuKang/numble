@@ -12,7 +12,7 @@ import java.util.List;
 public interface BoardService {
 
     GetBoardResponse getBoard(Long userId, Long boardId);
-    List<GetAllBoardResponse> getBoardList(PageRequest pageRequest, Long userId, String address, String animal, String category);
+    List<GetAllBoardResponse> getBoardList(Long userId, String address, String animal, String category, Long lastBoardId);
 
     Long addBoard(AddBoardRequest addBoardRequest, Long userId);
 

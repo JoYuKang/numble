@@ -33,9 +33,9 @@ public class BoardController {
             @RequestParam(value = "address", required = false) String address,
             @RequestParam(value = "category", required = false) String categoryType,
             @RequestParam(value = "animal", required = false) String animalType,
+            @RequestParam(value = "lastBoardId", required = false) Long lastBoardId,
             @SignInUser UserInfo userInfo) {
-        PageRequest pageRequest = PageRequest.of(0, 50);
-        List<GetAllBoardResponse> boards = boardService.getBoardList(pageRequest, userInfo.getUserId(), address, animalType, categoryType);
+        List<GetAllBoardResponse> boards = boardService.getBoardList(userInfo.getUserId(), address, animalType, categoryType, lastBoardId);
 
         return new ResponseEntity<>(boards, HttpStatus.OK);
     }
