@@ -13,4 +13,4 @@ COPY properties/application-oauth2.yml application-oauth2.yml
 COPY properties/application-api.yml application-api.yml
 COPY properties/application-aws.yml application-aws.yml
 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ENV_IDLE_PROFILE}", "-Dspring.config.location=classpath:/application.yml,application-session.yml,application-db.yml,application-jpa.yml,application-oauth2.yml,application-api.yml,application-aws.yml", "/numble-9.jar"]
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${ENV_IDLE_PROFILE}", "-Duser.timezone=Asia/Seoul", "-Dspring.config.location=classpath:/application.yml,application-session.yml,application-db.yml,application-jpa.yml,application-oauth2.yml,application-api.yml,application-aws.yml", "/numble-9.jar"]
