@@ -20,7 +20,6 @@ import com.project.numble.application.user.domain.enums.AnimalType;
 import com.project.numble.application.user.repository.UserRepository;
 import com.project.numble.application.user.repository.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,27 +86,30 @@ public class StandardBoardService implements BoardService{
     }
 
 
-    // 자기가 작성한 글 조회
+    // 작성한 글 조회
     @Override
     @Transactional(readOnly = true)
-    public List<GetAllBoardResponse> getBoardUser(PageRequest pageRequest,Long userId) {
-        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findUserBoardsOrderByIdDesc(pageRequest, userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
-        for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
-            getAllBoardResponse.setLikeCheck(!likeRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
-            getAllBoardResponse.setBookmarkCheck(!bookmarkRepository.findByUserIdAndBoardId(userId, getAllBoardResponse.getBoardId()).isEmpty());
+    public List<GetAllBoardResponse> getBoardUser(Long userId, Long lastBoardId) {
+        userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
+        if (lastBoardId == null) {
+            lastBoardId = Long.MAX_VALUE;
         }
-        return getAllBoardResponses;
+        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findUserBoardsOrderByIdDesc(userId,lastBoardId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+
+        return getGetAllBoardResponses(userId, lastBoardId, getAllBoardResponses);
     }
 
     // bookmark 게시글 조회
     @Override
-    public List<GetAllBoardResponse> getBookmarkBoard(PageRequest pageRequest, Long userId) {
+    public List<GetAllBoardResponse> getBookmarkBoard(Long userId, Long lastBoardId) {
         userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
-        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findBookmarkBoardOrderByIdDesc(pageRequest, userId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
-        for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
-            getAllBoardResponse.setBookmarkCheck(true);
+        if (lastBoardId == null) {
+            lastBoardId = Long.MAX_VALUE;
         }
-        return getAllBoardResponses;
+
+        List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findBookmarkBoardOrderByIdDesc(userId, lastBoardId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
+
+        return getGetAllBoardResponses(lastBoardId, getAllBoardResponses);
     }
 
     // 전체 조회
@@ -119,6 +121,10 @@ public class StandardBoardService implements BoardService{
         }
         List<GetAllBoardResponse> getAllBoardResponses = boardRepository.findBoardsOrderByIdDesc(address, animalType, categoryType, lastBoardId).stream().map(GetAllBoardResponse::new).collect(Collectors.toList());
 
+        return getGetAllBoardResponses(userId, lastBoardId, getAllBoardResponses);
+    }
+
+    private List<GetAllBoardResponse> getGetAllBoardResponses(Long userId, Long lastBoardId, List<GetAllBoardResponse> getAllBoardResponses) {
         if (getAllBoardResponses.size() > 0) {
             lastBoardId = getAllBoardResponses.get(getAllBoardResponses.size() - 1).getBoardId();
         }
@@ -130,6 +136,18 @@ public class StandardBoardService implements BoardService{
         return getAllBoardResponses;
     }
 
+
+    private static List<GetAllBoardResponse> getGetAllBoardResponses(Long lastBoardId, List<GetAllBoardResponse> getAllBoardResponses) {
+        if (getAllBoardResponses.size() > 0) {
+            lastBoardId = getAllBoardResponses.get(getAllBoardResponses.size() - 1).getBoardId();
+        }
+
+        for (GetAllBoardResponse getAllBoardResponse : getAllBoardResponses) {
+            getAllBoardResponse.setBookmarkCheck(true);
+            getAllBoardResponse.setLastBoardId(lastBoardId);
+        }
+        return getAllBoardResponses;
+    }
 
     // 수정
     @Override

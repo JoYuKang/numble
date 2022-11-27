@@ -668,7 +668,7 @@ include::{snippets}/get-board/response-fields.adoc[]
 
 include::{snippets}/get-board-list/http-request.adoc[]
 
-==== HTTP request
+==== HTTP request query parameters
 
 include::{snippets}/get-board-list/request-parameters.adoc[]
 
@@ -686,6 +686,10 @@ include::{snippets}/get-board-list/response-fields.adoc[]
 
 include::{snippets}/get-user-boards/http-request.adoc[]
 
+==== HTTP request query parameters
+
+include::{snippets}/get-user-boards/request-parameters.adoc[]
+
 ==== HTTP response
 
 include::{snippets}/get-user-boards/http-response.adoc[]
@@ -699,6 +703,10 @@ include::{snippets}/get-user-boards/response-fields.adoc[]
 ==== HTTP request
 
 include::{snippets}/get-bookmark-boards/http-request.adoc[]
+
+==== HTTP request query parameters
+
+include::{snippets}/get-bookmark-boards/request-parameters.adoc[]
 
 ==== HTTP response
 

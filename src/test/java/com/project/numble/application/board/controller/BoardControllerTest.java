@@ -7,8 +7,6 @@ import com.project.numble.application.board.dto.request.ModBoardRequest;
 import com.project.numble.application.board.dto.response.GetAllBoardResponse;
 import com.project.numble.application.board.dto.response.GetBoardResponse;
 import com.project.numble.application.board.service.StandardBoardService;
-import com.project.numble.application.comment.dto.response.RootCommentResponse;
-import com.project.numble.application.comment.dto.response.RootsCommentsResponse;
 import com.project.numble.application.common.advice.CommonControllerAdvice;
 import com.project.numble.application.common.advice.ControllerAdviceUtils;
 import com.project.numble.application.helper.factory.dto.*;
@@ -219,7 +217,7 @@ public class BoardControllerTest {
 
         // when
         ResultActions result = mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/board/list?boardAddress=강남구&animalTypes=강아지&categoryType=반려고수"));
+                RestDocumentationRequestBuilders.get("/board/list?boardAddress=강남구&animalTypes=강아지&categoryType=반려고수&lastBoardId=6"));
 
         // then
         result
@@ -228,7 +226,8 @@ public class BoardControllerTest {
                         document("get-board-list",
                                 requestParameters(parameterWithName("boardAddress").description("주소"),
                                         parameterWithName("animalTypes").description("동물 종류"),
-                                        parameterWithName("categoryType").description("카테고리")),
+                                        parameterWithName("categoryType").description("카테고리"),
+                                        parameterWithName("lastBoardId").description("마지막 Board ID")),
                                 responseFields(
                                         fieldWithPath("[].boardId").type(JsonFieldType.NUMBER).description("게시글 ID").optional(),
                                         fieldWithPath("[].content").type(JsonFieldType.STRING).description("게시글 내용").optional(),
@@ -254,17 +253,19 @@ public class BoardControllerTest {
     void getBoardUser_성공_테스트() throws Exception {
         // given
         GetAllBoardResponse response = GetAllBoardResponseFactory.createGetAllBoardResponse();
-        given(boardService.getBoardUser(any(), any())).willReturn(List.of(response));
+        given(boardService.getBoardUser((Long) any(), any())).willReturn(List.of(response));
 
         // when
         ResultActions result = mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/board/user"));
+                RestDocumentationRequestBuilders.get("/board/user?lastBoardId=6"));
 
         // then
         result
                 .andExpect(status().isOk())
                 .andDo(
                         document("get-user-boards",
+                                requestParameters(
+                                        parameterWithName("lastBoardId").description("마지막 Board ID").optional()),
                                 responseFields(
                                         fieldWithPath("[].boardId").type(JsonFieldType.NUMBER).description("게시글 ID").optional(),
                                         fieldWithPath("[].content").type(JsonFieldType.STRING).description("게시글 내용").optional(),
@@ -295,13 +296,15 @@ public class BoardControllerTest {
 
         // when
         ResultActions result = mockMvc.perform(
-                RestDocumentationRequestBuilders.get("/board/bookmark"));
+                RestDocumentationRequestBuilders.get("/board/bookmark?lastBoardId=6"));
 
         // then
         result
                 .andExpect(status().isOk())
                 .andDo(
                         document("get-bookmark-boards",
+                                requestParameters(
+                                        parameterWithName("lastBoardId").description("마지막 Board ID")),
                                 responseFields(
                                         fieldWithPath("[].boardId").type(JsonFieldType.NUMBER).description("게시글 ID").optional(),
                                         fieldWithPath("[].content").type(JsonFieldType.STRING).description("게시글 내용").optional(),

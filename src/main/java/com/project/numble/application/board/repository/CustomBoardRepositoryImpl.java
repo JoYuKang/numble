@@ -39,36 +39,36 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     }
 
     private BooleanExpression categoryTypeEq(String categoryType) {
-        return !categoryType.equals("전체") ? QBOARD.categoryType.eq(categoryType) : null;
+        return categoryType != null && !categoryType.equals("전체") ? QBOARD.categoryType.eq(categoryType) : null;
     }
 
     private BooleanExpression addressEq(String address) {
-        return !address.equals("전체") ? QBOARD.boardAddress.eq(address) : null;
+        return address != null && !address.equals("전체") ? QBOARD.boardAddress.eq(address) : null;
     }
 
     private static BooleanExpression boardAnimalEq(String animalType) {
-        return !animalType.equals("전체") ? QBOARDANIMAL.animalType.eq(AnimalType.getAnimalType(animalType)) : null;
+        return animalType != null && !animalType.equals("전체") ? QBOARDANIMAL.animalType.eq(AnimalType.getAnimalType(animalType)) : null;
     }
 
     @Override
-    public List<Board> findUserBoardsOrderByIdDesc(Pageable pageable, Long userId) {
+    public List<Board> findUserBoardsOrderByIdDesc(Long userId, Long lastBoardId) {
         return queryFactory.selectFrom(QBOARD)
-                .where(QBOARD.user.id.eq(userId))
+                .where(QBOARD.user.id.eq(userId),
+                        QBOARD.id.lt(lastBoardId))
                 .orderBy(QBOARD.id.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .limit(5)
                 .fetch();
     }
 
     @Override
-    public List<Board> findBookmarkBoardOrderByIdDesc(Pageable pageable, Long userId) {
+    public List<Board> findBookmarkBoardOrderByIdDesc(Long userId, Long lastBoardId) {
         return queryFactory.selectFrom(QBOARD)
                 .join(QBOARD.bookmarks, QBOOKMARK)
-                .on(QBOARD.id.eq(QBOOKMARK.board.id))
+                .on(QBOARD.id.eq(QBOOKMARK.board.id),
+                        QBOARD.id.lt(lastBoardId))
                 .where(QBOARD.user.id.eq(userId))
                 .orderBy(QBOARD.id.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .limit(5)
                 .fetch();
     }
 }
