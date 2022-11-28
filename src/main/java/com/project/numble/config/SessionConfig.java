@@ -14,6 +14,7 @@ public class SessionConfig {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
         serializer.setCookieName("SESSION");
         serializer.setSameSite("None");
+        serializer.setUseSecureCookie(true);
         return serializer;
     }
 
