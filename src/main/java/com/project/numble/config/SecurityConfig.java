@@ -6,7 +6,6 @@ import com.project.numble.core.security.oauth2.CustomAuthenticationFailureHandle
 import com.project.numble.core.security.oauth2.CustomLoginFailureEntryPoint;
 import com.project.numble.core.security.oauth2.CustomOAuth2SuccessHandler;
 import com.project.numble.core.security.oauth2.CustomOAuth2UserService;
-import java.util.logging.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +19,6 @@ import org.springframework.security.config.annotation.web.configurers.RequestCac
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.session.SessionManagementFilter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -46,7 +44,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .addFilterBefore(corsFilter(), SessionManagementFilter.class)
             .exceptionHandling()
             .authenticationEntryPoint(new CustomLoginFailureEntryPoint())
             .and()
@@ -94,10 +91,5 @@ public class SecurityConfig {
     @Bean
     public CustomOAuth2SuccessHandler oAuth2SuccessHandler() {
         return new CustomOAuth2SuccessHandler(userRepository, customUserDetailsService());
-    }
-
-    @Bean
-    public CorsFilter corsFilter() {
-        return new CorsFilter();
     }
 }
