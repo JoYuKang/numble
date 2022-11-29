@@ -63,6 +63,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET, "/application/health").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/sign-up").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/sign-in").permitAll()
+                .antMatchers("/", "/**").permitAll()
                 .anyRequest().authenticated())
             .oauth2Login()
             .userInfoEndpoint(oauth2 -> oauth2.userService(oAuth2UserService()))
