@@ -24,7 +24,8 @@ public enum ExceptionType {
     BOOKMARK_NOT_EXIST_EXCEPTION("bookmarkNotExistsException.message"),
     COMMENT_NOT_FOUND_EXCEPTION("commentNotFoundException.message"),
     COMMENT_NOT_AUTH_EXCEPTION("commentNotAuthException.message"),
-    IMAGE_NOT_FOUND_EXCEPTION("imageNotFoundException.message");
+    IMAGE_NOT_FOUND_EXCEPTION("imageNotFoundException.message"),
+    HTTP_MEDIA_TYPE_NOT_SUPPORTED_EXCEPTION("httpMediaTypeNotSupportedException.message");
 
     private final String message;
 

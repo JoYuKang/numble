@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -35,5 +36,12 @@ public class CommonControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     Map<String, String> userNotFoundExceptionHandler() {
         return utils.getFailureResponse(ExceptionType.USER_NOT_FOUND_EXCEPTION);
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Map<String, String> httpMediaTypeNotSupportedExceptionHandler(HttpMediaTypeNotSupportedException e) {
+        log.info("{}", e);
+        return utils.getFailureResponse(ExceptionType.HTTP_MEDIA_TYPE_NOT_SUPPORTED_EXCEPTION);
     }
 }
