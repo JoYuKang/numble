@@ -10,6 +10,6 @@ public class SessionConfig {
 
     @Bean
     public HttpSessionIdResolver httpSessionStrategy() {
-        return new HeaderHttpSessionIdResolver("x_auth_token");
+        return HeaderHttpSessionIdResolver.xAuthToken();
     }
 }
