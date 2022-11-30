@@ -102,6 +102,9 @@ public class StandardUserService implements UserService {
     @Override
     public FindAddressByQueryResponse searchAddressByQuery(String query) {
         try {
+            if (query.length() == 0) {
+                return new FindAddressByQueryResponse();
+            }
             Map<String, String> address = getAddressByQuery(query);
             String addressName = address.get("address_name");
             String[] addressArr = addressName.split(" ");
