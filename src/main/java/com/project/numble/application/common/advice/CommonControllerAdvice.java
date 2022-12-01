@@ -44,4 +44,11 @@ public class CommonControllerAdvice {
         log.info("{}", e);
         return utils.getFailureResponse(ExceptionType.HTTP_MEDIA_TYPE_NOT_SUPPORTED_EXCEPTION);
     }
+
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    Map<String, String> nullPointerExceptionHandler(NullPointerException e) {
+        log.info("{}", e);
+        return null;
+    }
 }
