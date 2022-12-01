@@ -37,42 +37,8 @@ public class CustomAuthenticationFilter extends GenericFilterBean {
         if (attribute != null) {
             SecurityContext context = (SecurityContext) attribute;
             String name = context.getAuthentication().getName();
-            System.out.println("name = " + name);
         }
-
-        /*
-        userRepository
-            .findByEmail(email)
-            .filter(user -> passwordEncoder.matches(user.getPassword(), password))
-            .map(user -> userDetailsService.loadUserByUsername(String.valueOf(user.getId())))
-            .ifPresent(this::setAuthentication);
-
-         */
 
         chain.doFilter(req, res);
-    }
-
-    private void setAuthentication(CustomUserDetails userDetails) {
-        SecurityContextHolder
-                .getContext()
-                .setAuthentication(new CustomAuthenticationToken(userDetails, userDetails.getAuthorities()));
-    }
-
-    private Optional<String> extractCookie(ServletRequest request) {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-
-        Cookie[] cookies = httpServletRequest.getCookies();
-
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("SESSION")) {
-                return Optional.of(cookie.getValue());
-            }
-        }
-
-        return Optional.empty();
-    }
-
-    private Optional<String> extractToken(ServletRequest request) {
-        return Optional.ofNullable(((HttpServletRequest)request).getHeader("Authorization"));
     }
 }

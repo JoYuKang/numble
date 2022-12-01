@@ -32,6 +32,8 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
             "exception",
             exception.getMessage());
 
+        exception.printStackTrace();
+
         response.getOutputStream()
             .println(objectMapper.writeValueAsString(data));
     }
