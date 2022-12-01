@@ -22,7 +22,9 @@ public class CorsFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
-        response.setHeader("Access-Control-Allow-Origin", "*");
+
+        String origin = request.getHeader("origin");
+        response.setHeader("Access-Control-Allow-Origin", findOrigin(origin));
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods","POST, GET, DELETE, PUT");
         response.setHeader("Access-Control-Max-Age", "36000");
@@ -36,6 +38,13 @@ public class CorsFilter implements Filter {
         } else {
             chain.doFilter(req, res);
         }
+    }
+
+    private String findOrigin(String origin) {
+        if (origin.contains("local")) {
+            return "http://localhost:3000";
+        }
+        return "http://43.201.47.207:3000";
     }
 
     @Override
