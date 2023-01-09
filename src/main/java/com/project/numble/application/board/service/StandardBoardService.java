@@ -48,7 +48,7 @@ public class StandardBoardService implements BoardService{
         Board board = Board.builder().user(user)
                 .content(request.getContent())
                 .categoryType(request.getCategoryType())
-                .boardAddress(user.getAddress().getRegionDepth1())
+                .boardAddress(user.getAddress().getRegionDepth2())
                 .build();
 
         if (request.getBoardAnimalTypes().size() == 0) {

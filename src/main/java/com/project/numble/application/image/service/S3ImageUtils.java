@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class S3ImageUtils implements ImageUtils {
 
-    private static String AWS_CLOUD_FRONT = "https://d1rxx32hh0c77e.cloudfront.net";
+    private static String AWS_CLOUD_FRONT = "https://numble-image-file.s3.ap-northeast-2.amazonaws.com";
 
     private final AmazonS3Client amazonS3Client;
 

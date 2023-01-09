@@ -1,6 +1,7 @@
 package com.project.numble.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
