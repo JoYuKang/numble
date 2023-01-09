@@ -7,7 +7,7 @@ public class NaverOAuth2Attribute extends AbstractOAuth2Attribute {
 
     private static final String RESPONSE_TARGET = "response";
     private static final String NAVER_EMAIL = "email";
-    private static final String NAVER_NICKNAME = "nickname";
+    private static final String NAVER_NICKNAME = "name";
     private static final String NAVER_PROFILE = "profile_image";
 
     @Builder

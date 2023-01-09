@@ -8,13 +8,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,8 +17,8 @@ public class ImageController {
 
     private final ImageService imageService;
 
-    @PostMapping("/upload")
-    public ResponseEntity<AddImagesResponse> uploadImages(@Valid @ModelAttribute AddImageRequest request) {
+    @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
+    public ResponseEntity<AddImagesResponse> uploadImages(@Valid @ModelAttribute("images") AddImageRequest request) {
         return new ResponseEntity(imageService.saveImages(request), HttpStatus.CREATED);
     }
     @GetMapping("/{id}")

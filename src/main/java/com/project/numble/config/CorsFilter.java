@@ -41,7 +41,9 @@ public class CorsFilter implements Filter {
     }
 
     private String findOrigin(String origin) {
-        if (origin.contains("local")) {
+        //return "http://localhost"; //로컬 환경에서 작동 시
+
+        if (origin == null || origin.contains("local")) {
             return "http://localhost:3000";
         }
         return "http://43.201.47.207:3000";

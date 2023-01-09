@@ -23,7 +23,6 @@ public class BoardController {
 
     private final BoardService boardService;
 
-
     // board 다건 조회
     @GetMapping("/list")
     public ResponseEntity<List<GetAllBoardResponse>> getBoards(
