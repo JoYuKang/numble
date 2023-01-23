@@ -61,6 +61,12 @@ public class Comment extends BaseTimeEntity {
     private Board board;
 
     @Column(nullable = false)
+    private String categoryType;
+
+    @Column(nullable = false)
+    private String boardAnimalTypes;
+
+    @Column(nullable = false)
     private boolean deleted = false;
 
     public void updateChildComment(Comment childComment) {

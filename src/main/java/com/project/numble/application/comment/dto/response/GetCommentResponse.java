@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.project.numble.application.comment.domain.Comment;
+
+import java.sql.Struct;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,6 +24,8 @@ public class GetCommentResponse {
     private String author;
     private String content;
     private Long depth;
+    private String categoryType;
+    private String boardAnimalTypes;
 
     @JsonFormat(
             shape = JsonFormat.Shape.STRING,
